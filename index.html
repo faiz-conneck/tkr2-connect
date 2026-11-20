@@ -495,6 +495,10 @@ h1 { font-size: 22px; margin: 0 0 6px 0; }
 
 </div>
 
+<!-- ALAT FIREBASE: supaya halaman bisa membaca database Firestore -->
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+
 <script>
 
 /* DATA JADWAL PELAJARAN */
@@ -502,7 +506,7 @@ h1 { font-size: 22px; margin: 0 0 6px 0; }
 const jadwal = {
 
     senin: [
-        { mapel: "Dasar-Dasar Kompetensi Kealian (DDKK)", guru: "RAMLI TIRO" },
+        { mapel: "Dasar-Dasar Kompetensi Keahlian (DDKK)", guru: "RAMLI TIRO" },
         { mapel: "Matematika", guru: "NURAENI" }
     ],
 
@@ -556,10 +560,25 @@ const jadwalPiket = {
 };
 
 
-/* DATA PENGUMUMAN
-   Yang PALING BARU di PALING ATAS. Setiap id harus berbeda. */
+/* PENGATURAN FIREBASE
+   Ini adalah "alamat dan kunci masuk" ke database kamu. */
 
-const daftarPengumuman = [
+const firebaseConfig = {
+    apiKey: "AIzaSyBZPqXKT76ipUMY5npqwyiSNTl6PinWWOg",
+    authDomain: "tkr2-connect.firebaseapp.com",
+    projectId: "tkr2-connect",
+    storageBucket: "tkr2-connect.firebasestorage.app",
+    messagingSenderId: "485459455236",
+    appId: "1:485459455236:web:dc3d59c929baa558ed7451"
+};
+
+
+/* DATA PENGUMUMAN
+   Isi di bawah ini hanya CADANGAN, tampil kalau internet mati
+   atau Firebase gagal dibuka. Kalau berhasil, isinya akan
+   diganti otomatis oleh data asli dari Firestore. */
+
+let daftarPengumuman = [
 
     {
         id: "p-2",
@@ -568,18 +587,62 @@ const daftarPengumuman = [
         tanggal: "20 November 2026",
         pembuat: "Admin",
         penting: true
-    },
-
-    {
-        id: "p-1",
-        judul: "Contoh: Piket Hari Sabtu",
-        isi: "Piket hari Sabtu adalah bakti sosial, harap hadir tepat waktu.",
-        tanggal: "18 November 2026",
-        pembuat: "Admin",
-        penting: false
     }
 
 ];
+
+
+/* MEMBACA PENGUMUMAN DARI FIRESTORE
+   - collection("pengumuman")  = buka folder "pengumuman" di database
+   - orderBy("urutan", "desc") = angka terbesar tampil paling atas
+   - onSnapshot                = otomatis ikut berubah saat data berubah */
+
+function muatPengumuman() {
+
+    try {
+
+        firebase.initializeApp(firebaseConfig);
+
+        const db = firebase.firestore();
+
+        db.collection("pengumuman")
+          .orderBy("urutan", "desc")
+          .onSnapshot(function(hasilBaca) {
+
+            let baru = [];
+
+            hasilBaca.forEach(function(dok) {
+
+                let d = dok.data();
+
+                baru.push({
+                    id: dok.id,
+                    judul: d.judul,
+                    isi: d.isi,
+                    tanggal: d.tanggal,
+                    pembuat: d.pembuat,
+                    penting: d.penting === true
+                });
+
+            });
+
+            daftarPengumuman = baru;
+
+            tampilkanPengumumanTerbaru();
+
+            if (document.getElementById("pengumuman").classList.contains("aktif")) {
+                tampilkanPengumuman();
+            }
+
+        }, function(error) {
+            console.log("Gagal membaca pengumuman:", error);
+        });
+
+    } catch (e) {
+        console.log("Firebase belum siap:", e);
+    }
+
+}
 
 
 /* DATA TUGAS. Setiap id harus berbeda. */
@@ -1035,6 +1098,7 @@ function tampilkanPengumumanTerbaru() {
 
 perbaruiTombolTema();
 tampilkanBeranda();
+muatPengumuman();
 
 </script>
 </body>
