@@ -1,325 +1,441 @@
 <!DOCTYPE html>
-
 <html lang="id">
-
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+<meta name="theme-color" content="#0b1220">
 <title>TKR 2 CONNECT</title>
+
+<!-- Pasang tema tersimpan SEBELUM halaman tampil (supaya tidak berkedip) -->
+<script>
+(function () {
+    var tema = "gelap";
+    try {
+        if (localStorage.getItem("tema") === "terang") { tema = "terang"; }
+    } catch (e) {}
+    document.documentElement.setAttribute("data-tema", tema);
+})();
+</script>
 
 <style>
 
+/* PALET WARNA: mode GELAP (bawaan) */
+:root {
+    --biru: #3b7bf0;
+    --biru-tua: #1d3f94;
+    --indigo: #4f46b8;
+    --emas: #f0b94a;
+    --teal: #2fb8a6;
+    --ungu: #8e84f0;
+    --koral: #ee8a7c;
+
+    --latar1: #0b1220;
+    --latar2: #0e1730;
+    --kartu: #141d30;
+    --kartu2: #1a2540;
+    --garis: #25324d;
+    --garis2: #34456a;
+
+    --teks: #ffffff;
+    --teks2: #b8c4da;
+    --abu: #9fb0cc;
+    --redup: #7f8fab;
+
+    --emas-teks: #f0b94a;
+    --teal-teks: #5eead4;
+    --bayangan: none;
+}
+
+/* PALET WARNA: mode TERANG */
+:root[data-tema="terang"] {
+    --latar1: #f3f6fc;
+    --latar2: #e4ecfa;
+    --kartu: #ffffff;
+    --kartu2: #eaf0fb;
+    --garis: #d5dded;
+    --garis2: #c3cfe6;
+
+    --teks: #0f1a30;
+    --teks2: #3b4a66;
+    --abu: #5b6b88;
+    --redup: #7083a3;
+
+    --emas-teks: #9a6200;
+    --teal-teks: #0f766e;
+    --bayangan: 0 2px 10px rgba(30, 60, 120, 0.08);
+}
+
 * { box-sizing: border-box; }
+
+button { -webkit-tap-highlight-color: transparent; }
 
 body {
     margin: 0;
-    background: #111111;
-    color: white;
+    min-height: 100vh;
+    background: linear-gradient(180deg, var(--latar1) 0%, var(--latar2) 100%);
+    background-attachment: fixed;
+    color: var(--teks);
     font-family: Arial, sans-serif;
+    transition: background-color 0.3s, color 0.3s;
 }
 
-.container { padding: 20px; }
+.container { max-width: 600px; margin: 0 auto; padding: 20px; }
 
 /* HEADER */
 .header {
     display: flex;
     align-items: center;
-    margin-bottom: 30px;
+    padding-bottom: 16px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid var(--garis);
 }
 
 .logo {
-    background: #d71935;
-    width: 50px;
-    height: 50px;
-    border-radius: 12px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 22px;
-    font-weight: bold;
+    position: relative;
+    background: linear-gradient(135deg, var(--biru), var(--indigo));
+    color: #ffffff;
+    width: 48px; height: 48px;
+    border-radius: 13px;
+    display: flex; justify-content: center; align-items: center;
+    font-size: 18px; font-weight: bold;
     margin-right: 12px;
+    overflow: hidden;
 }
+.logo svg {
+    position: absolute;
+    top: 4px; left: 4px;
+    width: 40px; height: 40px;
+    opacity: 0.4;
+    animation: putar 1.2s ease-out;
+    transition: transform 0.3s;
+}
+.logo:active svg { transform: rotate(90deg); }
+.logo span { position: relative; }
 
 .nama { font-size: 18px; font-weight: bold; }
-.kelas { color: #aaaaaa; font-size: 12px; margin-top: 5px; }
+.nama .emas { color: var(--emas-teks); }
+.kelas { color: var(--abu); font-size: 12px; margin-top: 4px; }
 
-/* JUDUL */
-.judul { font-size: 25px; }
-.deskripsi { color: #aaaaaa; font-size: 14px; }
+/* TOMBOL GANTI TEMA */
+.tema {
+    margin-left: auto;
+    width: 42px; height: 42px;
+    border-radius: 50%;
+    border: 1px solid var(--garis);
+    background: var(--kartu);
+    color: var(--teks);
+    font-size: 19px;
+    cursor: pointer;
+    box-shadow: var(--bayangan);
+    transition: transform 0.2s, background-color 0.3s;
+}
+.tema:active { transform: rotate(40deg) scale(0.9); }
+
+/* HALAMAN + ANIMASI MUNCUL */
+.halaman { display: none; }
+.halaman.aktif { display: block; animation: muncul 0.25s ease; }
+
+@keyframes muncul {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes naik {
+    from { opacity: 0; transform: translateY(14px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes putar {
+    from { transform: rotate(-180deg); }
+    to   { transform: rotate(0deg); }
+}
+@keyframes denyut {
+    0%, 100% { transform: scale(1); }
+    50%      { transform: scale(1.1); }
+}
+
+h1 { font-size: 22px; margin: 0 0 6px 0; }
+.deskripsi { color: var(--abu); font-size: 14px; margin-top: 0; }
+.judul-bagian {
+    margin: 26px 0 0 0;
+    font-size: 16px;
+    border-left: 3px solid var(--emas);
+    padding-left: 10px;
+}
+
+/* PROFIL */
+.profil {
+    display: flex; align-items: center;
+    background: var(--kartu);
+    border: 1px solid var(--garis);
+    border-radius: 16px;
+    padding: 16px;
+    margin-top: 16px;
+    box-shadow: var(--bayangan);
+    animation: naik 0.45s ease backwards;
+    transition: background-color 0.3s, border-color 0.3s;
+}
+.avatar {
+    width: 52px; height: 52px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--teal), var(--biru));
+    color: #ffffff;
+    display: flex; justify-content: center; align-items: center;
+    font-weight: bold; font-size: 18px;
+    margin-right: 14px;
+}
+.salam { color: var(--abu); font-size: 13px; }
+.nama-siswa { font-size: 18px; font-weight: bold; margin: 3px 0; }
+.kelas-kecil { color: var(--abu); font-size: 12px; }
 
 /* KARTU */
 .kartu {
-    background: #222222;
+    background: var(--kartu);
+    border: 1px solid var(--garis);
     border-radius: 15px;
     padding: 18px;
-    margin-top: 20px;
+    margin-top: 16px;
+    box-shadow: var(--bayangan);
+    transition: background-color 0.3s, border-color 0.3s;
 }
-
-.kartu-jadwal { background: #d71935; }
+.kartu-hari {
+    background: linear-gradient(135deg, var(--biru-tua), var(--indigo));
+    border: none;
+    color: #ffffff;
+    animation: naik 0.5s ease 0.1s backwards;
+}
+.kartu-hari h3 { margin: 0 0 4px 0; }
+.tanggal { font-size: 12px; opacity: 0.85; margin: 0 0 10px 0; }
+.kartu-hari ul { margin: 0 0 10px 0; padding-left: 18px; font-size: 14px; line-height: 1.7; }
+.kartu-hari .piket-info {
+    font-size: 13px; margin: 0; padding-top: 10px;
+    border-top: 1px solid rgba(255, 255, 255, 0.25);
+    color: var(--emas);
+}
 
 /* MENU */
 .menu {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 12px;
-    margin-top: 20px;
+    margin-top: 14px;
 }
-
 .menu-item {
-    background: #222222;
-    padding: 20px;
-    border-radius: 15px;
+    background: var(--kartu);
+    padding: 18px 10px;
+    border-radius: 16px;
     text-align: center;
-    border: none;
-    color: white;
+    border: 1px solid var(--garis);
+    color: var(--teks);
     cursor: pointer;
     font-size: 14px;
+    font-weight: bold;
+    box-shadow: var(--bayangan);
+    animation: naik 0.45s ease backwards;
+    transition: transform 0.12s, background-color 0.3s, border-color 0.3s;
 }
-
-.menu-item:active { background: #d71935; }
-
+.menu-item:active { transform: scale(0.95); background: var(--kartu2); }
+.menu-item:nth-child(1) { animation-delay: 0.05s; }
+.menu-item:nth-child(2) { animation-delay: 0.10s; }
+.menu-item:nth-child(3) { animation-delay: 0.15s; }
+.menu-item:nth-child(4) { animation-delay: 0.20s; }
+.menu-item:nth-child(5) { animation-delay: 0.25s; }
 .menu-lebar { grid-column: span 2; }
 
-.ikon { font-size: 30px; margin-bottom: 10px; }
+.ikon {
+    width: 52px; height: 52px;
+    margin: 0 auto 10px auto;
+    border-radius: 50%;
+    display: flex; justify-content: center; align-items: center;
+    font-size: 26px;
+}
+.menu-item:nth-child(1) .ikon { background: rgba(59, 123, 240, 0.20); }
+.menu-item:nth-child(2) .ikon { background: rgba(240, 185, 74, 0.20); }
+.menu-item:nth-child(3) .ikon { background: rgba(47, 184, 166, 0.20); }
+.menu-item:nth-child(4) .ikon { background: rgba(142, 132, 240, 0.20); }
+.menu-item:nth-child(5) .ikon { background: rgba(238, 138, 124, 0.20); }
 
-/* HALAMAN */
-.halaman { display: none; }
-.halaman.aktif { display: block; }
-
-/* TOMBOL HARI */
+/* TOMBOL HARI (3 kolom) */
+.hari-grid { grid-template-columns: repeat(3, 1fr); gap: 8px; }
 .hari-button {
-    background: #222222;
-    color: white;
-    border: 1px solid #444444;
-    padding: 12px;
+    background: var(--kartu);
+    color: var(--teks);
+    border: 1px solid var(--garis2);
+    padding: 12px 6px;
     border-radius: 10px;
     cursor: pointer;
     font-size: 14px;
+    transition: background-color 0.2s, border-color 0.2s, transform 0.1s;
 }
+.hari-button:active { transform: scale(0.95); }
+#jadwal .hari-button.aktif { background: var(--biru); border-color: var(--biru); font-weight: bold; color: #ffffff; }
+#piket .hari-button.aktif  { background: var(--teal); border-color: var(--teal); font-weight: bold; color: #08201c; }
 
-.hari-button.aktif {
-    background: #d71935;
-    border-color: #d71935;
-}
-
-/* DAFTAR JADWAL */
+/* DAFTAR KARTU (jadwal, piket, tugas, pengumuman) */
 .daftar-mapel { margin-top: 20px; }
 
-.kartu-mapel {
-    background: #222222;
-    padding: 18px;
-    border-radius: 12px;
-    margin-top: 12px;
+.kartu-mapel, .kartu-piket, .kartu-tugas, .kartu-pengumuman {
+    background: var(--kartu);
+    box-shadow: var(--bayangan);
+    animation: naik 0.4s ease backwards;
+    transition: background-color 0.3s;
 }
+.daftar-mapel > :nth-child(3), #daftar-tugas > :nth-child(2), #daftar-pengumuman > :nth-child(2) { animation-delay: 0.08s; }
+.daftar-mapel > :nth-child(4), #daftar-tugas > :nth-child(3), #daftar-pengumuman > :nth-child(3) { animation-delay: 0.16s; }
+.daftar-mapel > :nth-child(5), #daftar-tugas > :nth-child(4), #daftar-pengumuman > :nth-child(4) { animation-delay: 0.24s; }
 
-.kartu-mapel h3 { font-size: 16px; }
-.kartu-mapel p { color: #aaaaaa; font-size: 14px; }
+/* JADWAL (garis biru) */
+.kartu-mapel {
+    padding: 16px 18px;
+    border-radius: 12px;
+    margin-top: 10px;
+    border-left: 4px solid var(--biru);
+}
+.kartu-mapel h3 { font-size: 16px; margin: 0 0 6px 0; }
+.kartu-mapel p { color: var(--abu); font-size: 14px; margin: 0; }
 
-/* JADWAL PIKET */
+/* PIKET (garis tosca) */
 .kartu-piket {
-    background: #222222;
     padding: 14px 18px;
     border-radius: 12px;
     margin-top: 10px;
-    border-left: 4px solid #d71935;
+    border-left: 4px solid var(--teal);
     font-size: 15px;
 }
 
-.label-contoh {
-    color: #ff7777;
-    font-size: 11px;
-    font-weight: bold;
-}
-
-/* HALAMAN TUGAS */
+/* TUGAS (garis emas) */
 .kartu-tugas {
-    background: #222222;
     padding: 18px;
-    border-radius: 13px;
-    margin-top: 15px;
-    border-left: 4px solid #d71935;
+    border-radius: 14px;
+    margin-top: 14px;
+    border-left: 4px solid var(--emas);
 }
 
-.kartu-tugas h3 { font-size: 17px; margin-top: 5px; }
-
-.kartu-tugas p {
-    color: #bbbbbb;
-    font-size: 14px;
-    line-height: 1.5;
+/* PENGUMUMAN (garis ungu) */
+.kartu-pengumuman {
+    padding: 18px;
+    border-radius: 14px;
+    margin-top: 14px;
+    border-left: 4px solid var(--ungu);
 }
 
+.kartu-tugas h3, .kartu-pengumuman h3 { font-size: 17px; margin: 8px 0 6px 0; }
+.kartu-tugas p, .kartu-pengumuman p {
+    color: var(--teks2); font-size: 14px; line-height: 1.5; margin: 6px 0;
+}
+.label-contoh { color: var(--emas-teks); font-size: 11px; font-weight: bold; }
 .status {
     display: inline-block;
-    background: #664b16;
-    color: #ffd66b;
-    padding: 6px 10px;
-    border-radius: 20px;
-    font-size: 11px;
-    margin-top: 5px;
+    background: rgba(240, 185, 74, 0.18); color: var(--emas-teks);
+    padding: 6px 10px; border-radius: 20px;
+    font-size: 11px; margin-top: 5px;
 }
-
-.status-selesai {
-    background: #164d2c;
-    color: #8affad;
-}
-
-/* TOMBOL TANDAI SELESAI */
+.status-selesai { background: rgba(47, 184, 166, 0.2); color: var(--teal-teks); }
 .tombol-status {
     display: block;
-    background: #333333;
-    color: white;
-    border: 1px solid #555555;
-    padding: 8px 12px;
-    border-radius: 8px;
-    margin-top: 12px;
-    font-size: 13px;
-    cursor: pointer;
+    background: var(--kartu2); color: var(--teks);
+    border: 1px solid var(--garis2);
+    padding: 9px 14px; border-radius: 8px;
+    margin-top: 12px; font-size: 13px; cursor: pointer;
 }
 
-/* PENGUMUMAN */
-.kartu-pengumuman {
-    background: #222222;
-    padding: 18px;
-    border-radius: 13px;
-    margin-top: 15px;
-    border-left: 4px solid #d71935;
-}
-
-.kartu-pengumuman h3 { font-size: 17px; margin: 8px 0 6px 0; }
-
-.kartu-pengumuman p {
-    color: #bbbbbb;
-    font-size: 14px;
-    line-height: 1.5;
-    margin: 6px 0;
-}
-
-.info-pengumuman { color: #888888; font-size: 12px; }
-
+/* PENGUMUMAN: label & info */
+.info-pengumuman { color: var(--redup) !important; font-size: 12px !important; }
 .label-penting {
     display: inline-block;
-    background: #d71935;
-    color: white;
-    padding: 4px 10px;
-    border-radius: 20px;
-    font-size: 11px;
-    font-weight: bold;
+    background: var(--emas); color: #1a1a1a;
+    padding: 4px 10px; border-radius: 20px;
+    font-size: 11px; font-weight: bold;
 }
+#pengumuman-terbaru .label-penting { animation: denyut 2s ease-in-out infinite; }
 
 .kosong {
-    background: #222222;
-    padding: 25px;
-    border-radius: 13px;
-    text-align: center;
-    color: #aaaaaa;
+    background: var(--kartu);
+    padding: 25px; border-radius: 13px;
+    text-align: center; color: var(--abu);
     margin-top: 20px;
 }
 
 /* TOMBOL KEMBALI */
 .tombol-kembali {
-    background: #d71935;
-    color: white;
-    border: none;
-    padding: 12px 18px;
-    border-radius: 10px;
-    margin-top: 20px;
-    cursor: pointer;
+    background: var(--biru);
+    color: #ffffff; border: none;
+    padding: 12px 18px; border-radius: 10px;
+    margin-top: 22px; cursor: pointer; font-size: 14px;
 }
 
-/* FOOTER */
-.footer {
-    text-align: center;
-    color: #777777;
-    margin-top: 35px;
-    font-size: 12px;
+.footer { text-align: center; color: var(--redup); margin-top: 35px; font-size: 12px; }
+
+/* Hormati pengguna yang mematikan animasi di HP-nya */
+@media (prefers-reduced-motion: reduce) {
+    * { animation: none !important; transition: none !important; }
 }
 
 </style>
-
 </head>
 
 <body>
-
 <div class="container">
 
 <!-- HEADER -->
 <div class="header">
-    <div class="logo">T2</div>
+    <div class="logo">
+        <svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+            <circle cx="20" cy="20" r="16"/>
+            <circle cx="20" cy="20" r="4"/>
+            <path d="M20 4v12M20 24v12M4 20h12M24 20h12M8.7 8.7l8.5 8.5M22.8 22.8l8.5 8.5M31.3 8.7l-8.5 8.5M17.2 22.8l-8.5 8.5"/>
+        </svg>
+        <span>T2</span>
+    </div>
     <div>
-        <div class="nama">TKR 2 CONNECT</div>
+        <div class="nama">TKR <span class="emas">2</span> CONNECT</div>
         <div class="kelas">X TKR 2</div>
     </div>
+    <button class="tema" id="tombol-tema" onclick="gantiTema()" aria-label="Ganti tema">☀️</button>
 </div>
-
 
 <!-- BERANDA -->
 <div id="beranda" class="halaman aktif">
 
-    <!-- Pengumuman baru muncul di paling atas -->
     <div id="pengumuman-terbaru"></div>
 
-    <h1 class="judul">Selamat Datang!</h1>
-
-    <p class="deskripsi">
-        Pusat informasi dan komunikasi kelas X TKR 2.
-    </p>
-
-    <div class="kartu">
-        <h3>👤 Profil Siswa</h3>
-        <p>Nama: M. Fais</p>
-        <p>Kelas: X TKR 2</p>
-        <p>Status: Siswa</p>
+    <div class="profil">
+        <div class="avatar">MF</div>
+        <div>
+            <div class="salam" id="salam">Selamat datang</div>
+            <div class="nama-siswa">M. Fais</div>
+            <div class="kelas-kecil">X TKR 2 • Siswa</div>
+        </div>
     </div>
 
-    <div class="kartu kartu-jadwal">
-        <h3>📅 Jadwal Pelajaran</h3>
-        <p>Informasi pembelajaran kelas X TKR 2.</p>
-    </div>
+    <div class="kartu kartu-hari" id="hari-ini"></div>
 
-    <h3>Menu Utama</h3>
+    <h3 class="judul-bagian">Menu Utama</h3>
 
     <div class="menu">
-
         <button class="menu-item" onclick="bukaHalaman('jadwal')">
-            <div class="ikon">📅</div>
-            Jadwal
+            <div class="ikon">📅</div>Jadwal
         </button>
-
         <button class="menu-item" onclick="bukaHalaman('tugas')">
-            <div class="ikon">📚</div>
-            Tugas
+            <div class="ikon">📚</div>Tugas
         </button>
-
         <button class="menu-item" onclick="bukaHalaman('piket')">
-            <div class="ikon">🧹</div>
-            Jadwal Piket
+            <div class="ikon">🧹</div>Jadwal Piket
         </button>
-
         <button class="menu-item" onclick="bukaHalaman('pengumuman')">
-            <div class="ikon">📢</div>
-            Pengumuman
+            <div class="ikon">📢</div>Pengumuman
         </button>
-
         <button class="menu-item menu-lebar" onclick="bukaHalaman('chat')">
-            <div class="ikon">💬</div>
-            Chat Kelas
+            <div class="ikon">💬</div>Chat Kelas
         </button>
-
     </div>
 
 </div>
 
-
 <!-- HALAMAN JADWAL -->
 <div id="jadwal" class="halaman">
-
     <h1>📅 Jadwal Pelajaran</h1>
-
     <p class="deskripsi">Jadwal pembelajaran X TKR 2</p>
 
-    <div class="menu">
+    <div class="menu hari-grid">
         <button class="hari-button" data-hari="senin" onclick="tampilkanJadwal('senin')">Senin</button>
         <button class="hari-button" data-hari="selasa" onclick="tampilkanJadwal('selasa')">Selasa</button>
         <button class="hari-button" data-hari="rabu" onclick="tampilkanJadwal('rabu')">Rabu</button>
@@ -329,20 +445,15 @@ body {
     </div>
 
     <div id="isi-jadwal" class="daftar-mapel"></div>
-
     <button class="tombol-kembali" onclick="beranda()">← Kembali</button>
-
 </div>
-
 
 <!-- HALAMAN PIKET -->
 <div id="piket" class="halaman">
-
     <h1>🧹 Jadwal Piket</h1>
-
     <p class="deskripsi">Jadwal piket kelas X TKR 2</p>
 
-    <div class="menu">
+    <div class="menu hari-grid">
         <button class="hari-button" data-hari="senin" onclick="tampilkanPiket('senin')">Senin</button>
         <button class="hari-button" data-hari="selasa" onclick="tampilkanPiket('selasa')">Selasa</button>
         <button class="hari-button" data-hari="rabu" onclick="tampilkanPiket('rabu')">Rabu</button>
@@ -352,60 +463,38 @@ body {
     </div>
 
     <div id="isi-piket" class="daftar-mapel"></div>
-
     <button class="tombol-kembali" onclick="beranda()">← Kembali</button>
-
 </div>
-
 
 <!-- HALAMAN TUGAS -->
 <div id="tugas" class="halaman">
-
     <h1>📚 Daftar Tugas</h1>
-
     <p class="deskripsi">Informasi tugas siswa kelas X TKR 2.</p>
-
     <div id="daftar-tugas"></div>
-
     <button class="tombol-kembali" onclick="beranda()">← Kembali</button>
-
 </div>
-
 
 <!-- HALAMAN PENGUMUMAN -->
 <div id="pengumuman" class="halaman">
-
     <h1>📢 Pengumuman</h1>
-
     <div id="daftar-pengumuman"></div>
-
     <button class="tombol-kembali" onclick="beranda()">← Kembali</button>
-
 </div>
-
 
 <!-- HALAMAN CHAT -->
 <div id="chat" class="halaman">
-
     <h1>💬 Chat Kelas</h1>
-
     <div class="kartu">
         <h3>Ruang Komunikasi</h3>
         <p>Fitur chat akan dikembangkan nanti.</p>
     </div>
-
     <button class="tombol-kembali" onclick="beranda()">← Kembali</button>
-
 </div>
 
-
-<!-- FOOTER -->
 <div class="footer">TKR 2 CONNECT © 2026</div>
 
 </div>
 
-
-<!-- JAVASCRIPT -->
 <script>
 
 /* DATA JADWAL PELAJARAN */
@@ -448,9 +537,7 @@ const jadwal = {
 };
 
 
-/* DATA JADWAL PIKET
-   Mau tambah orang? Tambahkan satu nama lagi di dalam [ ].
-*/
+/* DATA JADWAL PIKET */
 
 const jadwalPiket = {
 
@@ -470,11 +557,7 @@ const jadwalPiket = {
 
 
 /* DATA PENGUMUMAN
-   - Yang PALING BARU taruh di PALING ATAS.
-   - Setiap pengumuman WAJIB punya id yang berbeda
-     (dipakai untuk mengingat mana yang sudah dibuka).
-   - penting: true  -> muncul label merah "Penting"
-*/
+   Yang PALING BARU di PALING ATAS. Setiap id harus berbeda. */
 
 const daftarPengumuman = [
 
@@ -499,9 +582,7 @@ const daftarPengumuman = [
 ];
 
 
-/* DATA TUGAS
-   Setiap tugas WAJIB punya id yang berbeda.
-*/
+/* DATA TUGAS. Setiap id harus berbeda. */
 
 const daftarTugas = [
 
@@ -526,10 +607,40 @@ const daftarTugas = [
 ];
 
 
-/* FUNGSI BANTU: MENGAMBIL HARI INI
-   getDay(): 0 = Minggu, 1 = Senin, ... 6 = Sabtu.
-   Hari Minggu dialihkan ke Senin karena tidak ada jadwal.
-*/
+/* TEMA GELAP / TERANG */
+
+function perbaruiTombolTema() {
+
+    let tema = document.documentElement.getAttribute("data-tema");
+
+    document.getElementById("tombol-tema").textContent =
+        tema === "terang" ? "🌙" : "☀️";
+
+    let meta = document.querySelector('meta[name="theme-color"]');
+
+    if (meta) {
+        meta.setAttribute("content", tema === "terang" ? "#f3f6fc" : "#0b1220");
+    }
+
+}
+
+function gantiTema() {
+
+    let sekarang = document.documentElement.getAttribute("data-tema");
+    let baru = sekarang === "terang" ? "gelap" : "terang";
+
+    document.documentElement.setAttribute("data-tema", baru);
+
+    try {
+        localStorage.setItem("tema", baru);
+    } catch (e) {}
+
+    perbaruiTombolTema();
+
+}
+
+
+/* FUNGSI BANTU */
 
 function hariIni() {
 
@@ -546,10 +657,9 @@ function hariIni() {
 
 }
 
-
-/* FUNGSI BANTU: MENYALAKAN TOMBOL HARI YANG DIPILIH
-   idHalaman = "jadwal" atau "piket"
-*/
+function huruf1Besar(teks) {
+    return teks.charAt(0).toUpperCase() + teks.slice(1);
+}
 
 function aktifkanTombolHari(idHalaman, hari) {
 
@@ -567,7 +677,7 @@ function aktifkanTombolHari(idHalaman, hari) {
 }
 
 
-/* FUNGSI NAVIGASI */
+/* NAVIGASI */
 
 function bukaHalaman(nama) {
 
@@ -577,51 +687,82 @@ function bukaHalaman(nama) {
 
     document.getElementById(nama).classList.add("aktif");
 
-    if (nama === "tugas") {
-        tampilkanTugas();
-    }
-
-    if (nama === "jadwal") {
-        tampilkanJadwal(hariIni());
-    }
-
-    if (nama === "piket") {
-        tampilkanPiket(hariIni());
-    }
-
-    if (nama === "pengumuman") {
-        tampilkanPengumuman();
-    }
-
-    if (nama === "beranda") {
-        tampilkanPengumumanTerbaru();
-    }
+    if (nama === "tugas") { tampilkanTugas(); }
+    if (nama === "jadwal") { tampilkanJadwal(hariIni()); }
+    if (nama === "piket") { tampilkanPiket(hariIni()); }
+    if (nama === "pengumuman") { tampilkanPengumuman(); }
+    if (nama === "beranda") { tampilkanBeranda(); }
 
     window.scrollTo(0, 0);
 
 }
-
-
-/* FUNGSI KEMBALI */
 
 function beranda() {
     bukaHalaman("beranda");
 }
 
 
-/* FUNGSI MENAMPILKAN JADWAL */
+/* BERANDA: SALAM + KARTU HARI INI */
+
+function tampilkanSalam() {
+
+    let jam = new Date().getHours();
+    let salam = "Selamat malam";
+
+    if (jam < 11) { salam = "Selamat pagi"; }
+    else if (jam < 15) { salam = "Selamat siang"; }
+    else if (jam < 18) { salam = "Selamat sore"; }
+
+    document.getElementById("salam").textContent = salam + " 👋";
+
+}
+
+function tampilkanHariIni() {
+
+    let hari = hariIni();
+
+    let tanggal = new Date().toLocaleDateString("id-ID", {
+        weekday: "long",
+        day: "numeric",
+        month: "long",
+        year: "numeric"
+    });
+
+    let catatan = "";
+
+    if (new Date().getDay() === 0) {
+        catatan = " (Minggu libur, menampilkan Senin)";
+    }
+
+    let daftarMapel = "";
+
+    jadwal[hari].forEach(function(data) {
+        daftarMapel += "<li>" + data.mapel + "</li>";
+    });
+
+    document.getElementById("hari-ini").innerHTML = `
+        <h3>📅 Jadwal Hari Ini</h3>
+        <p class="tanggal">${tanggal}${catatan}</p>
+        <ul>${daftarMapel}</ul>
+        <p class="piket-info">🧹 Piket: ${jadwalPiket[hari].join(", ")}</p>
+    `;
+
+}
+
+function tampilkanBeranda() {
+    tampilkanPengumumanTerbaru();
+    tampilkanSalam();
+    tampilkanHariIni();
+}
+
+
+/* JADWAL */
 
 function tampilkanJadwal(hari) {
 
-    let isi = document.getElementById("isi-jadwal");
+    let hasil = "<h3>Hari " + huruf1Besar(hari) + "</h3>";
 
-    let daftar = jadwal[hari];
-
-    let hasil = "<h3>Hari " +
-        hari.charAt(0).toUpperCase() +
-        hari.slice(1) + "</h3>";
-
-    daftar.forEach(function(data, index) {
+    jadwal[hari].forEach(function(data, index) {
 
         hasil += `
             <div class="kartu-mapel">
@@ -632,33 +773,23 @@ function tampilkanJadwal(hari) {
 
     });
 
-    isi.innerHTML = hasil;
+    document.getElementById("isi-jadwal").innerHTML = hasil;
 
     aktifkanTombolHari("jadwal", hari);
 
 }
 
 
-/* FUNGSI MENAMPILKAN JADWAL PIKET */
+/* PIKET */
 
 function tampilkanPiket(hari) {
 
-    let isi = document.getElementById("isi-piket");
-
     let daftar = jadwalPiket[hari];
 
-    let hasil = "<h3>Piket Hari " +
-        hari.charAt(0).toUpperCase() +
-        hari.slice(1) + "</h3>";
+    let hasil = "<h3>Piket Hari " + huruf1Besar(hari) + "</h3>";
 
     if (daftar.length === 0) {
-
-        hasil += `
-            <div class="kosong">
-                Belum ada petugas piket di hari ini.
-            </div>
-        `;
-
+        hasil += `<div class="kosong">Belum ada petugas piket di hari ini.</div>`;
     }
 
     daftar.forEach(function(nama, index) {
@@ -671,16 +802,14 @@ function tampilkanPiket(hari) {
 
     });
 
-    isi.innerHTML = hasil;
+    document.getElementById("isi-piket").innerHTML = hasil;
 
     aktifkanTombolHari("piket", hari);
 
 }
 
 
-/* PENYIMPANAN STATUS TUGAS
-   localStorage = memori kecil di HP untuk menyimpan data.
-*/
+/* STATUS TUGAS (localStorage) */
 
 function ambilStatusTersimpan() {
 
@@ -716,8 +845,73 @@ function ubahStatusTugas(id) {
 
 }
 
+function tampilkanTugas() {
 
-/* PENYIMPANAN PENGUMUMAN YANG SUDAH DIBUKA */
+    let tempat = document.getElementById("daftar-tugas");
+
+    if (daftarTugas.length === 0) {
+
+        tempat.innerHTML = `
+            <div class="kosong">
+                <h3>📭 Belum Ada Tugas</h3>
+                <p>Tugas dari guru akan ditampilkan di halaman ini.</p>
+            </div>
+        `;
+
+        return;
+
+    }
+
+    let tersimpan = ambilStatusTersimpan();
+
+    let hasil = "";
+
+    daftarTugas.forEach(function(data, index) {
+
+        let statusSekarang = tersimpan[data.id] || data.status;
+
+        let statusHTML = "";
+        let teksTombol = "";
+
+        if (statusSekarang === "Selesai") {
+            statusHTML = `<span class="status status-selesai">✓ Selesai</span>`;
+            teksTombol = "↩ Tandai Belum Selesai";
+        } else {
+            statusHTML = `<span class="status">Belum Selesai</span>`;
+            teksTombol = "✓ Tandai Selesai";
+        }
+
+        hasil += `
+            <div class="kartu-tugas">
+
+                <span class="label-contoh">CONTOH DATA</span>
+
+                <p>${data.mapel}</p>
+
+                <h3>${index + 1}. ${data.nama}</h3>
+
+                <p>${data.keterangan}</p>
+
+                <p>📅 Batas: ${data.batas}</p>
+
+                ${statusHTML}
+
+                <button class="tombol-status"
+                onclick="ubahStatusTugas('${data.id}')">
+                    ${teksTombol}
+                </button>
+
+            </div>
+        `;
+
+    });
+
+    tempat.innerHTML = hasil;
+
+}
+
+
+/* PENGUMUMAN */
 
 function ambilPengumumanDibaca() {
 
@@ -728,9 +922,6 @@ function ambilPengumumanDibaca() {
     }
 
 }
-
-/* Dipanggil saat kartu pengumuman di Beranda diketuk:
-   tandai semua pengumuman sudah dibaca, lalu buka halamannya. */
 
 function bukaPengumumanDariBeranda() {
 
@@ -745,10 +936,6 @@ function bukaPengumumanDariBeranda() {
     bukaHalaman("pengumuman");
 
 }
-
-
-/* FUNGSI MENAMPILKAN SEMUA PENGUMUMAN */
-
 
 function tampilkanPengumuman() {
 
@@ -797,12 +984,6 @@ function tampilkanPengumuman() {
 
 }
 
-
-/* FUNGSI PENGUMUMAN BARU DI BERANDA
-   Hanya menampilkan pengumuman yang BELUM dibuka.
-   Kalau semua sudah dibuka, kartunya hilang.
-*/
-
 function tampilkanPengumumanTerbaru() {
 
     let tempat = document.getElementById("pengumuman-terbaru");
@@ -814,11 +995,8 @@ function tampilkanPengumumanTerbaru() {
     });
 
     if (belumDibaca.length === 0) {
-
         tempat.innerHTML = "";
-
         return;
-
     }
 
     let data = belumDibaca[0];
@@ -826,20 +1004,18 @@ function tampilkanPengumumanTerbaru() {
     let infoLain = "";
 
     if (belumDibaca.length > 1) {
-
         infoLain = `
             <p class="info-pengumuman">
                 +${belumDibaca.length - 1} pengumuman lainnya
             </p>
         `;
-
     }
 
     tempat.innerHTML = `
         <div class="kartu-pengumuman"
         onclick="bukaPengumumanDariBeranda()">
 
-            <span class="label-penting">🔔 baru</span>
+            <span class="label-penting">🔔 Baru</span>
 
             <h3>${data.judul}</h3>
 
@@ -855,84 +1031,11 @@ function tampilkanPengumumanTerbaru() {
 }
 
 
-/* FUNGSI MENAMPILKAN TUGAS */
+/* JALANKAN SAAT APLIKASI DIBUKA */
 
-function tampilkanTugas() {
-
-    let tempat = document.getElementById("daftar-tugas");
-
-    if (daftarTugas.length === 0) {
-
-        tempat.innerHTML = `
-            <div class="kosong">
-                <h3>📭 Belum Ada Tugas</h3>
-                <p>Tugas dari guru akan ditampilkan di halaman ini.</p>
-            </div>
-        `;
-
-        return;
-
-    }
-
-    let tersimpan = ambilStatusTersimpan();
-
-    let hasil = "";
-
-    daftarTugas.forEach(function(data, index) {
-
-        let statusSekarang = tersimpan[data.id] || data.status;
-
-        let statusHTML = "";
-        let teksTombol = "";
-
-        if (statusSekarang === "Selesai") {
-
-            statusHTML = `<span class="status status-selesai">✓ Selesai</span>`;
-            teksTombol = "↩ Tandai Belum Selesai";
-
-        } else {
-
-            statusHTML = `<span class="status">Belum Selesai</span>`;
-            teksTombol = "✓ Tandai Selesai";
-
-        }
-
-        hasil += `
-            <div class="kartu-tugas">
-
-                <span class="label-contoh">CONTOH DATA</span>
-
-                <p>${data.mapel}</p>
-
-                <h3>${index + 1}. ${data.nama}</h3>
-
-                <p>${data.keterangan}</p>
-
-                <p>📅 Batas: ${data.batas}</p>
-
-                ${statusHTML}
-
-                <button class="tombol-status"
-                onclick="ubahStatusTugas('${data.id}')">
-                    ${teksTombol}
-                </button>
-
-            </div>
-        `;
-
-    });
-
-    tempat.innerHTML = hasil;
-
-}
-
-
-/* JALANKAN SAAT APLIKASI PERTAMA DIBUKA */
-
-tampilkanPengumumanTerbaru();
+perbaruiTombolTema();
+tampilkanBeranda();
 
 </script>
-
 </body>
-
 </html>
