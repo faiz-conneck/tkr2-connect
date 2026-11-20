@@ -1,0 +1,938 @@
+<!DOCTYPE html>
+
+<html lang="id">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>TKR 2 CONNECT</title>
+
+<style>
+
+* { box-sizing: border-box; }
+
+body {
+    margin: 0;
+    background: #111111;
+    color: white;
+    font-family: Arial, sans-serif;
+}
+
+.container { padding: 20px; }
+
+/* HEADER */
+.header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.logo {
+    background: #d71935;
+    width: 50px;
+    height: 50px;
+    border-radius: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 22px;
+    font-weight: bold;
+    margin-right: 12px;
+}
+
+.nama { font-size: 18px; font-weight: bold; }
+.kelas { color: #aaaaaa; font-size: 12px; margin-top: 5px; }
+
+/* JUDUL */
+.judul { font-size: 25px; }
+.deskripsi { color: #aaaaaa; font-size: 14px; }
+
+/* KARTU */
+.kartu {
+    background: #222222;
+    border-radius: 15px;
+    padding: 18px;
+    margin-top: 20px;
+}
+
+.kartu-jadwal { background: #d71935; }
+
+/* MENU */
+.menu {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-top: 20px;
+}
+
+.menu-item {
+    background: #222222;
+    padding: 20px;
+    border-radius: 15px;
+    text-align: center;
+    border: none;
+    color: white;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.menu-item:active { background: #d71935; }
+
+.menu-lebar { grid-column: span 2; }
+
+.ikon { font-size: 30px; margin-bottom: 10px; }
+
+/* HALAMAN */
+.halaman { display: none; }
+.halaman.aktif { display: block; }
+
+/* TOMBOL HARI */
+.hari-button {
+    background: #222222;
+    color: white;
+    border: 1px solid #444444;
+    padding: 12px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.hari-button.aktif {
+    background: #d71935;
+    border-color: #d71935;
+}
+
+/* DAFTAR JADWAL */
+.daftar-mapel { margin-top: 20px; }
+
+.kartu-mapel {
+    background: #222222;
+    padding: 18px;
+    border-radius: 12px;
+    margin-top: 12px;
+}
+
+.kartu-mapel h3 { font-size: 16px; }
+.kartu-mapel p { color: #aaaaaa; font-size: 14px; }
+
+/* JADWAL PIKET */
+.kartu-piket {
+    background: #222222;
+    padding: 14px 18px;
+    border-radius: 12px;
+    margin-top: 10px;
+    border-left: 4px solid #d71935;
+    font-size: 15px;
+}
+
+.label-contoh {
+    color: #ff7777;
+    font-size: 11px;
+    font-weight: bold;
+}
+
+/* HALAMAN TUGAS */
+.kartu-tugas {
+    background: #222222;
+    padding: 18px;
+    border-radius: 13px;
+    margin-top: 15px;
+    border-left: 4px solid #d71935;
+}
+
+.kartu-tugas h3 { font-size: 17px; margin-top: 5px; }
+
+.kartu-tugas p {
+    color: #bbbbbb;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.status {
+    display: inline-block;
+    background: #664b16;
+    color: #ffd66b;
+    padding: 6px 10px;
+    border-radius: 20px;
+    font-size: 11px;
+    margin-top: 5px;
+}
+
+.status-selesai {
+    background: #164d2c;
+    color: #8affad;
+}
+
+/* TOMBOL TANDAI SELESAI */
+.tombol-status {
+    display: block;
+    background: #333333;
+    color: white;
+    border: 1px solid #555555;
+    padding: 8px 12px;
+    border-radius: 8px;
+    margin-top: 12px;
+    font-size: 13px;
+    cursor: pointer;
+}
+
+/* PENGUMUMAN */
+.kartu-pengumuman {
+    background: #222222;
+    padding: 18px;
+    border-radius: 13px;
+    margin-top: 15px;
+    border-left: 4px solid #d71935;
+}
+
+.kartu-pengumuman h3 { font-size: 17px; margin: 8px 0 6px 0; }
+
+.kartu-pengumuman p {
+    color: #bbbbbb;
+    font-size: 14px;
+    line-height: 1.5;
+    margin: 6px 0;
+}
+
+.info-pengumuman { color: #888888; font-size: 12px; }
+
+.label-penting {
+    display: inline-block;
+    background: #d71935;
+    color: white;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: bold;
+}
+
+.kosong {
+    background: #222222;
+    padding: 25px;
+    border-radius: 13px;
+    text-align: center;
+    color: #aaaaaa;
+    margin-top: 20px;
+}
+
+/* TOMBOL KEMBALI */
+.tombol-kembali {
+    background: #d71935;
+    color: white;
+    border: none;
+    padding: 12px 18px;
+    border-radius: 10px;
+    margin-top: 20px;
+    cursor: pointer;
+}
+
+/* FOOTER */
+.footer {
+    text-align: center;
+    color: #777777;
+    margin-top: 35px;
+    font-size: 12px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<!-- HEADER -->
+<div class="header">
+    <div class="logo">T2</div>
+    <div>
+        <div class="nama">TKR 2 CONNECT</div>
+        <div class="kelas">X TKR 2</div>
+    </div>
+</div>
+
+
+<!-- BERANDA -->
+<div id="beranda" class="halaman aktif">
+
+    <!-- Pengumuman baru muncul di paling atas -->
+    <div id="pengumuman-terbaru"></div>
+
+    <h1 class="judul">Selamat Datang!</h1>
+
+    <p class="deskripsi">
+        Pusat informasi dan komunikasi kelas X TKR 2.
+    </p>
+
+    <div class="kartu">
+        <h3>👤 Profil Siswa</h3>
+        <p>Nama: M. Fais</p>
+        <p>Kelas: X TKR 2</p>
+        <p>Status: Siswa</p>
+    </div>
+
+    <div class="kartu kartu-jadwal">
+        <h3>📅 Jadwal Pelajaran</h3>
+        <p>Informasi pembelajaran kelas X TKR 2.</p>
+    </div>
+
+    <h3>Menu Utama</h3>
+
+    <div class="menu">
+
+        <button class="menu-item" onclick="bukaHalaman('jadwal')">
+            <div class="ikon">📅</div>
+            Jadwal
+        </button>
+
+        <button class="menu-item" onclick="bukaHalaman('tugas')">
+            <div class="ikon">📚</div>
+            Tugas
+        </button>
+
+        <button class="menu-item" onclick="bukaHalaman('piket')">
+            <div class="ikon">🧹</div>
+            Jadwal Piket
+        </button>
+
+        <button class="menu-item" onclick="bukaHalaman('pengumuman')">
+            <div class="ikon">📢</div>
+            Pengumuman
+        </button>
+
+        <button class="menu-item menu-lebar" onclick="bukaHalaman('chat')">
+            <div class="ikon">💬</div>
+            Chat Kelas
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- HALAMAN JADWAL -->
+<div id="jadwal" class="halaman">
+
+    <h1>📅 Jadwal Pelajaran</h1>
+
+    <p class="deskripsi">Jadwal pembelajaran X TKR 2</p>
+
+    <div class="menu">
+        <button class="hari-button" data-hari="senin" onclick="tampilkanJadwal('senin')">Senin</button>
+        <button class="hari-button" data-hari="selasa" onclick="tampilkanJadwal('selasa')">Selasa</button>
+        <button class="hari-button" data-hari="rabu" onclick="tampilkanJadwal('rabu')">Rabu</button>
+        <button class="hari-button" data-hari="kamis" onclick="tampilkanJadwal('kamis')">Kamis</button>
+        <button class="hari-button" data-hari="jumat" onclick="tampilkanJadwal('jumat')">Jumat</button>
+        <button class="hari-button" data-hari="sabtu" onclick="tampilkanJadwal('sabtu')">Sabtu</button>
+    </div>
+
+    <div id="isi-jadwal" class="daftar-mapel"></div>
+
+    <button class="tombol-kembali" onclick="beranda()">← Kembali</button>
+
+</div>
+
+
+<!-- HALAMAN PIKET -->
+<div id="piket" class="halaman">
+
+    <h1>🧹 Jadwal Piket</h1>
+
+    <p class="deskripsi">Jadwal piket kelas X TKR 2</p>
+
+    <div class="menu">
+        <button class="hari-button" data-hari="senin" onclick="tampilkanPiket('senin')">Senin</button>
+        <button class="hari-button" data-hari="selasa" onclick="tampilkanPiket('selasa')">Selasa</button>
+        <button class="hari-button" data-hari="rabu" onclick="tampilkanPiket('rabu')">Rabu</button>
+        <button class="hari-button" data-hari="kamis" onclick="tampilkanPiket('kamis')">Kamis</button>
+        <button class="hari-button" data-hari="jumat" onclick="tampilkanPiket('jumat')">Jumat</button>
+        <button class="hari-button" data-hari="sabtu" onclick="tampilkanPiket('sabtu')">Sabtu</button>
+    </div>
+
+    <div id="isi-piket" class="daftar-mapel"></div>
+
+    <button class="tombol-kembali" onclick="beranda()">← Kembali</button>
+
+</div>
+
+
+<!-- HALAMAN TUGAS -->
+<div id="tugas" class="halaman">
+
+    <h1>📚 Daftar Tugas</h1>
+
+    <p class="deskripsi">Informasi tugas siswa kelas X TKR 2.</p>
+
+    <div id="daftar-tugas"></div>
+
+    <button class="tombol-kembali" onclick="beranda()">← Kembali</button>
+
+</div>
+
+
+<!-- HALAMAN PENGUMUMAN -->
+<div id="pengumuman" class="halaman">
+
+    <h1>📢 Pengumuman</h1>
+
+    <div id="daftar-pengumuman"></div>
+
+    <button class="tombol-kembali" onclick="beranda()">← Kembali</button>
+
+</div>
+
+
+<!-- HALAMAN CHAT -->
+<div id="chat" class="halaman">
+
+    <h1>💬 Chat Kelas</h1>
+
+    <div class="kartu">
+        <h3>Ruang Komunikasi</h3>
+        <p>Fitur chat akan dikembangkan nanti.</p>
+    </div>
+
+    <button class="tombol-kembali" onclick="beranda()">← Kembali</button>
+
+</div>
+
+
+<!-- FOOTER -->
+<div class="footer">TKR 2 CONNECT © 2026</div>
+
+</div>
+
+
+<!-- JAVASCRIPT -->
+<script>
+
+/* DATA JADWAL PELAJARAN */
+
+const jadwal = {
+
+    senin: [
+        { mapel: "Dasar-Dasar Kompetensi Kealian (DDKK)", guru: "RAMLI TIRO" },
+        { mapel: "Matematika", guru: "NURAENI" }
+    ],
+
+    selasa: [
+        { mapel: "PJOK", guru: "HERNI" },
+        { mapel: "Pendidikan Agama Islam (PAI)", guru: "SUHARNI" },
+        { mapel: "Ilmu Pengetahuan ALAM & SOSIAL (IPAS)", guru: "Nunung" }
+    ],
+
+    rabu: [
+        { mapel: "Dasar-Dasar Kompetensi keahlian (DDKK)", guru: "Dr rusik" },
+        { mapel: "Bahasa Indonesia", guru: "Nurbaya" }
+    ],
+
+    kamis: [
+        { mapel: "Sejarah", guru: "Fira" },
+        { mapel: "Seni Budaya dan Keterampilan", guru: "Tasya" },
+        { mapel: "Ilmu Pengetahuan ALAM & SOSIAL (IPAS)", guru: "Nunung" }
+    ],
+
+    jumat: [
+        { mapel: "Bahasa Inggris", guru: "Hasna" },
+        { mapel: "Koding dan Kecerdasan Artifisial (KKA)", guru: "H.Syarlinda" }
+    ],
+
+    sabtu: [
+        { mapel: "Informatika", guru: "Nama Guru Informatika" },
+        { mapel: "PPKn", guru: "Wahyudin" },
+        { mapel: "Dasar-Dasar Kompetensi Keahlian (DDKK)", guru: "Tadris ulum" }
+    ]
+
+};
+
+
+/* DATA JADWAL PIKET
+   Mau tambah orang? Tambahkan satu nama lagi di dalam [ ].
+*/
+
+const jadwalPiket = {
+
+    senin:  ["FAHMI", "JUSRI", "nama"],
+
+    selasa: ["Andika", "jusri", "AFIQ"],
+
+    rabu:   ["ASRAF", "KHAIRIL", "ADNAN"],
+
+    kamis:  ["AZHAR", "SAIFUL", "AMAR"],
+
+    jumat:  ["FAIZ", "ZULL", "IKSAN"],
+
+    sabtu:  ["BAKSOS"]
+
+};
+
+
+/* DATA PENGUMUMAN
+   - Yang PALING BARU taruh di PALING ATAS.
+   - Setiap pengumuman WAJIB punya id yang berbeda
+     (dipakai untuk mengingat mana yang sudah dibuka).
+   - penting: true  -> muncul label merah "Penting"
+*/
+
+const daftarPengumuman = [
+
+    {
+        id: "p-2",
+        judul: "Contoh: Rapat Kelas",
+        isi: "Rapat kelas X TKR 2 akan dibahas bersama wali kelas.",
+        tanggal: "20 November 2026",
+        pembuat: "Admin",
+        penting: true
+    },
+
+    {
+        id: "p-1",
+        judul: "Contoh: Piket Hari Sabtu",
+        isi: "Piket hari Sabtu adalah bakti sosial, harap hadir tepat waktu.",
+        tanggal: "18 November 2026",
+        pembuat: "Admin",
+        penting: false
+    }
+
+];
+
+
+/* DATA TUGAS
+   Setiap tugas WAJIB punya id yang berbeda.
+*/
+
+const daftarTugas = [
+
+    {
+        id: "ddkk-1",
+        mapel: "DDKK",
+        nama: "Contoh Tugas DDKK",
+        keterangan: "Tuliskan contoh komponen kendaraan dan fungsinya.",
+        batas: "Contoh: 25 November 2026",
+        status: "Belum selesai"
+    },
+
+    {
+        id: "bina-1",
+        mapel: "Bahasa Indonesia",
+        nama: "Contoh Tugas Bahasa Indonesia",
+        keterangan: "Buat rangkuman materi yang telah dipelajari.",
+        batas: "Contoh: 27 November 2026",
+        status: "Selesai"
+    }
+
+];
+
+
+/* FUNGSI BANTU: MENGAMBIL HARI INI
+   getDay(): 0 = Minggu, 1 = Senin, ... 6 = Sabtu.
+   Hari Minggu dialihkan ke Senin karena tidak ada jadwal.
+*/
+
+function hariIni() {
+
+    const namaHari = ["minggu", "senin", "selasa", "rabu",
+                      "kamis", "jumat", "sabtu"];
+
+    let hari = namaHari[new Date().getDay()];
+
+    if (hari === "minggu") {
+        hari = "senin";
+    }
+
+    return hari;
+
+}
+
+
+/* FUNGSI BANTU: MENYALAKAN TOMBOL HARI YANG DIPILIH
+   idHalaman = "jadwal" atau "piket"
+*/
+
+function aktifkanTombolHari(idHalaman, hari) {
+
+    document.querySelectorAll("#" + idHalaman + " .hari-button")
+    .forEach(function(tombol) {
+
+        if (tombol.dataset.hari === hari) {
+            tombol.classList.add("aktif");
+        } else {
+            tombol.classList.remove("aktif");
+        }
+
+    });
+
+}
+
+
+/* FUNGSI NAVIGASI */
+
+function bukaHalaman(nama) {
+
+    document.querySelectorAll(".halaman").forEach(function(item) {
+        item.classList.remove("aktif");
+    });
+
+    document.getElementById(nama).classList.add("aktif");
+
+    if (nama === "tugas") {
+        tampilkanTugas();
+    }
+
+    if (nama === "jadwal") {
+        tampilkanJadwal(hariIni());
+    }
+
+    if (nama === "piket") {
+        tampilkanPiket(hariIni());
+    }
+
+    if (nama === "pengumuman") {
+        tampilkanPengumuman();
+    }
+
+    if (nama === "beranda") {
+        tampilkanPengumumanTerbaru();
+    }
+
+    window.scrollTo(0, 0);
+
+}
+
+
+/* FUNGSI KEMBALI */
+
+function beranda() {
+    bukaHalaman("beranda");
+}
+
+
+/* FUNGSI MENAMPILKAN JADWAL */
+
+function tampilkanJadwal(hari) {
+
+    let isi = document.getElementById("isi-jadwal");
+
+    let daftar = jadwal[hari];
+
+    let hasil = "<h3>Hari " +
+        hari.charAt(0).toUpperCase() +
+        hari.slice(1) + "</h3>";
+
+    daftar.forEach(function(data, index) {
+
+        hasil += `
+            <div class="kartu-mapel">
+                <h3>${index + 1}. ${data.mapel}</h3>
+                <p>👨‍🏫 Guru: ${data.guru}</p>
+            </div>
+        `;
+
+    });
+
+    isi.innerHTML = hasil;
+
+    aktifkanTombolHari("jadwal", hari);
+
+}
+
+
+/* FUNGSI MENAMPILKAN JADWAL PIKET */
+
+function tampilkanPiket(hari) {
+
+    let isi = document.getElementById("isi-piket");
+
+    let daftar = jadwalPiket[hari];
+
+    let hasil = "<h3>Piket Hari " +
+        hari.charAt(0).toUpperCase() +
+        hari.slice(1) + "</h3>";
+
+    if (daftar.length === 0) {
+
+        hasil += `
+            <div class="kosong">
+                Belum ada petugas piket di hari ini.
+            </div>
+        `;
+
+    }
+
+    daftar.forEach(function(nama, index) {
+
+        hasil += `
+            <div class="kartu-piket">
+                ${index + 1}. 🧹 ${nama}
+            </div>
+        `;
+
+    });
+
+    isi.innerHTML = hasil;
+
+    aktifkanTombolHari("piket", hari);
+
+}
+
+
+/* PENYIMPANAN STATUS TUGAS
+   localStorage = memori kecil di HP untuk menyimpan data.
+*/
+
+function ambilStatusTersimpan() {
+
+    try {
+        return JSON.parse(localStorage.getItem("statusTugas")) || {};
+    } catch (e) {
+        return {};
+    }
+
+}
+
+function ubahStatusTugas(id) {
+
+    let tugas = daftarTugas.find(function(t) {
+        return t.id === id;
+    });
+
+    let tersimpan = ambilStatusTersimpan();
+
+    let sekarang = tersimpan[id] || tugas.status;
+
+    if (sekarang === "Selesai") {
+        tersimpan[id] = "Belum selesai";
+    } else {
+        tersimpan[id] = "Selesai";
+    }
+
+    try {
+        localStorage.setItem("statusTugas", JSON.stringify(tersimpan));
+    } catch (e) {}
+
+    tampilkanTugas();
+
+}
+
+
+/* PENYIMPANAN PENGUMUMAN YANG SUDAH DIBUKA */
+
+function ambilPengumumanDibaca() {
+
+    try {
+        return JSON.parse(localStorage.getItem("pengumumanDibaca")) || [];
+    } catch (e) {
+        return [];
+    }
+
+}
+
+/* Dipanggil saat kartu pengumuman di Beranda diketuk:
+   tandai semua pengumuman sudah dibaca, lalu buka halamannya. */
+
+function bukaPengumumanDariBeranda() {
+
+    let semuaId = daftarPengumuman.map(function(p) {
+        return p.id;
+    });
+
+    try {
+        localStorage.setItem("pengumumanDibaca", JSON.stringify(semuaId));
+    } catch (e) {}
+
+    bukaHalaman("pengumuman");
+
+}
+
+
+/* FUNGSI MENAMPILKAN SEMUA PENGUMUMAN */
+
+
+function tampilkanPengumuman() {
+
+    let tempat = document.getElementById("daftar-pengumuman");
+
+    if (daftarPengumuman.length === 0) {
+
+        tempat.innerHTML = `
+            <div class="kosong">
+                <h3>📭 Belum Ada Pengumuman</h3>
+                <p>Pengumuman terbaru akan tampil di sini.</p>
+            </div>
+        `;
+
+        return;
+
+    }
+
+    let hasil = "";
+
+    daftarPengumuman.forEach(function(data) {
+
+        let labelPenting = data.penting
+            ? `<span class="label-penting">❗ Penting</span>`
+            : "";
+
+        hasil += `
+            <div class="kartu-pengumuman">
+
+                ${labelPenting}
+
+                <h3>${data.judul}</h3>
+
+                <p>${data.isi}</p>
+
+                <p class="info-pengumuman">
+                    📅 ${data.tanggal} • ✍️ ${data.pembuat}
+                </p>
+
+            </div>
+        `;
+
+    });
+
+    tempat.innerHTML = hasil;
+
+}
+
+
+/* FUNGSI PENGUMUMAN BARU DI BERANDA
+   Hanya menampilkan pengumuman yang BELUM dibuka.
+   Kalau semua sudah dibuka, kartunya hilang.
+*/
+
+function tampilkanPengumumanTerbaru() {
+
+    let tempat = document.getElementById("pengumuman-terbaru");
+
+    let dibaca = ambilPengumumanDibaca();
+
+    let belumDibaca = daftarPengumuman.filter(function(p) {
+        return !dibaca.includes(p.id);
+    });
+
+    if (belumDibaca.length === 0) {
+
+        tempat.innerHTML = "";
+
+        return;
+
+    }
+
+    let data = belumDibaca[0];
+
+    let infoLain = "";
+
+    if (belumDibaca.length > 1) {
+
+        infoLain = `
+            <p class="info-pengumuman">
+                +${belumDibaca.length - 1} pengumuman lainnya
+            </p>
+        `;
+
+    }
+
+    tempat.innerHTML = `
+        <div class="kartu-pengumuman"
+        onclick="bukaPengumumanDariBeranda()">
+
+            <span class="label-penting">🔔 baru</span>
+
+            <h3>${data.judul}</h3>
+
+            ${infoLain}
+
+            <p class="info-pengumuman">
+                Ketuk untuk membuka pengumuman
+            </p>
+
+        </div>
+    `;
+
+}
+
+
+/* FUNGSI MENAMPILKAN TUGAS */
+
+function tampilkanTugas() {
+
+    let tempat = document.getElementById("daftar-tugas");
+
+    if (daftarTugas.length === 0) {
+
+        tempat.innerHTML = `
+            <div class="kosong">
+                <h3>📭 Belum Ada Tugas</h3>
+                <p>Tugas dari guru akan ditampilkan di halaman ini.</p>
+            </div>
+        `;
+
+        return;
+
+    }
+
+    let tersimpan = ambilStatusTersimpan();
+
+    let hasil = "";
+
+    daftarTugas.forEach(function(data, index) {
+
+        let statusSekarang = tersimpan[data.id] || data.status;
+
+        let statusHTML = "";
+        let teksTombol = "";
+
+        if (statusSekarang === "Selesai") {
+
+            statusHTML = `<span class="status status-selesai">✓ Selesai</span>`;
+            teksTombol = "↩ Tandai Belum Selesai";
+
+        } else {
+
+            statusHTML = `<span class="status">Belum Selesai</span>`;
+            teksTombol = "✓ Tandai Selesai";
+
+        }
+
+        hasil += `
+            <div class="kartu-tugas">
+
+                <span class="label-contoh">CONTOH DATA</span>
+
+                <p>${data.mapel}</p>
+
+                <h3>${index + 1}. ${data.nama}</h3>
+
+                <p>${data.keterangan}</p>
+
+                <p>📅 Batas: ${data.batas}</p>
+
+                ${statusHTML}
+
+                <button class="tombol-status"
+                onclick="ubahStatusTugas('${data.id}')">
+                    ${teksTombol}
+                </button>
+
+            </div>
+        `;
+
+    });
+
+    tempat.innerHTML = hasil;
+
+}
+
+
+/* JALANKAN SAAT APLIKASI PERTAMA DIBUKA */
+
+tampilkanPengumumanTerbaru();
+
+</script>
+
+</body>
+
+</html>
