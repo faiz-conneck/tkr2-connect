@@ -321,7 +321,6 @@ h1 { font-size: 22px; margin: 0 0 6px 0; }
 .kartu-tugas p, .kartu-pengumuman p {
     color: var(--teks2); font-size: 14px; line-height: 1.5; margin: 6px 0;
 }
-.label-contoh { color: var(--emas-teks); font-size: 11px; font-weight: bold; }
 .status {
     display: inline-block;
     background: rgba(240, 185, 74, 0.18); color: var(--emas-teks);
@@ -362,6 +361,55 @@ h1 { font-size: 22px; margin: 0 0 6px 0; }
     margin-top: 22px; cursor: pointer; font-size: 14px;
 }
 
+/* ADMIN */
+.input-admin {
+    display: block;
+    width: 100%;
+    margin-top: 8px;
+    padding: 12px 14px;
+    border-radius: 10px;
+    border: 1px solid var(--garis2);
+    background: var(--kartu);
+    color: var(--teks);
+    font-size: 14px;
+    font-family: Arial, sans-serif;
+}
+textarea.input-admin { min-height: 90px; resize: vertical; }
+.tombol-utama {
+    background: var(--biru);
+    color: #ffffff; border: none;
+    padding: 12px 18px; border-radius: 10px;
+    margin-top: 12px; cursor: pointer; font-size: 14px;
+}
+.tombol-keluar {
+    background: var(--kartu2);
+    color: var(--teks);
+    border: 1px solid var(--garis2);
+    padding: 12px 18px; border-radius: 10px;
+    margin-top: 26px; cursor: pointer; font-size: 14px;
+}
+.tombol-hapus {
+    background: rgba(238, 138, 124, 0.18);
+    color: var(--koral);
+    border: 1px solid var(--koral);
+    padding: 8px 12px; border-radius: 8px;
+    font-size: 12px; cursor: pointer; flex-shrink: 0;
+}
+.kelola-item {
+    display: flex; justify-content: space-between; align-items: center;
+    gap: 10px;
+    padding: 12px 14px; margin-top: 8px;
+    background: var(--kartu);
+    border: 1px solid var(--garis);
+    border-radius: 10px;
+    font-size: 14px;
+}
+.pesan-admin { color: var(--emas-teks); font-size: 13px; margin-top: 12px; min-height: 18px; }
+.cek-penting {
+    display: flex; align-items: center; gap: 8px;
+    margin-top: 10px; font-size: 14px; color: var(--teks2);
+}
+
 .footer { text-align: center; color: var(--redup); margin-top: 35px; font-size: 12px; }
 
 /* Hormati pengguna yang mematikan animasi di HP-nya */
@@ -389,7 +437,8 @@ h1 { font-size: 22px; margin: 0 0 6px 0; }
         <div class="nama">TKR <span class="emas">2</span> CONNECT</div>
         <div class="kelas">X TKR 2</div>
     </div>
-    <button class="tema" id="tombol-tema" onclick="gantiTema()" aria-label="Ganti tema">☀️</button>
+    <button class="tema" id="tombol-admin" onclick="bukaHalaman('admin')" aria-label="Admin">🔐</button>
+    <button class="tema" id="tombol-tema" style="margin-left: 8px;" onclick="gantiTema()" aria-label="Ganti tema">☀️</button>
 </div>
 
 <!-- BERANDA -->
@@ -491,6 +540,49 @@ h1 { font-size: 22px; margin: 0 0 6px 0; }
     <button class="tombol-kembali" onclick="beranda()">← Kembali</button>
 </div>
 
+<!-- HALAMAN ADMIN -->
+<div id="admin" class="halaman">
+    <h1>🔐 Admin</h1>
+
+    <!-- Tampil kalau belum masuk -->
+    <div id="admin-login">
+        <p class="deskripsi">Masuk untuk menambah atau menghapus pengumuman dan tugas.</p>
+        <input class="input-admin" type="email" id="admin-email-input" placeholder="Email admin" autocomplete="username">
+        <input class="input-admin" type="password" id="admin-sandi" placeholder="Password" autocomplete="current-password">
+        <button class="tombol-utama" onclick="masukAdmin()">Masuk</button>
+    </div>
+
+    <!-- Tampil kalau sudah masuk sebagai admin -->
+    <div id="admin-panel" style="display: none;">
+        <p class="deskripsi">Masuk sebagai: <span id="admin-info"></span></p>
+
+        <h3 class="judul-bagian">Tambah Pengumuman</h3>
+        <input class="input-admin" type="text" id="in-judul" placeholder="Judul pengumuman">
+        <textarea class="input-admin" id="in-isi" placeholder="Isi pengumuman"></textarea>
+        <input class="input-admin" type="text" id="in-pembuat" placeholder="Pembuat (kosongkan = Admin)">
+        <label class="cek-penting"><input type="checkbox" id="in-penting"> Tandai sebagai penting</label>
+        <button class="tombol-utama" onclick="simpanPengumuman()">Simpan Pengumuman</button>
+
+        <h3 class="judul-bagian">Tambah Tugas</h3>
+        <input class="input-admin" type="text" id="in-mapel" placeholder="Mata pelajaran">
+        <input class="input-admin" type="text" id="in-nama" placeholder="Nama tugas">
+        <textarea class="input-admin" id="in-keterangan" placeholder="Keterangan tugas"></textarea>
+        <input class="input-admin" type="text" id="in-batas" placeholder="Batas pengumpulan (misal 28 November 2026)">
+        <button class="tombol-utama" onclick="simpanTugas()">Simpan Tugas</button>
+
+        <h3 class="judul-bagian">Hapus Pengumuman</h3>
+        <div id="kelola-pengumuman"></div>
+
+        <h3 class="judul-bagian">Hapus Tugas</h3>
+        <div id="kelola-tugas"></div>
+
+        <button class="tombol-keluar" onclick="keluarAdmin()">Keluar dari Admin</button>
+    </div>
+
+    <p class="pesan-admin" id="admin-pesan"></p>
+    <button class="tombol-kembali" onclick="beranda()">← Kembali</button>
+</div>
+
 <div class="footer">TKR 2 CONNECT © 2026</div>
 
 </div>
@@ -498,6 +590,7 @@ h1 { font-size: 22px; margin: 0 0 6px 0; }
 <!-- ALAT FIREBASE: supaya halaman bisa membaca database Firestore -->
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
 
 <script>
 
@@ -601,10 +694,6 @@ function muatPengumuman() {
 
     try {
 
-        firebase.initializeApp(firebaseConfig);
-
-        const db = firebase.firestore();
-
         db.collection("pengumuman")
           .orderBy("urutan", "desc")
           .onSnapshot(function(hasilBaca) {
@@ -628,6 +717,8 @@ function muatPengumuman() {
 
             daftarPengumuman = baru;
 
+            tampilkanKelolaAdmin();
+
             tampilkanPengumumanTerbaru();
 
             if (document.getElementById("pengumuman").classList.contains("aktif")) {
@@ -645,29 +736,355 @@ function muatPengumuman() {
 }
 
 
-/* DATA TUGAS. Setiap id harus berbeda. */
+/* DATA TUGAS
+   Awalnya kosong. Isinya diambil dari Firestore (koleksi "tugas").
+   Status selesai / belum tetap disimpan di HP masing-masing siswa. */
 
-const daftarTugas = [
+let daftarTugas = [];
 
-    {
-        id: "ddkk-1",
-        mapel: "DDKK",
-        nama: "Contoh Tugas DDKK",
-        keterangan: "Tuliskan contoh komponen kendaraan dan fungsinya.",
-        batas: "Contoh: 25 November 2026",
-        status: "Belum selesai"
-    },
 
-    {
-        id: "bina-1",
-        mapel: "Bahasa Indonesia",
-        nama: "Contoh Tugas Bahasa Indonesia",
-        keterangan: "Buat rangkuman materi yang telah dipelajari.",
-        batas: "Contoh: 27 November 2026",
-        status: "Selesai"
+/* MEMBACA TUGAS DARI FIRESTORE */
+
+function muatTugas() {
+
+    try {
+
+        db.collection("tugas")
+          .orderBy("urutan", "desc")
+          .onSnapshot(function(hasilBaca) {
+
+            let baru = [];
+
+            hasilBaca.forEach(function(dok) {
+
+                let d = dok.data();
+
+                baru.push({
+                    id: dok.id,
+                    mapel: d.mapel,
+                    nama: d.nama,
+                    keterangan: d.keterangan,
+                    batas: d.batas,
+                    status: "Belum selesai"
+                });
+
+            });
+
+            daftarTugas = baru;
+
+            tampilkanKelolaAdmin();
+
+            if (document.getElementById("tugas").classList.contains("aktif")) {
+                tampilkanTugas();
+            }
+
+        }, function(error) {
+            console.log("Gagal membaca tugas:", error);
+        });
+
+    } catch (e) {
+        console.log("Firebase belum siap:", e);
     }
 
-];
+}
+
+
+/* MENYALAKAN FIREBASE (sekali saja), lalu memuat semua data */
+
+let db = null;
+
+function mulaiFirebase() {
+
+    try {
+
+        firebase.initializeApp(firebaseConfig);
+
+        db = firebase.firestore();
+
+        muatPengumuman();
+        muatTugas();
+
+    } catch (e) {
+        console.log("Firebase belum siap:", e);
+    }
+
+    /* Login admin dinyalakan terpisah. Kalau gagal (misalnya
+       dibuka dari TrebEdit), data tetap tampil seperti biasa. */
+
+    try {
+
+        auth = firebase.auth();
+
+        auth.onAuthStateChanged(function() {
+            perbaruiTampilanAdmin();
+        });
+
+    } catch (e) {
+        console.log("Login admin belum siap:", e);
+    }
+
+}
+
+
+/* ADMIN: LOGIN, TAMBAH, DAN HAPUS DATA
+   Hanya akun dengan UID di bawah ini yang dianggap admin.
+   Aturan Firestore juga memeriksa UID yang sama, jadi
+   orang lain tidak bisa mengubah data walau membuka kode ini. */
+
+const UID_ADMIN = "SQvYZXHKIUVGA51YXllzXVoRmSQ2";
+
+let auth = null;
+
+function adalahAdmin() {
+    return auth !== null
+        && auth.currentUser !== null
+        && auth.currentUser.uid === UID_ADMIN;
+}
+
+function ambilNilai(id) {
+    return document.getElementById(id).value.trim();
+}
+
+function pesanAdmin(teks) {
+    document.getElementById("admin-pesan").textContent = teks;
+}
+
+function perbaruiTampilanAdmin() {
+
+    let masuk = adalahAdmin();
+
+    document.getElementById("admin-login").style.display = masuk ? "none" : "block";
+    document.getElementById("admin-panel").style.display = masuk ? "block" : "none";
+
+    document.getElementById("tombol-admin").textContent = masuk ? "🔓" : "🔐";
+
+    if (masuk) {
+        document.getElementById("admin-info").textContent = auth.currentUser.email;
+        tampilkanKelolaAdmin();
+    }
+
+}
+
+function masukAdmin() {
+
+    if (auth === null) {
+        pesanAdmin("Login belum siap. Buka aplikasi lewat link web (bukan TrebEdit) dan periksa internet.");
+        return;
+    }
+
+    let email = ambilNilai("admin-email-input");
+    let sandi = document.getElementById("admin-sandi").value;
+
+    if (email === "" || sandi === "") {
+        pesanAdmin("Isi email dan password dulu.");
+        return;
+    }
+
+    pesanAdmin("Sedang masuk...");
+
+    auth.signInWithEmailAndPassword(email, sandi)
+    .then(function(hasil) {
+
+        if (hasil.user.uid !== UID_ADMIN) {
+            auth.signOut();
+            pesanAdmin("Akun ini bukan admin.");
+            return;
+        }
+
+        document.getElementById("admin-sandi").value = "";
+        pesanAdmin("");
+
+    })
+    .catch(function(error) {
+        console.log("Gagal masuk:", error);
+        pesanAdmin("Gagal masuk. Cek email dan password.");
+    });
+
+}
+
+function keluarAdmin() {
+
+    if (auth === null) { return; }
+
+    auth.signOut().then(function() {
+        pesanAdmin("Kamu sudah keluar.");
+    });
+
+}
+
+function simpanPengumuman() {
+
+    if (!adalahAdmin()) {
+        pesanAdmin("Masuk sebagai admin dulu.");
+        return;
+    }
+
+    let judul = ambilNilai("in-judul");
+    let isi = ambilNilai("in-isi");
+    let pembuat = ambilNilai("in-pembuat");
+
+    if (judul === "" || isi === "") {
+        pesanAdmin("Judul dan isi pengumuman harus diisi.");
+        return;
+    }
+
+    if (pembuat === "") { pembuat = "Admin"; }
+
+    let tanggal = new Date().toLocaleDateString("id-ID", {
+        day: "numeric",
+        month: "long",
+        year: "numeric"
+    });
+
+    pesanAdmin("Menyimpan...");
+
+    db.collection("pengumuman").add({
+        judul: judul,
+        isi: isi,
+        tanggal: tanggal,
+        pembuat: pembuat,
+        penting: document.getElementById("in-penting").checked,
+        urutan: Date.now()
+    })
+    .then(function() {
+
+        document.getElementById("in-judul").value = "";
+        document.getElementById("in-isi").value = "";
+        document.getElementById("in-pembuat").value = "";
+        document.getElementById("in-penting").checked = false;
+
+        pesanAdmin("Pengumuman tersimpan ✅");
+
+    })
+    .catch(function(error) {
+        console.log("Gagal menyimpan pengumuman:", error);
+        pesanAdmin("Gagal menyimpan. Cek aturan Firestore dan internet.");
+    });
+
+}
+
+function simpanTugas() {
+
+    if (!adalahAdmin()) {
+        pesanAdmin("Masuk sebagai admin dulu.");
+        return;
+    }
+
+    let mapel = ambilNilai("in-mapel");
+    let nama = ambilNilai("in-nama");
+    let keterangan = ambilNilai("in-keterangan");
+    let batas = ambilNilai("in-batas");
+
+    if (mapel === "" || nama === "") {
+        pesanAdmin("Mata pelajaran dan nama tugas harus diisi.");
+        return;
+    }
+
+    pesanAdmin("Menyimpan...");
+
+    db.collection("tugas").add({
+        mapel: mapel,
+        nama: nama,
+        keterangan: keterangan,
+        batas: batas,
+        urutan: Date.now()
+    })
+    .then(function() {
+
+        document.getElementById("in-mapel").value = "";
+        document.getElementById("in-nama").value = "";
+        document.getElementById("in-keterangan").value = "";
+        document.getElementById("in-batas").value = "";
+
+        pesanAdmin("Tugas tersimpan ✅");
+
+    })
+    .catch(function(error) {
+        console.log("Gagal menyimpan tugas:", error);
+        pesanAdmin("Gagal menyimpan. Cek aturan Firestore dan internet.");
+    });
+
+}
+
+/* Hapus butuh dua ketukan supaya tidak terhapus tidak sengaja */
+
+let hapusMenunggu = "";
+
+function hapusData(koleksi, id, tombol) {
+
+    if (!adalahAdmin()) { return; }
+
+    let kunci = koleksi + ":" + id;
+
+    if (hapusMenunggu !== kunci) {
+
+        hapusMenunggu = kunci;
+        tombol.textContent = "Ketuk lagi";
+
+        setTimeout(function() {
+            if (hapusMenunggu === kunci) {
+                hapusMenunggu = "";
+                tombol.textContent = "🗑 Hapus";
+            }
+        }, 4000);
+
+        return;
+
+    }
+
+    hapusMenunggu = "";
+
+    db.collection(koleksi).doc(id).delete()
+    .then(function() {
+        pesanAdmin("Data dihapus ✅");
+    })
+    .catch(function(error) {
+        console.log("Gagal menghapus:", error);
+        pesanAdmin("Gagal menghapus. Cek aturan Firestore dan internet.");
+    });
+
+}
+
+function tampilkanKelolaAdmin() {
+
+    if (!adalahAdmin()) { return; }
+
+    let hasilP = "";
+
+    daftarPengumuman.forEach(function(d) {
+        hasilP += `
+            <div class="kelola-item">
+                <span>${d.judul}</span>
+                <button class="tombol-hapus"
+                onclick="hapusData('pengumuman', '${d.id}', this)">🗑 Hapus</button>
+            </div>
+        `;
+    });
+
+    if (hasilP === "") {
+        hasilP = `<div class="kosong">Belum ada pengumuman.</div>`;
+    }
+
+    let hasilT = "";
+
+    daftarTugas.forEach(function(d) {
+        hasilT += `
+            <div class="kelola-item">
+                <span>${d.nama || "(tanpa judul)"} • ${d.mapel}</span>
+                <button class="tombol-hapus"
+                onclick="hapusData('tugas', '${d.id}', this)">🗑 Hapus</button>
+            </div>
+        `;
+    });
+
+    if (hasilT === "") {
+        hasilT = `<div class="kosong">Belum ada tugas.</div>`;
+    }
+
+    document.getElementById("kelola-pengumuman").innerHTML = hasilP;
+    document.getElementById("kelola-tugas").innerHTML = hasilT;
+
+}
 
 
 /* TEMA GELAP / TERANG */
@@ -755,6 +1172,7 @@ function bukaHalaman(nama) {
     if (nama === "piket") { tampilkanPiket(hariIni()); }
     if (nama === "pengumuman") { tampilkanPengumuman(); }
     if (nama === "beranda") { tampilkanBeranda(); }
+    if (nama === "admin") { pesanAdmin(""); perbaruiTampilanAdmin(); }
 
     window.scrollTo(0, 0);
 
@@ -947,8 +1365,6 @@ function tampilkanTugas() {
         hasil += `
             <div class="kartu-tugas">
 
-                <span class="label-contoh">CONTOH DATA</span>
-
                 <p>${data.mapel}</p>
 
                 <h3>${index + 1}. ${data.nama}</h3>
@@ -1098,7 +1514,7 @@ function tampilkanPengumumanTerbaru() {
 
 perbaruiTombolTema();
 tampilkanBeranda();
-muatPengumuman();
+mulaiFirebase();
 
 </script>
 </body>
