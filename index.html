@@ -6,7 +6,6 @@
 <meta name="theme-color" content="#0b1220">
 <title>TKR 2 CONNECT</title>
 
-<!-- Pasang tema tersimpan SEBELUM halaman tampil (supaya tidak berkedip) -->
 <script>
 (function () {
     var tema = "gelap";
@@ -18,217 +17,114 @@
 </script>
 
 <style>
-
-/* PALET WARNA: mode GELAP (bawaan) */
 :root {
-    --biru: #3b7bf0;
-    --biru-tua: #1d3f94;
-    --indigo: #4f46b8;
-    --emas: #f0b94a;
-    --teal: #2fb8a6;
-    --ungu: #8e84f0;
-    --koral: #ee8a7c;
-
-    --latar1: #0b1220;
-    --latar2: #0e1730;
-    --kartu: #141d30;
-    --kartu2: #1a2540;
-    --garis: #25324d;
-    --garis2: #34456a;
-
-    --teks: #ffffff;
-    --teks2: #b8c4da;
-    --abu: #9fb0cc;
-    --redup: #7f8fab;
-
-    --emas-teks: #f0b94a;
-    --teal-teks: #5eead4;
-    --bayangan: none;
+    --biru: #3b7bf0; --biru-tua: #1d3f94; --indigo: #4f46b8; --emas: #f0b94a;
+    --teal: #2fb8a6; --ungu: #8e84f0; --koral: #ee8a7c;
+    --latar1: #0b1220; --latar2: #0e1730; --kartu: #141d30; --kartu2: #1a2540;
+    --garis: #25324d; --garis2: #34456a;
+    --teks: #ffffff; --teks2: #b8c4da; --abu: #9fb0cc; --redup: #7f8fab;
+    --emas-teks: #f0b94a; --teal-teks: #5eead4; --bayangan: none;
+    --koral-teks: #ee8a7c; --biru-teks: #7fa8ff;
 }
-
-/* PALET WARNA: mode TERANG */
 :root[data-tema="terang"] {
-    --latar1: #f3f6fc;
-    --latar2: #e4ecfa;
-    --kartu: #ffffff;
-    --kartu2: #eaf0fb;
-    --garis: #d5dded;
-    --garis2: #c3cfe6;
-
-    --teks: #0f1a30;
-    --teks2: #3b4a66;
-    --abu: #5b6b88;
-    --redup: #7083a3;
-
-    --emas-teks: #9a6200;
-    --teal-teks: #0f766e;
+    --latar1: #f3f6fc; --latar2: #e4ecfa; --kartu: #ffffff; --kartu2: #eaf0fb;
+    --garis: #d5dded; --garis2: #c3cfe6;
+    --teks: #0f1a30; --teks2: #3b4a66; --abu: #5b6b88; --redup: #7083a3;
+    --emas-teks: #9a6200; --teal-teks: #0f766e;
     --bayangan: 0 2px 10px rgba(30, 60, 120, 0.08);
+    --koral-teks: #b4432f; --biru-teks: #1d4fc4;
 }
 
 * { box-sizing: border-box; }
-
-button { -webkit-tap-highlight-color: transparent; }
+button { -webkit-tap-highlight-color: transparent; font-family: inherit; }
 
 body {
-    margin: 0;
-    min-height: 100vh;
+    margin: 0; min-height: 100vh;
     background: linear-gradient(180deg, var(--latar1) 0%, var(--latar2) 100%);
     background-attachment: fixed;
     color: var(--teks);
     font-family: Arial, sans-serif;
     transition: background-color 0.3s, color 0.3s;
 }
-
 .container { max-width: 600px; margin: 0 auto; padding: 20px; }
 
 /* HEADER */
 .header {
-    display: flex;
-    align-items: center;
-    padding-bottom: 16px;
-    margin-bottom: 20px;
+    display: flex; align-items: center;
+    padding-bottom: 16px; margin-bottom: 20px;
     border-bottom: 1px solid var(--garis);
 }
-
 .logo {
     position: relative;
     background: linear-gradient(135deg, var(--biru), var(--indigo));
-    color: #ffffff;
-    width: 48px; height: 48px;
-    border-radius: 13px;
+    color: #ffffff; width: 48px; height: 48px; border-radius: 13px;
     display: flex; justify-content: center; align-items: center;
-    font-size: 18px; font-weight: bold;
-    margin-right: 12px;
-    overflow: hidden;
+    font-size: 18px; font-weight: bold; margin-right: 12px; overflow: hidden; flex-shrink: 0;
 }
 .logo svg {
-    position: absolute;
-    top: 4px; left: 4px;
-    width: 40px; height: 40px;
-    opacity: 0.4;
-    animation: putar 1.2s ease-out;
-    transition: transform 0.3s;
+    position: absolute; top: 4px; left: 4px; width: 40px; height: 40px;
+    opacity: 0.4; animation: putar 1.2s ease-out; transition: transform 0.3s;
 }
 .logo:active svg { transform: rotate(90deg); }
 .logo span { position: relative; }
-
 .nama { font-size: 18px; font-weight: bold; }
 .nama .emas { color: var(--emas-teks); }
 .kelas { color: var(--abu); font-size: 12px; margin-top: 4px; }
 
-/* TOMBOL GANTI TEMA */
 .tema {
-    margin-left: auto;
-    width: 42px; height: 42px;
-    border-radius: 50%;
-    border: 1px solid var(--garis);
-    background: var(--kartu);
-    color: var(--teks);
-    font-size: 19px;
-    cursor: pointer;
-    box-shadow: var(--bayangan);
+    margin-left: auto; width: 42px; height: 42px; border-radius: 50%;
+    border: 1px solid var(--garis); background: var(--kartu); color: var(--teks);
+    font-size: 19px; cursor: pointer; box-shadow: var(--bayangan); flex-shrink: 0;
     transition: transform 0.2s, background-color 0.3s;
 }
 .tema:active { transform: rotate(40deg) scale(0.9); }
 
-/* HALAMAN + ANIMASI MUNCUL */
+/* HALAMAN */
 .halaman { display: none; }
 .halaman.aktif { display: block; animation: muncul 0.25s ease; }
 
-@keyframes muncul {
-    from { opacity: 0; transform: translateY(8px); }
-    to   { opacity: 1; transform: translateY(0); }
-}
-@keyframes naik {
-    from { opacity: 0; transform: translateY(14px); }
-    to   { opacity: 1; transform: translateY(0); }
-}
-@keyframes putar {
-    from { transform: rotate(-180deg); }
-    to   { transform: rotate(0deg); }
-}
-@keyframes denyut {
-    0%, 100% { transform: scale(1); }
-    50%      { transform: scale(1.1); }
-}
+@keyframes muncul { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes naik { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes putar { from { transform: rotate(-180deg); } to { transform: rotate(0deg); } }
+@keyframes denyut { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
+@keyframes geser { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+@keyframes melayang { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+@keyframes putarTerus { to { transform: rotate(360deg); } }
+@keyframes jalan { from { left: -12%; } to { left: 108%; } }
+@keyframes kedip { 50% { opacity: 0; } }
+@keyframes goyang { 0%, 100% { transform: rotate(0); } 25% { transform: rotate(-14deg) scale(1.15); } 75% { transform: rotate(14deg) scale(1.15); } }
 
 h1 { font-size: 22px; margin: 0 0 6px 0; }
 .deskripsi { color: var(--abu); font-size: 14px; margin-top: 0; }
 .judul-bagian {
-    margin: 26px 0 0 0;
-    font-size: 16px;
-    border-left: 3px solid var(--emas);
-    padding-left: 10px;
+    margin: 26px 0 0 0; font-size: 16px;
+    border-left: 3px solid var(--emas); padding-left: 10px;
 }
-
-/* PROFIL */
-.profil {
-    display: flex; align-items: center;
-    background: var(--kartu);
-    border: 1px solid var(--garis);
-    border-radius: 16px;
-    padding: 16px;
-    margin-top: 16px;
-    box-shadow: var(--bayangan);
-    animation: naik 0.45s ease backwards;
-    transition: background-color 0.3s, border-color 0.3s;
-}
-.avatar {
-    width: 52px; height: 52px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, var(--teal), var(--biru));
-    color: #ffffff;
-    display: flex; justify-content: center; align-items: center;
-    font-weight: bold; font-size: 18px;
-    margin-right: 14px;
-}
-.salam { color: var(--abu); font-size: 13px; }
-.nama-siswa { font-size: 18px; font-weight: bold; margin: 3px 0; }
-.kelas-kecil { color: var(--abu); font-size: 12px; }
 
 /* KARTU */
 .kartu {
-    background: var(--kartu);
-    border: 1px solid var(--garis);
-    border-radius: 15px;
-    padding: 18px;
-    margin-top: 16px;
-    box-shadow: var(--bayangan);
-    transition: background-color 0.3s, border-color 0.3s;
+    background: var(--kartu); border: 1px solid var(--garis);
+    border-radius: 15px; padding: 18px; margin-top: 16px;
+    box-shadow: var(--bayangan); transition: background-color 0.3s, border-color 0.3s;
 }
 .kartu-hari {
     background: linear-gradient(135deg, var(--biru-tua), var(--indigo));
-    border: none;
-    color: #ffffff;
-    animation: naik 0.5s ease 0.1s backwards;
+    border: none; color: #ffffff; animation: naik 0.5s ease 0.1s backwards;
 }
 .kartu-hari h3 { margin: 0 0 4px 0; }
 .tanggal { font-size: 12px; opacity: 0.85; margin: 0 0 10px 0; }
 .kartu-hari ul { margin: 0 0 10px 0; padding-left: 18px; font-size: 14px; line-height: 1.7; }
 .kartu-hari .piket-info {
     font-size: 13px; margin: 0; padding-top: 10px;
-    border-top: 1px solid rgba(255, 255, 255, 0.25);
-    color: var(--emas);
+    border-top: 1px solid rgba(255, 255, 255, 0.25); color: var(--emas);
 }
 
 /* MENU */
-.menu {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
-    margin-top: 14px;
-}
+.menu { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 14px; }
 .menu-item {
-    background: var(--kartu);
-    padding: 18px 10px;
-    border-radius: 16px;
-    text-align: center;
-    border: 1px solid var(--garis);
-    color: var(--teks);
-    cursor: pointer;
-    font-size: 14px;
-    font-weight: bold;
-    box-shadow: var(--bayangan);
+    background: var(--kartu); padding: 18px 10px; border-radius: 16px; text-align: center;
+    border: 1px solid var(--garis); color: var(--teks); cursor: pointer;
+    font-size: 14px; font-weight: bold; box-shadow: var(--bayangan);
     animation: naik 0.45s ease backwards;
     transition: transform 0.12s, background-color 0.3s, border-color 0.3s;
 }
@@ -238,269 +134,214 @@ h1 { font-size: 22px; margin: 0 0 6px 0; }
 .menu-item:nth-child(3) { animation-delay: 0.15s; }
 .menu-item:nth-child(4) { animation-delay: 0.20s; }
 .menu-item:nth-child(5) { animation-delay: 0.25s; }
-.menu-lebar { grid-column: span 2; }
+.menu-item:nth-child(6) { animation-delay: 0.30s; }
 
 .ikon {
-    width: 52px; height: 52px;
-    margin: 0 auto 10px auto;
-    border-radius: 50%;
-    display: flex; justify-content: center; align-items: center;
-    font-size: 26px;
+    width: 52px; height: 52px; margin: 0 auto 10px auto; border-radius: 50%;
+    display: flex; justify-content: center; align-items: center; font-size: 26px;
 }
-.menu-item:nth-child(1) .ikon { background: rgba(59, 123, 240, 0.20); }
-.menu-item:nth-child(2) .ikon { background: rgba(240, 185, 74, 0.20); }
-.menu-item:nth-child(3) .ikon { background: rgba(47, 184, 166, 0.20); }
-.menu-item:nth-child(4) .ikon { background: rgba(142, 132, 240, 0.20); }
-.menu-item:nth-child(5) .ikon { background: rgba(238, 138, 124, 0.20); }
 
-/* TOMBOL HARI (3 kolom) */
+/* TOMBOL HARI */
 .hari-grid { grid-template-columns: repeat(3, 1fr); gap: 8px; }
 .hari-button {
-    background: var(--kartu);
-    color: var(--teks);
-    border: 1px solid var(--garis2);
-    padding: 12px 6px;
-    border-radius: 10px;
-    cursor: pointer;
-    font-size: 14px;
+    background: var(--kartu); color: var(--teks); border: 1px solid var(--garis2);
+    padding: 12px 6px; border-radius: 10px; cursor: pointer; font-size: 14px;
     transition: background-color 0.2s, border-color 0.2s, transform 0.1s;
 }
 .hari-button:active { transform: scale(0.95); }
 #jadwal .hari-button.aktif { background: var(--biru); border-color: var(--biru); font-weight: bold; color: #ffffff; }
-#piket .hari-button.aktif  { background: var(--teal); border-color: var(--teal); font-weight: bold; color: #08201c; }
+#piket .hari-button.aktif { background: var(--teal); border-color: var(--teal); font-weight: bold; color: #08201c; }
 
-/* DAFTAR KARTU (jadwal, piket, tugas, pengumuman) */
+/* DAFTAR KARTU */
 .daftar-mapel { margin-top: 20px; }
-
 .kartu-mapel, .kartu-piket, .kartu-tugas, .kartu-pengumuman {
-    background: var(--kartu);
-    box-shadow: var(--bayangan);
-    animation: naik 0.4s ease backwards;
-    transition: background-color 0.3s;
+    background: var(--kartu); box-shadow: var(--bayangan);
+    animation: naik 0.4s ease backwards; transition: background-color 0.3s;
 }
-.daftar-mapel > :nth-child(3), #daftar-tugas > :nth-child(2), #daftar-pengumuman > :nth-child(2) { animation-delay: 0.08s; }
-.daftar-mapel > :nth-child(4), #daftar-tugas > :nth-child(3), #daftar-pengumuman > :nth-child(3) { animation-delay: 0.16s; }
-.daftar-mapel > :nth-child(5), #daftar-tugas > :nth-child(4), #daftar-pengumuman > :nth-child(4) { animation-delay: 0.24s; }
-
-/* JADWAL (garis biru) */
-.kartu-mapel {
-    padding: 16px 18px;
-    border-radius: 12px;
-    margin-top: 10px;
-    border-left: 4px solid var(--biru);
-}
+.kartu-mapel { padding: 16px 18px; border-radius: 12px; margin-top: 10px; border-left: 4px solid var(--biru); }
 .kartu-mapel h3 { font-size: 16px; margin: 0 0 6px 0; }
 .kartu-mapel p { color: var(--abu); font-size: 14px; margin: 0; }
-
-/* PIKET (garis tosca) */
-.kartu-piket {
-    padding: 14px 18px;
-    border-radius: 12px;
-    margin-top: 10px;
-    border-left: 4px solid var(--teal);
-    font-size: 15px;
-}
-
-/* TUGAS (garis emas) */
-.kartu-tugas {
-    padding: 18px;
-    border-radius: 14px;
-    margin-top: 14px;
-    border-left: 4px solid var(--emas);
-}
-
-/* PENGUMUMAN (garis ungu) */
-.kartu-pengumuman {
-    padding: 18px;
-    border-radius: 14px;
-    margin-top: 14px;
-    border-left: 4px solid var(--ungu);
-}
-
+.kartu-piket { padding: 14px 18px; border-radius: 12px; margin-top: 10px; border-left: 4px solid var(--teal); font-size: 15px; }
+.kartu-tugas { padding: 18px; border-radius: 14px; margin-top: 14px; border-left: 4px solid var(--emas); }
+.kartu-pengumuman { padding: 18px; border-radius: 14px; margin-top: 14px; border-left: 4px solid var(--ungu); }
 .kartu-tugas h3, .kartu-pengumuman h3 { font-size: 17px; margin: 8px 0 6px 0; }
-.kartu-tugas p, .kartu-pengumuman p {
-    color: var(--teks2); font-size: 14px; line-height: 1.5; margin: 6px 0;
-}
+.kartu-tugas p, .kartu-pengumuman p { color: var(--teks2); font-size: 14px; line-height: 1.5; margin: 6px 0; }
 .status {
-    display: inline-block;
-    background: rgba(240, 185, 74, 0.18); color: var(--emas-teks);
-    padding: 6px 10px; border-radius: 20px;
-    font-size: 11px; margin-top: 5px;
+    display: inline-block; background: rgba(240, 185, 74, 0.18); color: var(--emas-teks);
+    padding: 6px 10px; border-radius: 20px; font-size: 11px; margin-top: 5px;
 }
 .status-selesai { background: rgba(47, 184, 166, 0.2); color: var(--teal-teks); }
 .tombol-status {
-    display: block;
-    background: var(--kartu2); color: var(--teks);
-    border: 1px solid var(--garis2);
-    padding: 9px 14px; border-radius: 8px;
+    display: block; background: var(--kartu2); color: var(--teks);
+    border: 1px solid var(--garis2); padding: 9px 14px; border-radius: 8px;
     margin-top: 12px; font-size: 13px; cursor: pointer;
 }
-
-/* PENGUMUMAN: label & info */
 .info-pengumuman { color: var(--redup) !important; font-size: 12px !important; }
 .label-penting {
-    display: inline-block;
-    background: var(--emas); color: #1a1a1a;
-    padding: 4px 10px; border-radius: 20px;
-    font-size: 11px; font-weight: bold;
+    display: inline-block; background: var(--emas); color: #1a1a1a;
+    padding: 4px 10px; border-radius: 20px; font-size: 11px; font-weight: bold;
 }
 #pengumuman-terbaru .label-penting { animation: denyut 2s ease-in-out infinite; }
+#pengumuman-terbaru .kartu-pengumuman { margin-top: 16px; cursor: pointer; }
 
 .kosong {
-    background: var(--kartu);
-    padding: 25px; border-radius: 13px;
-    text-align: center; color: var(--abu);
-    margin-top: 20px;
+    background: var(--kartu); padding: 25px; border-radius: 13px;
+    text-align: center; color: var(--abu); margin-top: 20px;
 }
-
-/* TOMBOL KEMBALI */
 .tombol-kembali {
-    background: var(--biru);
-    color: #ffffff; border: none;
-    padding: 12px 18px; border-radius: 10px;
-    margin-top: 22px; cursor: pointer; font-size: 14px;
+    background: var(--biru); color: #ffffff; border: none;
+    padding: 12px 18px; border-radius: 10px; margin-top: 22px; cursor: pointer; font-size: 14px;
 }
 
 /* ADMIN */
 .input-admin {
-    display: block;
-    width: 100%;
-    margin-top: 8px;
-    padding: 12px 14px;
-    border-radius: 10px;
-    border: 1px solid var(--garis2);
-    background: var(--kartu);
-    color: var(--teks);
-    font-size: 14px;
-    font-family: Arial, sans-serif;
+    display: block; width: 100%; margin-top: 8px; padding: 12px 14px;
+    border-radius: 10px; border: 1px solid var(--garis2);
+    background: var(--kartu); color: var(--teks); font-size: 14px; font-family: Arial, sans-serif;
 }
 textarea.input-admin { min-height: 90px; resize: vertical; }
 .tombol-utama {
-    background: var(--biru);
-    color: #ffffff; border: none;
-    padding: 12px 18px; border-radius: 10px;
-    margin-top: 12px; cursor: pointer; font-size: 14px;
+    background: var(--biru); color: #ffffff; border: none;
+    padding: 12px 18px; border-radius: 10px; margin-top: 12px; cursor: pointer; font-size: 14px;
 }
 .tombol-keluar {
-    background: var(--kartu2);
-    color: var(--teks);
-    border: 1px solid var(--garis2);
-    padding: 12px 18px; border-radius: 10px;
-    margin-top: 26px; cursor: pointer; font-size: 14px;
+    background: var(--kartu2); color: var(--teks); border: 1px solid var(--garis2);
+    padding: 12px 18px; border-radius: 10px; margin-top: 26px; cursor: pointer; font-size: 14px;
 }
 .tombol-hapus {
-    background: rgba(238, 138, 124, 0.18);
-    color: var(--koral);
-    border: 1px solid var(--koral);
-    padding: 8px 12px; border-radius: 8px;
-    font-size: 12px; cursor: pointer; flex-shrink: 0;
+    background: rgba(238, 138, 124, 0.18); color: var(--koral); border: 1px solid var(--koral);
+    padding: 8px 12px; border-radius: 8px; font-size: 12px; cursor: pointer; flex-shrink: 0;
 }
 .kelola-item {
-    display: flex; justify-content: space-between; align-items: center;
-    gap: 10px;
-    padding: 12px 14px; margin-top: 8px;
-    background: var(--kartu);
-    border: 1px solid var(--garis);
-    border-radius: 10px;
-    font-size: 14px;
+    display: flex; justify-content: space-between; align-items: center; gap: 10px;
+    padding: 12px 14px; margin-top: 8px; background: var(--kartu);
+    border: 1px solid var(--garis); border-radius: 10px; font-size: 14px;
 }
 .pesan-admin { color: var(--emas-teks); font-size: 13px; margin-top: 12px; min-height: 18px; }
-.cek-penting {
-    display: flex; align-items: center; gap: 8px;
-    margin-top: 10px; font-size: 14px; color: var(--teks2);
-}
+.cek-penting { display: flex; align-items: center; gap: 8px; margin-top: 10px; font-size: 14px; color: var(--teks2); }
 
-/* KEHADIRAN */
-:root { --koral-teks: #ee8a7c; --biru-teks: #7fa8ff; }
-:root[data-tema="terang"] { --koral-teks: #b4432f; --biru-teks: #1d4fc4; }
+@media (max-width: 420px) { .tema { width: 38px; height: 38px; font-size: 17px; } }
+@media (max-width: 370px) { .nama { font-size: 15px; } .logo { margin-right: 8px; } }
 
-/* Header lebih ringkas di HP kecil (ada tiga tombol sekarang) */
-@media (max-width: 420px) {
-    .tema { width: 38px; height: 38px; font-size: 17px; }
-}
-@media (max-width: 370px) {
-    .nama { font-size: 15px; }
-    .logo { margin-right: 8px; }
-}
-
+/* TABEL KEHADIRAN */
 .judul-tabel {
-    font-size: 15px; font-weight: bold;
-    margin: 22px 0 8px 0;
-    border-left: 3px solid var(--teal);
-    padding-left: 10px;
+    font-size: 15px; font-weight: bold; margin: 22px 0 8px 0;
+    border-left: 3px solid var(--teal); padding-left: 10px;
 }
 table.absen {
-    width: 100%; border-collapse: collapse;
-    table-layout: fixed; font-size: 13px;
-    background: var(--kartu);
-    border: 1px solid var(--garis);
+    width: 100%; border-collapse: collapse; table-layout: fixed; font-size: 13px;
+    background: var(--kartu); border: 1px solid var(--garis);
 }
-table.absen th {
-    font-size: 11px; color: var(--abu);
-    padding: 8px 2px; text-align: center;
-    border-bottom: 1px solid var(--garis);
-}
-table.absen td {
-    padding: 7px 2px; text-align: center;
-    border-bottom: 1px solid var(--garis);
-}
-table.absen td.nm {
-    text-align: left; padding-left: 6px;
-    overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
-}
+table.absen th { font-size: 11px; color: var(--abu); padding: 8px 2px; text-align: center; border-bottom: 1px solid var(--garis); }
+table.absen td { padding: 7px 2px; text-align: center; border-bottom: 1px solid var(--garis); }
+table.absen td.nm { text-align: left; padding-left: 6px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 table.absen td.ket { font-size: 11px; color: var(--abu); }
-table.absen td.baris-jam {
-    background: var(--kartu2); text-align: left;
-    padding: 8px; font-size: 12px; color: var(--teks2);
-}
+table.absen td.baris-jam { background: var(--kartu2); text-align: left; padding: 8px; font-size: 12px; color: var(--teks2); }
 .pilih {
-    width: 24px; height: 24px; border-radius: 50%;
-    border: 2px solid var(--garis2);
-    background: transparent; color: #08201c;
-    cursor: pointer; padding: 0; font-size: 13px; line-height: 1;
-    font-weight: bold;
+    width: 24px; height: 24px; border-radius: 50%; border: 2px solid var(--garis2);
+    background: transparent; color: #08201c; cursor: pointer; padding: 0;
+    font-size: 13px; line-height: 1; font-weight: bold;
 }
 .pilih.on { background: var(--teal); border-color: var(--teal); }
 .chip-jam {
     display: inline-block; min-width: 32px; padding: 6px 8px; margin: 3px 3px 3px 0;
-    border-radius: 8px; border: 1px solid var(--garis2);
-    background: var(--kartu); color: var(--teks);
-    font-size: 13px; cursor: pointer;
+    border-radius: 8px; border: 1px solid var(--garis2); background: var(--kartu);
+    color: var(--teks); font-size: 13px; cursor: pointer;
 }
 .chip-jam.on { background: var(--koral); border-color: var(--koral); color: #1a1a1a; font-weight: bold; }
 
 .rekap-bar { height: 8px; border-radius: 4px; background: var(--kartu2); overflow: hidden; }
 .rekap-bar div { height: 100%; border-radius: 4px; transition: width 0.4s; }
-.lencana {
-    display: inline-block; font-size: 12px;
-    padding: 5px 10px; border-radius: 8px; margin: 3px 4px 3px 0;
-}
+.lencana { display: inline-block; font-size: 12px; padding: 5px 10px; border-radius: 8px; margin: 3px 4px 3px 0; }
 .lencana-hijau { background: rgba(47, 184, 166, 0.2); color: var(--teal-teks); }
 .lencana-kuning { background: rgba(240, 185, 74, 0.2); color: var(--emas-teks); }
 .lencana-biru { background: rgba(59, 123, 240, 0.2); color: var(--biru-teks); }
 .lencana-merah { background: rgba(238, 138, 124, 0.2); color: var(--koral-teks); }
+.lencana-ungu { background: rgba(142, 132, 240, 0.2); color: var(--ungu); }
+
+.menu-3 { grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 16px; }
+.menu-3 .menu-item { position: relative; padding: 14px 4px; font-size: 12px; border-radius: 14px; }
+.menu-3 .ikon { width: 44px; height: 44px; font-size: 22px; margin-bottom: 8px; }
+.menu-item.ada-baru::after {
+    content: ""; position: absolute; top: 8px; right: 8px; width: 10px; height: 10px;
+    border-radius: 50%; background: #ff4d4f; border: 2px solid #ffffff;
+    animation: denyut 2s ease-in-out infinite;
+}
+
+/* HERO */
+.hero {
+    position: relative; overflow: hidden; color: #ffffff; border-radius: 22px;
+    padding: 20px 18px 40px 18px;
+    background: linear-gradient(120deg, #1d3f94, #4f46b8, #8e44ad, #1d3f94);
+    background-size: 300% 300%;
+    animation: geser 12s ease infinite, naik 0.5s ease backwards;
+    box-shadow: 0 8px 24px rgba(79, 70, 184, 0.25);
+}
+.hero-bulat { position: absolute; border-radius: 50%; background: rgba(255, 255, 255, 0.10); }
+.hero-bulat.b1 { width: 150px; height: 150px; right: -45px; top: -55px; animation: melayang 6s ease-in-out infinite; }
+.hero-bulat.b2 { width: 100px; height: 100px; left: -35px; bottom: -40px; animation: melayang 7s ease-in-out infinite reverse; }
+.hero-gigi { position: absolute; right: 18px; top: 14px; font-size: 48px; opacity: 0.3; animation: putarTerus 14s linear infinite; }
+.hero-isi { position: relative; z-index: 1; }
+.hero .salam { color: rgba(255, 255, 255, 0.85); font-size: 13px; }
+.hero-nama { font-size: 22px; font-weight: bold; margin: 2px 0 8px 0; }
+.hero-jam { font-size: 36px; font-weight: bold; letter-spacing: 1px; line-height: 1.1; }
+.kedip { animation: kedip 1s steps(1) infinite; }
+.hero-tgl { font-size: 12px; opacity: 0.85; margin-top: 2px; }
+.chip-baris { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+.chip-info {
+    background: rgba(255, 255, 255, 0.16); border: 1px solid rgba(255, 255, 255, 0.28);
+    padding: 6px 10px; border-radius: 20px; font-size: 11.5px;
+}
+.hero-jalan { position: absolute; left: 0; right: 0; bottom: 14px; border-top: 2px dashed rgba(255, 255, 255, 0.35); }
+.hero-mobil { position: absolute; bottom: 16px; left: -12%; font-size: 24px; transform: scaleX(-1); animation: jalan 8s linear infinite; }
+
+.menu-3 .menu-item { color: #ffffff; border-color: transparent; box-shadow: 0 6px 14px rgba(0, 0, 0, 0.18); }
+.menu-3 .menu-item:nth-child(1) { background: linear-gradient(135deg, #3b7bf0, #4f46b8); }
+.menu-3 .menu-item:nth-child(2) { background: linear-gradient(135deg, #f0b94a, #d9822b); }
+.menu-3 .menu-item:nth-child(3) { background: linear-gradient(135deg, #8e84f0, #5b4fd0); }
+.menu-3 .menu-item:nth-child(4) { background: linear-gradient(135deg, #2fb8a6, #1d8a9a); }
+.menu-3 .menu-item:nth-child(5) { background: linear-gradient(135deg, #46c46f, #2a8f55); }
+.menu-3 .menu-item:nth-child(6) { background: linear-gradient(135deg, #f08a5d, #d9534f); }
+.menu-3 .menu-item .ikon { background: rgba(255, 255, 255, 0.24); animation: melayang 3s ease-in-out infinite; }
+.menu-3 .menu-item:nth-child(2n) .ikon { animation-delay: 0.5s; }
+.menu-3 .menu-item:nth-child(3n) .ikon { animation-delay: 1s; }
+.menu-3 .menu-item:active .ikon { animation: goyang 0.4s ease; }
+
+.kutipan {
+    margin-top: 16px; padding: 16px 18px; border-radius: 16px; cursor: pointer;
+    background: var(--kartu); border: 1px solid var(--garis); border-left: 4px solid var(--emas);
+    box-shadow: var(--bayangan); animation: naik 0.5s ease backwards;
+}
+.kutipan small { color: var(--emas-teks); font-weight: bold; font-size: 12px; }
+.kutipan p { margin: 8px 0 0 0; font-size: 14px; line-height: 1.55; color: var(--teks2); font-style: italic; }
+
+.sub-t { display: block; font-size: 8px; font-weight: normal; }
+
+/* KAS */
+.kas-besar { font-size: 28px; font-weight: bold; margin: 2px 0 10px 0; }
+.kas-dua { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 12px; }
+.kas-kotak { background: var(--kartu); border: 1px solid var(--garis); border-radius: 14px; padding: 14px; box-shadow: var(--bayangan); }
+.kas-kotak span { display: block; font-size: 12px; color: var(--abu); margin-bottom: 6px; }
+.kas-kotak b { font-size: 16px; }
+.kas-plus { color: var(--teal-teks); }
+.kas-minus { color: var(--koral-teks); }
+.kas-tgl { color: var(--redup); font-size: 11px; }
+.kas-baris-input { display: flex; gap: 8px; align-items: flex-start; }
+.kas-baris-input .input-admin { flex: 1; min-width: 0; }
 
 /* DAFTAR KEHADIRAN SISWA */
 .chip-bulan-baris {
-    display: flex; gap: 8px; overflow-x: auto;
-    position: relative;
-    margin-top: 12px; padding: 4px 0 8px 0;
-    scrollbar-width: none; -webkit-overflow-scrolling: touch;
+    display: flex; gap: 8px; overflow-x: auto; position: relative;
+    margin-top: 12px; padding: 4px 0 8px 0; scrollbar-width: none; -webkit-overflow-scrolling: touch;
 }
 .chip-bulan-baris::-webkit-scrollbar { display: none; }
 .chip-bulan {
-    flex: 0 0 auto;
-    padding: 9px 16px; border-radius: 20px;
-    border: 1px solid var(--garis2);
-    background: var(--kartu); color: var(--teks);
-    font-size: 13px; font-family: inherit; cursor: pointer;
+    flex: 0 0 auto; padding: 9px 16px; border-radius: 20px; border: 1px solid var(--garis2);
+    background: var(--kartu); color: var(--teks); font-size: 13px; cursor: pointer;
     transition: background-color 0.2s, border-color 0.2s, transform 0.1s;
 }
 .chip-bulan:active { transform: scale(0.95); }
-.chip-bulan.aktif {
-    background: var(--biru); border-color: var(--biru);
-    color: #ffffff; font-weight: bold;
-}
+.chip-bulan.aktif { background: var(--biru); border-color: var(--biru); color: #ffffff; font-weight: bold; }
 .avatar-kecil {
     width: 38px; height: 38px; border-radius: 50%; flex-shrink: 0;
     display: flex; align-items: center; justify-content: center;
@@ -512,25 +353,15 @@ table.absen td.baris-jam {
 .av3 { background: linear-gradient(135deg, #b9730b, var(--koral)); }
 .av4 { background: linear-gradient(135deg, var(--koral), #c2566a); }
 .baris-hd {
-    background: var(--kartu); border: 1px solid var(--garis);
-    border-radius: 14px; margin-top: 10px;
-    box-shadow: var(--bayangan); overflow: hidden;
-    animation: naik 0.4s ease backwards;
-    transition: background-color 0.3s, border-color 0.3s;
+    background: var(--kartu); border: 1px solid var(--garis); border-radius: 14px; margin-top: 10px;
+    box-shadow: var(--bayangan); overflow: hidden; animation: naik 0.4s ease backwards;
 }
 .baris-hd-kepala {
-    display: flex; align-items: center; gap: 10px;
-    width: 100%; padding: 12px;
-    background: transparent; border: none;
-    color: var(--teks); font-family: inherit;
-    text-align: left; cursor: pointer;
+    display: flex; align-items: center; gap: 10px; width: 100%; padding: 12px;
+    background: transparent; border: none; color: var(--teks); text-align: left; cursor: pointer;
 }
 .baris-hd-nama { flex: 1; min-width: 0; font-size: 14px; font-weight: bold; line-height: 1.25; }
-.baris-hd-angka {
-    display: flex; flex-direction: column; gap: 2px;
-    flex-shrink: 0; text-align: right;
-    font-size: 12px; color: var(--abu);
-}
+.baris-hd-angka { display: flex; flex-direction: column; gap: 2px; flex-shrink: 0; text-align: right; font-size: 12px; color: var(--abu); }
 .baris-hd-angka b { font-size: 14px; margin-left: 2px; }
 .panah { color: var(--abu); font-size: 20px; line-height: 1; flex-shrink: 0; transition: transform 0.2s; }
 .baris-hd.buka .panah { transform: rotate(90deg); }
@@ -541,11 +372,9 @@ table.absen td.baris-jam {
 
 .footer { text-align: center; color: var(--redup); margin-top: 35px; font-size: 12px; }
 
-/* Hormati pengguna yang mematikan animasi di HP-nya */
 @media (prefers-reduced-motion: reduce) {
     * { animation: none !important; transition: none !important; }
 }
-
 </style>
 </head>
 
@@ -568,52 +397,64 @@ table.absen td.baris-jam {
     </div>
     <button class="tema" id="tombol-admin" onclick="bukaHalaman('admin')" aria-label="Admin">🔐</button>
     <button class="tema" id="tombol-absen" style="margin-left: 8px;" onclick="bukaHalaman('absen')" aria-label="Isi kehadiran">📝</button>
+    <button class="tema" id="tombol-kas" style="margin-left: 8px;" onclick="bukaHalaman('kas')" aria-label="Kelola kas">💰</button>
     <button class="tema" id="tombol-tema" style="margin-left: 8px;" onclick="gantiTema()" aria-label="Ganti tema">☀️</button>
 </div>
 
 <!-- BERANDA -->
 <div id="beranda" class="halaman aktif">
 
-    <div id="pengumuman-terbaru"></div>
-
-    <div class="profil">
-        <div class="avatar">MF</div>
-        <div>
+    <div class="hero">
+        <div class="hero-bulat b1"></div>
+        <div class="hero-bulat b2"></div>
+        <span class="hero-gigi">⚙️</span>
+        <div class="hero-isi">
             <div class="salam" id="salam">Selamat datang</div>
-            <div class="nama-siswa">M. Fais</div>
-            <div class="kelas-kecil">X TKR 2 • Siswa</div>
+            <div class="hero-nama">TKR 2 CONNECT</div>
+            <div class="hero-jam" id="hero-jam">--:--</div>
+            <div class="hero-tgl" id="hero-tgl"></div>
+            <div class="chip-baris" id="chip-info"></div>
         </div>
+        <div class="hero-jalan"></div>
+        <span class="hero-mobil">🚗</span>
     </div>
 
     <div class="kartu kartu-hari" id="hari-ini"></div>
 
-    <h3 class="judul-bagian">Menu Utama</h3>
-
-    <div class="menu">
+    <div class="menu menu-3">
         <button class="menu-item" onclick="bukaHalaman('jadwal')">
             <div class="ikon">📅</div>Jadwal
         </button>
         <button class="menu-item" onclick="bukaHalaman('tugas')">
             <div class="ikon">📚</div>Tugas
         </button>
-        <button class="menu-item" onclick="bukaHalaman('piket')">
-            <div class="ikon">🧹</div>Jadwal Piket
-        </button>
-        <button class="menu-item" onclick="bukaHalaman('pengumuman')">
+        <button class="menu-item" id="menu-pengumuman" onclick="bukaHalaman('pengumuman')">
             <div class="ikon">📢</div>Pengumuman
         </button>
-        <button class="menu-item menu-lebar" onclick="bukaHalaman('kehadiran')">
+        <button class="menu-item" onclick="bukaHalaman('kehadiran')">
             <div class="ikon">📊</div>Kehadiran
         </button>
+        <button class="menu-item" onclick="bukaHalaman('kaslihat')">
+            <div class="ikon">💰</div>Kas Kelas
+        </button>
+        <button class="menu-item" onclick="bukaHalaman('piket')">
+            <div class="ikon">🧹</div>Piket
+        </button>
+    </div>
+
+    <div id="pengumuman-terbaru"></div>
+
+    <div class="kutipan" onclick="tampilkanKutipan(true)">
+        <small>💡 Semangat Hari Ini • ketuk untuk ganti</small>
+        <p id="kutipan-teks"></p>
     </div>
 
 </div>
 
-<!-- HALAMAN JADWAL -->
+<!-- JADWAL -->
 <div id="jadwal" class="halaman">
     <h1>📅 Jadwal Pelajaran</h1>
     <p class="deskripsi">Jadwal pembelajaran X TKR 2</p>
-
     <div class="menu hari-grid">
         <button class="hari-button" data-hari="senin" onclick="tampilkanJadwal('senin')">Senin</button>
         <button class="hari-button" data-hari="selasa" onclick="tampilkanJadwal('selasa')">Selasa</button>
@@ -622,16 +463,14 @@ table.absen td.baris-jam {
         <button class="hari-button" data-hari="jumat" onclick="tampilkanJadwal('jumat')">Jumat</button>
         <button class="hari-button" data-hari="sabtu" onclick="tampilkanJadwal('sabtu')">Sabtu</button>
     </div>
-
     <div id="isi-jadwal" class="daftar-mapel"></div>
     <button class="tombol-kembali" onclick="beranda()">← Kembali</button>
 </div>
 
-<!-- HALAMAN PIKET -->
+<!-- PIKET -->
 <div id="piket" class="halaman">
     <h1>🧹 Jadwal Piket</h1>
     <p class="deskripsi">Jadwal piket kelas X TKR 2</p>
-
     <div class="menu hari-grid">
         <button class="hari-button" data-hari="senin" onclick="tampilkanPiket('senin')">Senin</button>
         <button class="hari-button" data-hari="selasa" onclick="tampilkanPiket('selasa')">Selasa</button>
@@ -640,12 +479,11 @@ table.absen td.baris-jam {
         <button class="hari-button" data-hari="jumat" onclick="tampilkanPiket('jumat')">Jumat</button>
         <button class="hari-button" data-hari="sabtu" onclick="tampilkanPiket('sabtu')">Sabtu</button>
     </div>
-
     <div id="isi-piket" class="daftar-mapel"></div>
     <button class="tombol-kembali" onclick="beranda()">← Kembali</button>
 </div>
 
-<!-- HALAMAN TUGAS -->
+<!-- TUGAS -->
 <div id="tugas" class="halaman">
     <h1>📚 Daftar Tugas</h1>
     <p class="deskripsi">Informasi tugas siswa kelas X TKR 2.</p>
@@ -653,27 +491,23 @@ table.absen td.baris-jam {
     <button class="tombol-kembali" onclick="beranda()">← Kembali</button>
 </div>
 
-<!-- HALAMAN PENGUMUMAN -->
+<!-- PENGUMUMAN -->
 <div id="pengumuman" class="halaman">
     <h1>📢 Pengumuman</h1>
     <div id="daftar-pengumuman"></div>
     <button class="tombol-kembali" onclick="beranda()">← Kembali</button>
 </div>
 
-<!-- HALAMAN KEHADIRAN (dilihat siswa) -->
+<!-- KEHADIRAN (dilihat siswa) -->
 <div id="kehadiran" class="halaman">
     <h1>📊 Kehadiran</h1>
     <p class="deskripsi">Daftar kehadiran seluruh siswa X TKR 2.</p>
-
-    <!-- Pilihan bulan: bulan berjalan di ujung kanan -->
     <div class="chip-bulan-baris" id="hd-bulan-baris"></div>
-
     <div id="hd-isi"></div>
-
     <button class="tombol-kembali" onclick="beranda()">← Kembali</button>
 </div>
 
-<!-- HALAMAN ABSEN (diisi sekretaris dan admin) -->
+<!-- ABSEN (sekretaris dan admin) -->
 <div id="absen" class="halaman">
     <h1>📝 Isi Kehadiran</h1>
     <p class="deskripsi">Hanya sekretaris dan admin yang bisa mengisi.</p>
@@ -691,18 +525,18 @@ table.absen td.baris-jam {
 
         <h3 class="judul-tabel">Tabel 1: Apel pagi</h3>
         <table class="absen">
-            <colgroup><col style="width:10%"><col style="width:30%"><col style="width:20%"><col style="width:20%"><col style="width:20%"></colgroup>
-            <thead><tr><th>No</th><th style="text-align:left">Nama</th><th>Ikut</th><th>Tdk ikut</th><th>Tdk hadir</th></tr></thead>
+            <colgroup><col style="width:8%"><col style="width:28%"><col style="width:16%"><col style="width:16%"><col style="width:16%"><col style="width:16%"></colgroup>
+            <thead><tr><th>No</th><th style="text-align:left">Nama</th><th>Ikut</th><th>Tdk ikut</th><th>Tdk hadir</th><th>T<span class="sub-t">Terlambat</span></th></tr></thead>
             <tbody id="absen-tabel-apel"></tbody>
         </table>
 
         <h3 class="judul-tabel">Tabel 2: Absen kelas</h3>
         <table class="absen">
-            <colgroup><col style="width:8%"><col style="width:25%"><col style="width:9%"><col style="width:9%"><col style="width:9%"><col style="width:9%"><col style="width:9%"><col style="width:22%"></colgroup>
-            <thead><tr><th>No</th><th style="text-align:left">Nama</th><th>H</th><th>I</th><th>S</th><th>B</th><th>A</th><th>Ket.</th></tr></thead>
+            <colgroup><col style="width:7%"><col style="width:21%"><col style="width:8%"><col style="width:8%"><col style="width:8%"><col style="width:8%"><col style="width:8%"><col style="width:13%"><col style="width:19%"></colgroup>
+            <thead><tr><th>No</th><th style="text-align:left">Nama</th><th>H</th><th>I</th><th>S</th><th>B</th><th>A</th><th>T<span class="sub-t">Terlambat</span></th><th>Ket.</th></tr></thead>
             <tbody id="absen-tabel-kelas"></tbody>
         </table>
-        <p class="deskripsi" style="margin-top: 8px;">H = hadir tanpa keterangan, I = izin, S = sakit, B = bolos, A = alfa (tidak hadir tanpa keterangan). Pilih B untuk mengisi jam bolos. Ketuk lagi untuk membatalkan pilihan.</p>
+        <p class="deskripsi" style="margin-top: 8px;">H = hadir tanpa keterangan, I = izin, S = sakit, B = bolos, A = alfa (tidak hadir tanpa keterangan), T = terlambat. Pilih B untuk mengisi jam bolos. Ketuk lagi untuk membatalkan pilihan.</p>
 
         <button class="tombol-utama" style="width: 100%;" onclick="simpanAbsen()">Simpan Kehadiran</button>
         <button class="tombol-keluar" onclick="keluarAbsen()">Keluar</button>
@@ -712,11 +546,88 @@ table.absen td.baris-jam {
     <button class="tombol-kembali" onclick="beranda()">← Kembali</button>
 </div>
 
-<!-- HALAMAN ADMIN -->
+<!-- KAS (dilihat siswa) -->
+<div id="kaslihat" class="halaman">
+    <h1>💰 Kas Kelas</h1>
+    <p class="deskripsi">Pemasukan, pengeluaran, dan saldo kas X TKR 2.</p>
+    <div class="chip-bulan-baris" id="kl-bulan-baris"></div>
+    <div id="kl-isi"></div>
+    <button class="tombol-kembali" onclick="beranda()">← Kembali</button>
+</div>
+
+<!-- KAS (bendahara dan admin) -->
+<div id="kas" class="halaman">
+    <h1>💰 Kelola Kas</h1>
+    <p class="deskripsi">Hanya bendahara dan admin yang bisa mengakses.</p>
+
+    <div id="kas-login">
+        <input class="input-admin" type="email" id="kas-email" placeholder="Email bendahara atau admin" autocomplete="username">
+        <input class="input-admin" type="password" id="kas-sandi" placeholder="Password" autocomplete="current-password">
+        <button class="tombol-utama" onclick="masukKas()">Masuk</button>
+    </div>
+
+    <div id="kas-panel" style="display: none;">
+        <p class="deskripsi">Masuk sebagai: <span id="kas-info"></span></p>
+        <div class="chip-bulan-baris" id="kas-bulan-baris"></div>
+
+        <div id="kas-ringkasan"></div>
+        <button class="tombol-keluar" style="margin-top: 12px; width: 100%;" onclick="salinLaporan()">📋 Salin laporan untuk WhatsApp</button>
+
+        <h3 class="judul-bagian">Kas Siswa (Iuran Mingguan)</h3>
+        <div class="kas-baris-input">
+            <input class="input-admin" type="number" inputmode="numeric" id="kas-iuran" placeholder="Iuran per minggu (Rp)">
+            <button class="tombol-utama" style="white-space: nowrap;" onclick="simpanIuran()">Simpan</button>
+        </div>
+        <div id="kas-iuran-info" style="margin-top: 12px;"></div>
+
+        <div class="sub-judul">Catat pembayaran siswa</div>
+        <select class="input-admin" id="kas-bayar-nama"></select>
+        <div class="kas-baris-input">
+            <input class="input-admin" type="number" inputmode="numeric" id="kas-bayar-jml" placeholder="Nominal dibayar (Rp)">
+            <select class="input-admin" id="kas-bayar-minggu" style="flex: 0 0 38%;" onchange="isiNominalOtomatis()">
+                <option value="1">1 minggu</option>
+                <option value="2">2 minggu</option>
+                <option value="3">3 minggu</option>
+                <option value="4">4 minggu</option>
+            </select>
+        </div>
+        <input class="input-admin" type="date" id="kas-bayar-tgl">
+        <button class="tombol-utama" onclick="catatBayar()">Catat Pembayaran</button>
+
+        <div class="sub-judul">Status kas minggu ini</div>
+        <div id="kas-status-siswa"></div>
+
+        <div class="sub-judul">Pembayaran bulan ini</div>
+        <div id="kas-list-bayar"></div>
+
+        <h3 class="judul-bagian">Pemasukan di Luar Kas Siswa</h3>
+        <input class="input-admin" type="text" id="kas-masuk-ket" placeholder="Dari mana? (misal: Wali kelas)">
+        <input class="input-admin" type="number" inputmode="numeric" id="kas-masuk-jml" placeholder="Jumlah (Rp)">
+        <input class="input-admin" type="date" id="kas-masuk-tgl">
+        <button class="tombol-utama" onclick="tambahKas('masuk')">Tambah Pemasukan</button>
+        <div id="kas-list-masuk"></div>
+
+        <h3 class="judul-bagian">Pengeluaran</h3>
+        <input class="input-admin" type="text" id="kas-keluar-ket" placeholder="Untuk apa? (misal: Beli spidol)">
+        <input class="input-admin" type="number" inputmode="numeric" id="kas-keluar-jml" placeholder="Jumlah (Rp)">
+        <input class="input-admin" type="date" id="kas-keluar-tgl">
+        <button class="tombol-utama" onclick="tambahKas('keluar')">Tambah Pengeluaran</button>
+        <div id="kas-list-keluar"></div>
+
+        <h3 class="judul-bagian">Riwayat Per Bulan</h3>
+        <div id="kas-riwayat"></div>
+
+        <button class="tombol-keluar" onclick="keluarKas()">Keluar</button>
+    </div>
+
+    <p class="pesan-admin" id="kas-pesan"></p>
+    <button class="tombol-kembali" onclick="beranda()">← Kembali</button>
+</div>
+
+<!-- ADMIN -->
 <div id="admin" class="halaman">
     <h1>🔐 Admin</h1>
 
-    <!-- Tampil kalau belum masuk -->
     <div id="admin-login">
         <p class="deskripsi">Masuk untuk menambah atau menghapus pengumuman dan tugas.</p>
         <input class="input-admin" type="email" id="admin-email-input" placeholder="Email admin" autocomplete="username">
@@ -724,7 +635,6 @@ table.absen td.baris-jam {
         <button class="tombol-utama" onclick="masukAdmin()">Masuk</button>
     </div>
 
-    <!-- Tampil kalau sudah masuk sebagai admin -->
     <div id="admin-panel" style="display: none;">
         <p class="deskripsi">Masuk sebagai: <span id="admin-info"></span></p>
 
@@ -759,7 +669,7 @@ table.absen td.baris-jam {
 
 </div>
 
-<!-- ALAT FIREBASE: supaya halaman bisa membaca database Firestore -->
+<!-- FIREBASE -->
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
@@ -767,67 +677,47 @@ table.absen td.baris-jam {
 <script>
 
 /* DATA JADWAL PELAJARAN */
-
 const jadwal = {
-
     senin: [
         { mapel: "Dasar-Dasar Kompetensi Keahlian (DDKK)", guru: "RAMLI TIRO" },
         { mapel: "Matematika", guru: "NURAENI" }
     ],
-
     selasa: [
         { mapel: "PJOK", guru: "HERNI" },
         { mapel: "Pendidikan Agama Islam (PAI)", guru: "SUHARNI" },
         { mapel: "Ilmu Pengetahuan ALAM & SOSIAL (IPAS)", guru: "Nunung" }
     ],
-
     rabu: [
         { mapel: "Dasar-Dasar Kompetensi keahlian (DDKK)", guru: "Dr rusik" },
         { mapel: "Bahasa Indonesia", guru: "Nurbaya" }
     ],
-
     kamis: [
         { mapel: "Sejarah", guru: "Fira" },
         { mapel: "Seni Budaya dan Keterampilan", guru: "Tasya" },
         { mapel: "Ilmu Pengetahuan ALAM & SOSIAL (IPAS)", guru: "Nunung" }
     ],
-
     jumat: [
         { mapel: "Bahasa Inggris", guru: "Hasna" },
         { mapel: "Koding dan Kecerdasan Artifisial (KKA)", guru: "H.Syarlinda" }
     ],
-
     sabtu: [
         { mapel: "Informatika", guru: "Nama Guru Informatika" },
         { mapel: "PPKn", guru: "Wahyudin" },
         { mapel: "Dasar-Dasar Kompetensi Keahlian (DDKK)", guru: "Tadris ulum" }
     ]
-
 };
-
 
 /* DATA JADWAL PIKET */
-
 const jadwalPiket = {
-
     senin:  ["FAHMI", "JUSRI", "nama"],
-
     selasa: ["Andika", "jusri", "AFIQ"],
-
     rabu:   ["ASRAF", "KHAIRIL", "ADNAN"],
-
     kamis:  ["AZHAR", "SAIFUL", "AMAR"],
-
     jumat:  ["FAIZ", "ZULL", "IKSAN"],
-
     sabtu:  ["BAKSOS"]
-
 };
 
-
-/* PENGATURAN FIREBASE
-   Ini adalah "alamat dan kunci masuk" ke database kamu. */
-
+/* PENGATURAN FIREBASE */
 const firebaseConfig = {
     apiKey: "AIzaSyBZPqXKT76ipUMY5npqwyiSNTl6PinWWOg",
     authDomain: "tkr2-connect.firebaseapp.com",
@@ -837,14 +727,11 @@ const firebaseConfig = {
     appId: "1:485459455236:web:dc3d59c929baa558ed7451"
 };
 
+let db = null;
+let auth = null;
 
-/* DATA PENGUMUMAN
-   Isi di bawah ini hanya CADANGAN, tampil kalau internet mati
-   atau Firebase gagal dibuka. Kalau berhasil, isinya akan
-   diganti otomatis oleh data asli dari Firestore. */
-
+/* DATA PENGUMUMAN (cadangan kalau offline) */
 let daftarPengumuman = [
-
     {
         id: "p-2",
         judul: "Contoh: Rapat Kelas",
@@ -853,169 +740,152 @@ let daftarPengumuman = [
         pembuat: "Admin",
         penting: true
     }
-
 ];
-
-
-/* MEMBACA PENGUMUMAN DARI FIRESTORE
-   - collection("pengumuman")  = buka folder "pengumuman" di database
-   - orderBy("urutan", "desc") = angka terbesar tampil paling atas
-   - onSnapshot                = otomatis ikut berubah saat data berubah */
-
-function muatPengumuman() {
-
-    try {
-
-        db.collection("pengumuman")
-          .orderBy("urutan", "desc")
-          .onSnapshot(function(hasilBaca) {
-
-            let baru = [];
-
-            hasilBaca.forEach(function(dok) {
-
-                let d = dok.data();
-
-                baru.push({
-                    id: dok.id,
-                    judul: d.judul,
-                    isi: d.isi,
-                    tanggal: d.tanggal,
-                    pembuat: d.pembuat,
-                    penting: d.penting === true
-                });
-
-            });
-
-            daftarPengumuman = baru;
-
-            tampilkanKelolaAdmin();
-
-            tampilkanPengumumanTerbaru();
-
-            if (document.getElementById("pengumuman").classList.contains("aktif")) {
-                tampilkanPengumuman();
-            }
-
-        }, function(error) {
-            console.log("Gagal membaca pengumuman:", error);
-        });
-
-    } catch (e) {
-        console.log("Firebase belum siap:", e);
-    }
-
-}
-
-
-/* DATA TUGAS
-   Awalnya kosong. Isinya diambil dari Firestore (koleksi "tugas").
-   Status selesai / belum tetap disimpan di HP masing-masing siswa. */
 
 let daftarTugas = [];
 
 
-/* MEMBACA TUGAS DARI FIRESTORE */
+/* FUNGSI BANTU UMUM */
 
-function muatTugas() {
-
-    try {
-
-        db.collection("tugas")
-          .orderBy("urutan", "desc")
-          .onSnapshot(function(hasilBaca) {
-
-            let baru = [];
-
-            hasilBaca.forEach(function(dok) {
-
-                let d = dok.data();
-
-                baru.push({
-                    id: dok.id,
-                    mapel: d.mapel,
-                    nama: d.nama,
-                    keterangan: d.keterangan,
-                    batas: d.batas,
-                    status: "Belum selesai"
-                });
-
-            });
-
-            daftarTugas = baru;
-
-            tampilkanKelolaAdmin();
-
-            if (document.getElementById("tugas").classList.contains("aktif")) {
-                tampilkanTugas();
-            }
-
-        }, function(error) {
-            console.log("Gagal membaca tugas:", error);
-        });
-
-    } catch (e) {
-        console.log("Firebase belum siap:", e);
-    }
-
-}
-
-
-/* MENYALAKAN FIREBASE (sekali saja), lalu memuat semua data */
-
-let db = null;
-
-function mulaiFirebase() {
-
-    try {
-
-        firebase.initializeApp(firebaseConfig);
-
-        db = firebase.firestore();
-
-        muatPengumuman();
-        muatTugas();
-
-    } catch (e) {
-        console.log("Firebase belum siap:", e);
-    }
-
-    /* Login admin dinyalakan terpisah. Kalau gagal (misalnya
-       dibuka dari TrebEdit), data tetap tampil seperti biasa. */
-
-    try {
-
-        auth = firebase.auth();
-
-        auth.onAuthStateChanged(function() {
-            perbaruiTampilanAdmin();
-            perbaruiTampilanAbsen();
-        });
-
-    } catch (e) {
-        console.log("Login admin belum siap:", e);
-    }
-
-}
-
-
-/* ADMIN: LOGIN, TAMBAH, DAN HAPUS DATA
-   Hanya akun dengan UID di bawah ini yang dianggap admin.
-   Aturan Firestore juga memeriksa UID yang sama, jadi
-   orang lain tidak bisa mengubah data walau membuka kode ini. */
-
-const UID_ADMIN = "SQvYZXHKIUVGA51YXllzXVoRmSQ2";
-
-let auth = null;
-
-function adalahAdmin() {
-    return auth !== null
-        && auth.currentUser !== null
-        && auth.currentUser.uid === UID_ADMIN;
+function esc(t) {
+    return String(t === undefined || t === null ? "" : t).replace(/[&<>"']/g, function(c) {
+        return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
+    });
 }
 
 function ambilNilai(id) {
     return document.getElementById(id).value.trim();
+}
+
+function hariIni() {
+    const namaHari = ["minggu", "senin", "selasa", "rabu", "kamis", "jumat", "sabtu"];
+    let hari = namaHari[new Date().getDay()];
+    if (hari === "minggu") { hari = "senin"; }
+    return hari;
+}
+
+function huruf1Besar(teks) {
+    return teks.charAt(0).toUpperCase() + teks.slice(1);
+}
+
+function tanggalHariIniISO() {
+    let d = new Date();
+    d.setMinutes(d.getMinutes() - d.getTimezoneOffset());
+    return d.toISOString().slice(0, 10);
+}
+
+function aktifkanTombolHari(idHalaman, hari) {
+    document.querySelectorAll("#" + idHalaman + " .hari-button").forEach(function(tombol) {
+        if (tombol.dataset.hari === hari) {
+            tombol.classList.add("aktif");
+        } else {
+            tombol.classList.remove("aktif");
+        }
+    });
+}
+
+
+/* TEMA GELAP / TERANG */
+
+function perbaruiTombolTema() {
+    let tema = document.documentElement.getAttribute("data-tema");
+    document.getElementById("tombol-tema").textContent = tema === "terang" ? "🌙" : "☀️";
+    let meta = document.querySelector('meta[name="theme-color"]');
+    if (meta) { meta.setAttribute("content", tema === "terang" ? "#f3f6fc" : "#0b1220"); }
+}
+
+function gantiTema() {
+    let sekarang = document.documentElement.getAttribute("data-tema");
+    let baru = sekarang === "terang" ? "gelap" : "terang";
+    document.documentElement.setAttribute("data-tema", baru);
+    try { localStorage.setItem("tema", baru); } catch (e) {}
+    perbaruiTombolTema();
+}
+
+
+/* FIRESTORE: PENGUMUMAN DAN TUGAS */
+
+function muatPengumuman() {
+    try {
+        db.collection("pengumuman").orderBy("urutan", "desc").onSnapshot(function(hasilBaca) {
+            let baru = [];
+            hasilBaca.forEach(function(dok) {
+                let d = dok.data();
+                baru.push({
+                    id: dok.id, judul: d.judul, isi: d.isi, tanggal: d.tanggal,
+                    pembuat: d.pembuat, penting: d.penting === true
+                });
+            });
+            daftarPengumuman = baru;
+            tampilkanKelolaAdmin();
+            tampilkanPengumumanTerbaru();
+            if (document.getElementById("pengumuman").classList.contains("aktif")) {
+                tampilkanPengumuman();
+            }
+        }, function(error) {
+            console.log("Gagal membaca pengumuman:", error);
+        });
+    } catch (e) {
+        console.log("Firebase belum siap:", e);
+    }
+}
+
+function muatTugas() {
+    try {
+        db.collection("tugas").orderBy("urutan", "desc").onSnapshot(function(hasilBaca) {
+            let baru = [];
+            hasilBaca.forEach(function(dok) {
+                let d = dok.data();
+                baru.push({
+                    id: dok.id, mapel: d.mapel, nama: d.nama,
+                    keterangan: d.keterangan, batas: d.batas, status: "Belum selesai"
+                });
+            });
+            daftarTugas = baru;
+            tampilkanChipInfo();
+            tampilkanKelolaAdmin();
+            if (document.getElementById("tugas").classList.contains("aktif")) {
+                tampilkanTugas();
+            }
+        }, function(error) {
+            console.log("Gagal membaca tugas:", error);
+        });
+    } catch (e) {
+        console.log("Firebase belum siap:", e);
+    }
+}
+
+function mulaiFirebase() {
+
+    try {
+        firebase.initializeApp(firebaseConfig);
+        db = firebase.firestore();
+        muatPengumuman();
+        muatTugas();
+    } catch (e) {
+        console.log("Firebase belum siap:", e);
+    }
+
+    try {
+        auth = firebase.auth();
+        auth.onAuthStateChanged(function() {
+            perbaruiTampilanAdmin();
+            perbaruiTampilanAbsen();
+            perbaruiTampilanKas();
+        });
+    } catch (e) {
+        console.log("Login belum siap:", e);
+    }
+
+}
+
+
+/* ADMIN */
+
+const UID_ADMIN = "SQvYZXHKIUVGA51YXllzXVoRmSQ2";
+
+function adalahAdmin() {
+    return auth !== null && auth.currentUser !== null && auth.currentUser.uid === UID_ADMIN;
 }
 
 function pesanAdmin(teks) {
@@ -1023,25 +893,20 @@ function pesanAdmin(teks) {
 }
 
 function perbaruiTampilanAdmin() {
-
     let masuk = adalahAdmin();
-
     document.getElementById("admin-login").style.display = masuk ? "none" : "block";
     document.getElementById("admin-panel").style.display = masuk ? "block" : "none";
-
     document.getElementById("tombol-admin").textContent = masuk ? "🔓" : "🔐";
-
     if (masuk) {
         document.getElementById("admin-info").textContent = auth.currentUser.email;
         tampilkanKelolaAdmin();
     }
-
 }
 
 function masukAdmin() {
 
     if (auth === null) {
-        pesanAdmin("Login belum siap. Buka aplikasi lewat link web (bukan TrebEdit) dan periksa internet.");
+        pesanAdmin("Login belum siap. Buka aplikasi lewat link web dan periksa internet.");
         return;
     }
 
@@ -1057,16 +922,13 @@ function masukAdmin() {
 
     auth.signInWithEmailAndPassword(email, sandi)
     .then(function(hasil) {
-
         if (hasil.user.uid !== UID_ADMIN) {
             auth.signOut();
             pesanAdmin("Akun ini bukan admin.");
             return;
         }
-
         document.getElementById("admin-sandi").value = "";
         pesanAdmin("");
-
     })
     .catch(function(error) {
         console.log("Gagal masuk:", error);
@@ -1076,21 +938,13 @@ function masukAdmin() {
 }
 
 function keluarAdmin() {
-
     if (auth === null) { return; }
-
-    auth.signOut().then(function() {
-        pesanAdmin("Kamu sudah keluar.");
-    });
-
+    auth.signOut().then(function() { pesanAdmin("Kamu sudah keluar."); });
 }
 
 function simpanPengumuman() {
 
-    if (!adalahAdmin()) {
-        pesanAdmin("Masuk sebagai admin dulu.");
-        return;
-    }
+    if (!adalahAdmin()) { pesanAdmin("Masuk sebagai admin dulu."); return; }
 
     let judul = ambilNilai("in-judul");
     let isi = ambilNilai("in-isi");
@@ -1103,31 +957,21 @@ function simpanPengumuman() {
 
     if (pembuat === "") { pembuat = "Admin"; }
 
-    let tanggal = new Date().toLocaleDateString("id-ID", {
-        day: "numeric",
-        month: "long",
-        year: "numeric"
-    });
+    let tanggal = new Date().toLocaleDateString("id-ID", { day: "numeric", month: "long", year: "numeric" });
 
     pesanAdmin("Menyimpan...");
 
     db.collection("pengumuman").add({
-        judul: judul,
-        isi: isi,
-        tanggal: tanggal,
-        pembuat: pembuat,
+        judul: judul, isi: isi, tanggal: tanggal, pembuat: pembuat,
         penting: document.getElementById("in-penting").checked,
         urutan: Date.now()
     })
     .then(function() {
-
         document.getElementById("in-judul").value = "";
         document.getElementById("in-isi").value = "";
         document.getElementById("in-pembuat").value = "";
         document.getElementById("in-penting").checked = false;
-
         pesanAdmin("Pengumuman tersimpan ✅");
-
     })
     .catch(function(error) {
         console.log("Gagal menyimpan pengumuman:", error);
@@ -1138,10 +982,7 @@ function simpanPengumuman() {
 
 function simpanTugas() {
 
-    if (!adalahAdmin()) {
-        pesanAdmin("Masuk sebagai admin dulu.");
-        return;
-    }
+    if (!adalahAdmin()) { pesanAdmin("Masuk sebagai admin dulu."); return; }
 
     let mapel = ambilNilai("in-mapel");
     let nama = ambilNilai("in-nama");
@@ -1156,21 +997,14 @@ function simpanTugas() {
     pesanAdmin("Menyimpan...");
 
     db.collection("tugas").add({
-        mapel: mapel,
-        nama: nama,
-        keterangan: keterangan,
-        batas: batas,
-        urutan: Date.now()
+        mapel: mapel, nama: nama, keterangan: keterangan, batas: batas, urutan: Date.now()
     })
     .then(function() {
-
         document.getElementById("in-mapel").value = "";
         document.getElementById("in-nama").value = "";
         document.getElementById("in-keterangan").value = "";
         document.getElementById("in-batas").value = "";
-
         pesanAdmin("Tugas tersimpan ✅");
-
     })
     .catch(function(error) {
         console.log("Gagal menyimpan tugas:", error);
@@ -1179,8 +1013,7 @@ function simpanTugas() {
 
 }
 
-/* Hapus butuh dua ketukan supaya tidak terhapus tidak sengaja */
-
+/* Hapus butuh dua ketukan */
 let hapusMenunggu = "";
 
 function hapusData(koleksi, id, tombol) {
@@ -1190,27 +1023,21 @@ function hapusData(koleksi, id, tombol) {
     let kunci = koleksi + ":" + id;
 
     if (hapusMenunggu !== kunci) {
-
         hapusMenunggu = kunci;
         tombol.textContent = "Ketuk lagi";
-
         setTimeout(function() {
             if (hapusMenunggu === kunci) {
                 hapusMenunggu = "";
                 tombol.textContent = "🗑 Hapus";
             }
         }, 4000);
-
         return;
-
     }
 
     hapusMenunggu = "";
 
     db.collection(koleksi).doc(id).delete()
-    .then(function() {
-        pesanAdmin("Data dihapus ✅");
-    })
+    .then(function() { pesanAdmin("Data dihapus ✅"); })
     .catch(function(error) {
         console.log("Gagal menghapus:", error);
         pesanAdmin("Gagal menghapus. Cek aturan Firestore dan internet.");
@@ -1227,105 +1054,29 @@ function tampilkanKelolaAdmin() {
     daftarPengumuman.forEach(function(d) {
         hasilP += `
             <div class="kelola-item">
-                <span>${d.judul}</span>
-                <button class="tombol-hapus"
-                onclick="hapusData('pengumuman', '${d.id}', this)">🗑 Hapus</button>
+                <span>${esc(d.judul)}</span>
+                <button class="tombol-hapus" onclick="hapusData('pengumuman', '${esc(d.id)}', this)">🗑 Hapus</button>
             </div>
         `;
     });
 
-    if (hasilP === "") {
-        hasilP = `<div class="kosong">Belum ada pengumuman.</div>`;
-    }
+    if (hasilP === "") { hasilP = `<div class="kosong">Belum ada pengumuman.</div>`; }
 
     let hasilT = "";
 
     daftarTugas.forEach(function(d) {
         hasilT += `
             <div class="kelola-item">
-                <span>${d.nama || "(tanpa judul)"} • ${d.mapel}</span>
-                <button class="tombol-hapus"
-                onclick="hapusData('tugas', '${d.id}', this)">🗑 Hapus</button>
+                <span>${esc(d.nama || "(tanpa judul)")} • ${esc(d.mapel)}</span>
+                <button class="tombol-hapus" onclick="hapusData('tugas', '${esc(d.id)}', this)">🗑 Hapus</button>
             </div>
         `;
     });
 
-    if (hasilT === "") {
-        hasilT = `<div class="kosong">Belum ada tugas.</div>`;
-    }
+    if (hasilT === "") { hasilT = `<div class="kosong">Belum ada tugas.</div>`; }
 
     document.getElementById("kelola-pengumuman").innerHTML = hasilP;
     document.getElementById("kelola-tugas").innerHTML = hasilT;
-
-}
-
-
-/* TEMA GELAP / TERANG */
-
-function perbaruiTombolTema() {
-
-    let tema = document.documentElement.getAttribute("data-tema");
-
-    document.getElementById("tombol-tema").textContent =
-        tema === "terang" ? "🌙" : "☀️";
-
-    let meta = document.querySelector('meta[name="theme-color"]');
-
-    if (meta) {
-        meta.setAttribute("content", tema === "terang" ? "#f3f6fc" : "#0b1220");
-    }
-
-}
-
-function gantiTema() {
-
-    let sekarang = document.documentElement.getAttribute("data-tema");
-    let baru = sekarang === "terang" ? "gelap" : "terang";
-
-    document.documentElement.setAttribute("data-tema", baru);
-
-    try {
-        localStorage.setItem("tema", baru);
-    } catch (e) {}
-
-    perbaruiTombolTema();
-
-}
-
-
-/* FUNGSI BANTU */
-
-function hariIni() {
-
-    const namaHari = ["minggu", "senin", "selasa", "rabu",
-                      "kamis", "jumat", "sabtu"];
-
-    let hari = namaHari[new Date().getDay()];
-
-    if (hari === "minggu") {
-        hari = "senin";
-    }
-
-    return hari;
-
-}
-
-function huruf1Besar(teks) {
-    return teks.charAt(0).toUpperCase() + teks.slice(1);
-}
-
-function aktifkanTombolHari(idHalaman, hari) {
-
-    document.querySelectorAll("#" + idHalaman + " .hari-button")
-    .forEach(function(tombol) {
-
-        if (tombol.dataset.hari === hari) {
-            tombol.classList.add("aktif");
-        } else {
-            tombol.classList.remove("aktif");
-        }
-
-    });
 
 }
 
@@ -1348,6 +1099,8 @@ function bukaHalaman(nama) {
     if (nama === "admin") { pesanAdmin(""); perbaruiTampilanAdmin(); }
     if (nama === "kehadiran") { siapkanKehadiran(); }
     if (nama === "absen") { tampilkanAbsen(); }
+    if (nama === "kas") { tampilkanKas(); }
+    if (nama === "kaslihat") { siapkanKasLihat(); }
 
     window.scrollTo(0, 0);
 
@@ -1358,19 +1111,15 @@ function beranda() {
 }
 
 
-/* BERANDA: SALAM + KARTU HARI INI */
+/* BERANDA */
 
 function tampilkanSalam() {
-
     let jam = new Date().getHours();
     let salam = "Selamat malam";
-
     if (jam < 11) { salam = "Selamat pagi"; }
     else if (jam < 15) { salam = "Selamat siang"; }
     else if (jam < 18) { salam = "Selamat sore"; }
-
     document.getElementById("salam").textContent = salam + " 👋";
-
 }
 
 function tampilkanHariIni() {
@@ -1378,35 +1127,29 @@ function tampilkanHariIni() {
     let hari = hariIni();
 
     let tanggal = new Date().toLocaleDateString("id-ID", {
-        weekday: "long",
-        day: "numeric",
-        month: "long",
-        year: "numeric"
+        weekday: "long", day: "numeric", month: "long", year: "numeric"
     });
 
     let catatan = "";
-
-    if (new Date().getDay() === 0) {
-        catatan = " (Minggu libur, menampilkan Senin)";
-    }
+    if (new Date().getDay() === 0) { catatan = " (Minggu libur, menampilkan Senin)"; }
 
     let daftarMapel = "";
-
     jadwal[hari].forEach(function(data) {
-        daftarMapel += "<li>" + data.mapel + "</li>";
+        daftarMapel += "<li>" + esc(data.mapel) + "</li>";
     });
 
     document.getElementById("hari-ini").innerHTML = `
         <h3>📅 Jadwal Hari Ini</h3>
         <p class="tanggal">${tanggal}${catatan}</p>
         <ul>${daftarMapel}</ul>
-        <p class="piket-info">🧹 Piket: ${jadwalPiket[hari].join(", ")}</p>
+        <p class="piket-info">🧹 Piket: ${jadwalPiket[hari].map(esc).join(", ")}</p>
     `;
 
 }
 
 function tampilkanBeranda() {
     tampilkanPengumumanTerbaru();
+    tampilkanKutipan(false);
     tampilkanSalam();
     tampilkanHariIni();
 }
@@ -1419,18 +1162,15 @@ function tampilkanJadwal(hari) {
     let hasil = "<h3>Hari " + huruf1Besar(hari) + "</h3>";
 
     jadwal[hari].forEach(function(data, index) {
-
         hasil += `
             <div class="kartu-mapel">
-                <h3>${index + 1}. ${data.mapel}</h3>
-                <p>👨‍🏫 Guru: ${data.guru}</p>
+                <h3>${index + 1}. ${esc(data.mapel)}</h3>
+                <p>👨‍🏫 Guru: ${esc(data.guru)}</p>
             </div>
         `;
-
     });
 
     document.getElementById("isi-jadwal").innerHTML = hasil;
-
     aktifkanTombolHari("jadwal", hari);
 
 }
@@ -1441,7 +1181,6 @@ function tampilkanJadwal(hari) {
 function tampilkanPiket(hari) {
 
     let daftar = jadwalPiket[hari];
-
     let hasil = "<h3>Piket Hari " + huruf1Besar(hari) + "</h3>";
 
     if (daftar.length === 0) {
@@ -1449,17 +1188,10 @@ function tampilkanPiket(hari) {
     }
 
     daftar.forEach(function(nama, index) {
-
-        hasil += `
-            <div class="kartu-piket">
-                ${index + 1}. 🧹 ${nama}
-            </div>
-        `;
-
+        hasil += `<div class="kartu-piket">${index + 1}. 🧹 ${esc(nama)}</div>`;
     });
 
     document.getElementById("isi-piket").innerHTML = hasil;
-
     aktifkanTombolHari("piket", hari);
 
 }
@@ -1468,36 +1200,28 @@ function tampilkanPiket(hari) {
 /* STATUS TUGAS (localStorage) */
 
 function ambilStatusTersimpan() {
-
     try {
         return JSON.parse(localStorage.getItem("statusTugas")) || {};
     } catch (e) {
         return {};
     }
-
 }
 
 function ubahStatusTugas(id) {
 
-    let tugas = daftarTugas.find(function(t) {
-        return t.id === id;
-    });
+    let tugas = daftarTugas.find(function(t) { return t.id === id; });
+
+    if (!tugas) { return; }
 
     let tersimpan = ambilStatusTersimpan();
-
     let sekarang = tersimpan[id] || tugas.status;
 
-    if (sekarang === "Selesai") {
-        tersimpan[id] = "Belum selesai";
-    } else {
-        tersimpan[id] = "Selesai";
-    }
+    tersimpan[id] = (sekarang === "Selesai") ? "Belum selesai" : "Selesai";
 
-    try {
-        localStorage.setItem("statusTugas", JSON.stringify(tersimpan));
-    } catch (e) {}
+    try { localStorage.setItem("statusTugas", JSON.stringify(tersimpan)); } catch (e) {}
 
     tampilkanTugas();
+    tampilkanChipInfo();
 
 }
 
@@ -1506,26 +1230,21 @@ function tampilkanTugas() {
     let tempat = document.getElementById("daftar-tugas");
 
     if (daftarTugas.length === 0) {
-
         tempat.innerHTML = `
             <div class="kosong">
                 <h3>📭 Belum Ada Tugas</h3>
                 <p>Tugas dari guru akan ditampilkan di halaman ini.</p>
             </div>
         `;
-
         return;
-
     }
 
     let tersimpan = ambilStatusTersimpan();
-
     let hasil = "";
 
     daftarTugas.forEach(function(data, index) {
 
         let statusSekarang = tersimpan[data.id] || data.status;
-
         let statusHTML = "";
         let teksTombol = "";
 
@@ -1539,22 +1258,12 @@ function tampilkanTugas() {
 
         hasil += `
             <div class="kartu-tugas">
-
-                <p>${data.mapel}</p>
-
-                <h3>${index + 1}. ${data.nama}</h3>
-
-                <p>${data.keterangan}</p>
-
-                <p>📅 Batas: ${data.batas}</p>
-
+                <p>${esc(data.mapel)}</p>
+                <h3>${index + 1}. ${esc(data.nama)}</h3>
+                <p>${esc(data.keterangan)}</p>
+                <p>📅 Batas: ${esc(data.batas)}</p>
                 ${statusHTML}
-
-                <button class="tombol-status"
-                onclick="ubahStatusTugas('${data.id}')">
-                    ${teksTombol}
-                </button>
-
+                <button class="tombol-status" onclick="ubahStatusTugas('${esc(data.id)}')">${teksTombol}</button>
             </div>
         `;
 
@@ -1568,24 +1277,18 @@ function tampilkanTugas() {
 /* PENGUMUMAN */
 
 function ambilPengumumanDibaca() {
-
     try {
         return JSON.parse(localStorage.getItem("pengumumanDibaca")) || [];
     } catch (e) {
         return [];
     }
-
 }
 
 function bukaPengumumanDariBeranda() {
 
-    let semuaId = daftarPengumuman.map(function(p) {
-        return p.id;
-    });
+    let semuaId = daftarPengumuman.map(function(p) { return p.id; });
 
-    try {
-        localStorage.setItem("pengumumanDibaca", JSON.stringify(semuaId));
-    } catch (e) {}
+    try { localStorage.setItem("pengumumanDibaca", JSON.stringify(semuaId)); } catch (e) {}
 
     bukaHalaman("pengumuman");
 
@@ -1596,39 +1299,31 @@ function tampilkanPengumuman() {
     let tempat = document.getElementById("daftar-pengumuman");
 
     if (daftarPengumuman.length === 0) {
-
         tempat.innerHTML = `
             <div class="kosong">
                 <h3>📭 Belum Ada Pengumuman</h3>
                 <p>Pengumuman terbaru akan tampil di sini.</p>
             </div>
         `;
-
         return;
-
     }
+
+    /* Membuka halaman pengumuman = semua dianggap sudah dibaca */
+    let semuaId = daftarPengumuman.map(function(p) { return p.id; });
+    try { localStorage.setItem("pengumumanDibaca", JSON.stringify(semuaId)); } catch (e) {}
 
     let hasil = "";
 
     daftarPengumuman.forEach(function(data) {
 
-        let labelPenting = data.penting
-            ? `<span class="label-penting">❗ Penting</span>`
-            : "";
+        let labelPenting = data.penting ? `<span class="label-penting">❗ Penting</span>` : "";
 
         hasil += `
             <div class="kartu-pengumuman">
-
                 ${labelPenting}
-
-                <h3>${data.judul}</h3>
-
-                <p>${data.isi}</p>
-
-                <p class="info-pengumuman">
-                    📅 ${data.tanggal} • ✍️ ${data.pembuat}
-                </p>
-
+                <h3>${esc(data.judul)}</h3>
+                <p>${esc(data.isi)}</p>
+                <p class="info-pengumuman">📅 ${esc(data.tanggal)} • ✍️ ${esc(data.pembuat)}</p>
             </div>
         `;
 
@@ -1640,13 +1335,17 @@ function tampilkanPengumuman() {
 
 function tampilkanPengumumanTerbaru() {
 
-    let tempat = document.getElementById("pengumuman-terbaru");
+    tampilkanChipInfo();
 
+    let tempat = document.getElementById("pengumuman-terbaru");
     let dibaca = ambilPengumumanDibaca();
 
     let belumDibaca = daftarPengumuman.filter(function(p) {
         return !dibaca.includes(p.id);
     });
+
+    let tombolMenu = document.getElementById("menu-pengumuman");
+    if (tombolMenu) { tombolMenu.classList.toggle("ada-baru", belumDibaca.length > 0); }
 
     if (belumDibaca.length === 0) {
         tempat.innerHTML = "";
@@ -1654,41 +1353,25 @@ function tampilkanPengumumanTerbaru() {
     }
 
     let data = belumDibaca[0];
-
     let infoLain = "";
 
     if (belumDibaca.length > 1) {
-        infoLain = `
-            <p class="info-pengumuman">
-                +${belumDibaca.length - 1} pengumuman lainnya
-            </p>
-        `;
+        infoLain = `<p class="info-pengumuman">+${belumDibaca.length - 1} pengumuman lainnya</p>`;
     }
 
     tempat.innerHTML = `
-        <div class="kartu-pengumuman"
-        onclick="bukaPengumumanDariBeranda()">
-
+        <div class="kartu-pengumuman" onclick="bukaPengumumanDariBeranda()">
             <span class="label-penting">🔔 Baru</span>
-
-            <h3>${data.judul}</h3>
-
+            <h3>${esc(data.judul)}</h3>
             ${infoLain}
-
-            <p class="info-pengumuman">
-                Ketuk untuk membuka pengumuman
-            </p>
-
+            <p class="info-pengumuman">Ketuk untuk membuka pengumuman</p>
         </div>
     `;
 
 }
 
 
-/* KEHADIRAN SISWA
-   - Halaman "kehadiran": dilihat siswa (pilih nama, lihat persen).
-   - Halaman "absen": diisi sekretaris dan admin (dikenali lewat UID).
-   Data disimpan di Firestore, koleksi "kehadiran", satu dokumen per tanggal. */
+/* KEHADIRAN SISWA */
 
 const UID_SEKRETARIS = "kO0hfzGlQPWPvALu5OpunyT6QoX2";
 
@@ -1702,15 +1385,14 @@ const DAFTAR_SISWA = [
 const JAM_BIASA = 8;
 const JAM_JUMAT = 5;   // SESUAIKAN dengan jumlah jam pelajaran hari Jumat
 
-const OPSI_APEL  = ["Mengikuti apel", "Tidak mengikuti apel", "Tidak hadir"];
-const OPSI_KELAS = ["Hadir tanpa keterangan", "Izin", "Sakit", "Bolos", "Alfa"];
+const OPSI_APEL  = ["Mengikuti apel", "Tidak mengikuti apel", "Tidak hadir", "Terlambat"];
+const OPSI_KELAS = ["Hadir tanpa keterangan", "Izin", "Sakit", "Bolos", "Alfa", "Terlambat"];
 
-const SINGKAT_APEL  = { "Mengikuti apel": "Ikut", "Tidak mengikuti apel": "Tidak ikut", "Tidak hadir": "Tidak hadir" };
-const SINGKAT_KELAS = { "Hadir tanpa keterangan": "Hadir", "Izin": "Izin", "Sakit": "Sakit", "Bolos": "Bolos", "Alfa": "Alfa" };
+const SINGKAT_APEL  = { "Mengikuti apel": "Ikut", "Tidak mengikuti apel": "Tidak ikut", "Tidak hadir": "Tidak hadir", "Terlambat": "Terlambat" };
+const SINGKAT_KELAS = { "Hadir tanpa keterangan": "Hadir", "Izin": "Izin", "Sakit": "Sakit", "Bolos": "Bolos", "Alfa": "Alfa", "Terlambat": "Terlambat" };
 
 let jamAbsenSekarang = JAM_BIASA;
 
-/* Pilihan yang sedang diisi sekretaris (satu isi per siswa) */
 let stApel = [];
 let stKelas = [];
 let stJam = [];
@@ -1728,20 +1410,11 @@ function kosongkanIsian() {
 
 kosongkanIsian();
 
-function tanggalHariIniISO() {
-    let d = new Date();
-    d.setMinutes(d.getMinutes() - d.getTimezoneOffset());
-    return d.toISOString().slice(0, 10);
-}
-
-
-/* ===== BAGIAN SEKRETARIS DAN ADMIN: MENGISI KEHADIRAN ===== */
+/* --- Sekretaris dan admin: mengisi kehadiran --- */
 
 function adalahPetugasAbsen() {
-    return auth !== null
-        && auth.currentUser !== null
-        && (auth.currentUser.uid === UID_ADMIN
-            || auth.currentUser.uid === UID_SEKRETARIS);
+    return auth !== null && auth.currentUser !== null
+        && (auth.currentUser.uid === UID_ADMIN || auth.currentUser.uid === UID_SEKRETARIS);
 }
 
 function pesanAbsen(teks) {
@@ -1750,35 +1423,25 @@ function pesanAbsen(teks) {
 
 function masukAbsen() {
 
-    if (auth === null) {
-        pesanAbsen("Login belum siap. Periksa internet.");
-        return;
-    }
+    if (auth === null) { pesanAbsen("Login belum siap. Periksa internet."); return; }
 
     let email = document.getElementById("absen-email").value.trim();
     let sandi = document.getElementById("absen-sandi").value;
 
-    if (email === "" || sandi === "") {
-        pesanAbsen("Isi email dan password dulu.");
-        return;
-    }
+    if (email === "" || sandi === "") { pesanAbsen("Isi email dan password dulu."); return; }
 
     pesanAbsen("Sedang masuk...");
 
     auth.signInWithEmailAndPassword(email, sandi)
     .then(function(hasil) {
-
         let uid = hasil.user.uid;
-
         if (uid !== UID_ADMIN && uid !== UID_SEKRETARIS) {
             auth.signOut();
             pesanAbsen("Akun ini tidak punya izin mengisi kehadiran.");
             return;
         }
-
         document.getElementById("absen-sandi").value = "";
         pesanAbsen("");
-
     })
     .catch(function(error) {
         console.log("Gagal masuk:", error);
@@ -1788,13 +1451,8 @@ function masukAbsen() {
 }
 
 function keluarAbsen() {
-
     if (auth === null) { return; }
-
-    auth.signOut().then(function() {
-        pesanAbsen("Kamu sudah keluar.");
-    });
-
+    auth.signOut().then(function() { pesanAbsen("Kamu sudah keluar."); });
 }
 
 function perbaruiTampilanAbsen() {
@@ -1803,7 +1461,6 @@ function perbaruiTampilanAbsen() {
 
     document.getElementById("absen-login").style.display = masuk ? "none" : "block";
     document.getElementById("absen-panel").style.display = masuk ? "block" : "none";
-
     document.getElementById("tombol-absen").textContent = masuk ? "✅" : "📝";
 
     if (masuk) {
@@ -1811,10 +1468,7 @@ function perbaruiTampilanAbsen() {
         document.getElementById("absen-info").textContent = auth.currentUser.email;
 
         let kolom = document.getElementById("absen-tanggal");
-
-        if (kolom.value === "") {
-            kolom.value = tanggalHariIniISO();
-        }
+        if (kolom.value === "") { kolom.value = tanggalHariIniISO(); }
 
         if (document.getElementById("absen").classList.contains("aktif")) {
             muatAbsen();
@@ -1842,8 +1496,7 @@ function muatAbsen() {
 
     jamAbsenSekarang = (hariKe === 5) ? JAM_JUMAT : JAM_BIASA;
 
-    document.getElementById("absen-hari").textContent =
-        namaHari + " • " + jamAbsenSekarang + " jam pelajaran";
+    document.getElementById("absen-hari").textContent = namaHari + " • " + jamAbsenSekarang + " jam pelajaran";
 
     pesanAbsen("Memuat...");
 
@@ -1853,21 +1506,15 @@ function muatAbsen() {
         kosongkanIsian();
 
         if (dok.exists) {
-
             let daftar = dok.data().data || [];
-
             daftar.forEach(function(d) {
-
                 let i = DAFTAR_SISWA.indexOf(d.nama);
-
                 if (i > -1) {
                     stApel[i] = d.apel || "";
                     stKelas[i] = d.kelas || "";
                     stJam[i] = d.jam || [];
                 }
-
             });
-
         }
 
         pesanAbsen("");
@@ -1890,24 +1537,20 @@ function gambarAbsen() {
 
     DAFTAR_SISWA.forEach(function(nama, i) {
 
-        a += `<tr><td>${i + 1}</td><td class="nm">${nama}</td>`;
+        a += `<tr><td>${i + 1}</td><td class="nm">${esc(nama)}</td>`;
 
         OPSI_APEL.forEach(function(opsi, j) {
             let on = stApel[i] === opsi;
-            a += `<td><button class="pilih ${on ? "on" : ""}"
-                onclick="pilihApel(${i}, ${j})"
-                aria-label="${opsi}">${on ? "✓" : ""}</button></td>`;
+            a += `<td><button class="pilih ${on ? "on" : ""}" onclick="pilihApel(${i}, ${j})" aria-label="${opsi}">${on ? "✓" : ""}</button></td>`;
         });
 
         a += `</tr>`;
 
-        k += `<tr><td>${i + 1}</td><td class="nm">${nama}</td>`;
+        k += `<tr><td>${i + 1}</td><td class="nm">${esc(nama)}</td>`;
 
         OPSI_KELAS.forEach(function(opsi, j) {
             let on = stKelas[i] === opsi;
-            k += `<td><button class="pilih ${on ? "on" : ""}"
-                onclick="pilihKelas(${i}, ${j})"
-                aria-label="${opsi}">${on ? "✓" : ""}</button></td>`;
+            k += `<td><button class="pilih ${on ? "on" : ""}" onclick="pilihKelas(${i}, ${j})" aria-label="${opsi}">${on ? "✓" : ""}</button></td>`;
         });
 
         let ket = "";
@@ -1920,12 +1563,11 @@ function gambarAbsen() {
 
         if (stKelas[i] === "Bolos") {
 
-            k += `<tr><td colspan="8" class="baris-jam">Bolos jam ke: `;
+            k += `<tr><td colspan="9" class="baris-jam">Bolos jam ke: `;
 
             for (let h = 1; h <= jamAbsenSekarang; h++) {
                 let on = stJam[i].indexOf(h) > -1;
-                k += `<button class="chip-jam ${on ? "on" : ""}"
-                    onclick="pilihJam(${i}, ${h})">${h}</button>`;
+                k += `<button class="chip-jam ${on ? "on" : ""}" onclick="pilihJam(${i}, ${h})">${h}</button>`;
             }
 
             k += `</td></tr>`;
@@ -1945,13 +1587,9 @@ function pilihApel(i, j) {
 }
 
 function pilihKelas(i, j) {
-
     stKelas[i] = (stKelas[i] === OPSI_KELAS[j]) ? "" : OPSI_KELAS[j];
-
     if (stKelas[i] !== "Bolos") { stJam[i] = []; }
-
     gambarAbsen();
-
 }
 
 function pilihJam(i, h) {
@@ -1978,10 +1616,7 @@ function simpanAbsen() {
 
     let tanggal = document.getElementById("absen-tanggal").value;
 
-    if (tanggal === "") {
-        pesanAbsen("Pilih tanggal dulu.");
-        return;
-    }
+    if (tanggal === "") { pesanAbsen("Pilih tanggal dulu."); return; }
 
     let data = [];
 
@@ -2010,9 +1645,7 @@ function simpanAbsen() {
         diisiOleh: auth.currentUser.email,
         diperbarui: Date.now()
     })
-    .then(function() {
-        pesanAbsen("Kehadiran tersimpan ✅");
-    })
+    .then(function() { pesanAbsen("Kehadiran tersimpan ✅"); })
     .catch(function(error) {
         console.log("Gagal menyimpan kehadiran:", error);
         let kode = error && error.code ? error.code : "tidak diketahui";
@@ -2028,29 +1661,24 @@ function simpanAbsen() {
 }
 
 
-/* ===== BAGIAN SISWA: MELIHAT DAFTAR KEHADIRAN SEMUA SISWA ===== */
+/* --- Siswa: melihat daftar kehadiran --- */
 
-/* Bulan paling awal yang muncul di deretan tombol bulan. Boleh diubah. */
 const BULAN_AWAL = "2026-07";
 
-let hdBulan = "";   // bulan yang sedang dilihat, contoh "2026-11"
-let hdSiswa = {};   // nama siswa -> kehadiran per hari di bulan itu
-let hdHari = [];    // tanggal-tanggal yang sudah diisi sekretaris
+let hdBulan = "";
+let hdSiswa = {};
+let hdHari = [];
 
 function bulanSekarang() {
     return tanggalHariIniISO().slice(0, 7);
 }
 
 function namaBulan(bulan, panjang) {
-
     let bagian = bulan.split("-");
-
     return new Date(Number(bagian[0]), Number(bagian[1]) - 1, 1)
         .toLocaleDateString("id-ID", { month: panjang ? "long" : "short", year: "numeric" });
-
 }
 
-/* Daftar bulan dari BULAN_AWAL sampai bulan ini. Bulan baru muncul sendiri tiap tanggal 1. */
 function daftarBulan() {
 
     let hasil = [];
@@ -2060,42 +1688,29 @@ function daftarBulan() {
     if (b > akhir) { b = akhir; }
 
     while (b <= akhir) {
-
         hasil.push(b);
-
         let bagian = b.split("-");
         let d = new Date(Number(bagian[0]), Number(bagian[1]), 1);
-
         b = d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0");
-
     }
 
     return hasil;
 
 }
 
-/* Huruf awal untuk lingkaran di samping nama (awalan Muh. dan M. dilewati) */
 function inisialNama(nama) {
 
-    let kata = nama.replace(/\./g, " ").split(/\s+/).filter(function(k) {
-        return k !== "";
-    });
-
+    let kata = nama.replace(/\./g, " ").split(/\s+/).filter(function(k) { return k !== ""; });
     let awalan = ["muh", "m", "muhammad", "muhamad"];
 
-    if (kata.length > 1 && awalan.indexOf(kata[0].toLowerCase()) > -1) {
-        kata.shift();
-    }
+    if (kata.length > 1 && awalan.indexOf(kata[0].toLowerCase()) > -1) { kata.shift(); }
 
-    if (kata.length === 1) {
-        return kata[0].slice(0, 2).toUpperCase();
-    }
+    if (kata.length === 1) { return kata[0].slice(0, 2).toUpperCase(); }
 
     return (kata[0].charAt(0) + kata[1].charAt(0)).toUpperCase();
 
 }
 
-/* Warna lingkaran dibedakan per siswa */
 function kelasAvatar(i) {
     return "av" + (i % 5);
 }
@@ -2105,45 +1720,29 @@ function bangunChipBulan() {
     let h = "";
 
     daftarBulan().forEach(function(b) {
-        h += `<button class="chip-bulan ${b === hdBulan ? "aktif" : ""}"
-            data-bulan="${b}"
-            onclick="pilihBulan('${b}')">${namaBulan(b, false)}</button>`;
+        h += `<button class="chip-bulan ${b === hdBulan ? "aktif" : ""}" data-bulan="${b}" onclick="pilihBulan('${b}')">${namaBulan(b, false)}</button>`;
     });
 
     let baris = document.getElementById("hd-bulan-baris");
-
     baris.innerHTML = h;
 
-    /* Geser deretan supaya bulan yang aktif ada di tengah */
     let aktif = baris.querySelector(".aktif");
-
-    if (aktif) {
-        baris.scrollLeft = aktif.offsetLeft - (baris.clientWidth - aktif.offsetWidth) / 2;
-    }
+    if (aktif) { baris.scrollLeft = aktif.offsetLeft - (baris.clientWidth - aktif.offsetWidth) / 2; }
 
 }
 
-/* Setiap halaman dibuka, selalu mulai dari bulan berjalan */
 function siapkanKehadiran() {
-
     hdBulan = bulanSekarang();
-
     bangunChipBulan();
-
     muatRekap();
-
 }
 
 function pilihBulan(b) {
-
     hdBulan = b;
-
     document.querySelectorAll("#hd-bulan-baris .chip-bulan").forEach(function(c) {
         c.classList.toggle("aktif", c.dataset.bulan === b);
     });
-
     muatRekap();
-
 }
 
 function pesanRekap(teks) {
@@ -2167,15 +1766,12 @@ function muatRekap() {
       .get()
     .then(function(hasil) {
 
-        /* Abaikan hasil lama kalau bulan sudah diganti */
         if (bulan !== hdBulan) { return; }
 
         hdHari = [];
         hdSiswa = {};
 
-        DAFTAR_SISWA.forEach(function(nama) {
-            hdSiswa[nama] = [];
-        });
+        DAFTAR_SISWA.forEach(function(nama) { hdSiswa[nama] = []; });
 
         hasil.forEach(function(dok) {
 
@@ -2184,7 +1780,6 @@ function muatRekap() {
             hdHari.push(d.tanggal);
 
             (d.data || []).forEach(function(e) {
-
                 if (hdSiswa[e.nama]) {
                     hdSiswa[e.nama].push({
                         tanggal: d.tanggal,
@@ -2193,7 +1788,6 @@ function muatRekap() {
                         jam: e.jam || []
                     });
                 }
-
             });
 
         });
@@ -2224,12 +1818,11 @@ function tglPendek(tanggal, opsi) {
     return new Date(tanggal + "T00:00:00").toLocaleDateString("id-ID", opsi);
 }
 
-/* Menghitung jumlah hadir, izin, sakit, bolos, alfa, dan apel satu siswa */
 function hitungSiswa(baris) {
 
     let n = {
-        hadir: 0, izin: 0, sakit: 0, bolos: 0, alfa: 0, totalKelas: 0,
-        ikut: 0, tidakIkut: 0, tidakHadir: 0, totalApel: 0
+        hadir: 0, izin: 0, sakit: 0, bolos: 0, alfa: 0, telatKelas: 0, totalKelas: 0,
+        ikut: 0, tidakIkut: 0, tidakHadir: 0, telatApel: 0, totalApel: 0
     };
 
     baris.forEach(function(b) {
@@ -2241,6 +1834,7 @@ function hitungSiswa(baris) {
             if (b.kelas === "Sakit") { n.sakit++; }
             if (b.kelas === "Bolos") { n.bolos++; }
             if (b.kelas === "Alfa") { n.alfa++; }
+            if (b.kelas === "Terlambat") { n.telatKelas++; }
         }
 
         if (b.apel !== "") {
@@ -2248,6 +1842,7 @@ function hitungSiswa(baris) {
             if (b.apel === "Mengikuti apel") { n.ikut++; }
             if (b.apel === "Tidak mengikuti apel") { n.tidakIkut++; }
             if (b.apel === "Tidak hadir") { n.tidakHadir++; }
+            if (b.apel === "Terlambat") { n.telatApel++; }
         }
 
     });
@@ -2256,7 +1851,6 @@ function hitungSiswa(baris) {
 
 }
 
-/* Isi yang terbuka kalau nama siswa diketuk */
 function detailSiswaHtml(baris, n) {
 
     if (baris.length === 0) {
@@ -2270,11 +1864,13 @@ function detailSiswaHtml(baris, n) {
         <span class="lencana lencana-biru">Sakit ${n.sakit}</span>
         <span class="lencana lencana-merah">Bolos ${n.bolos}</span>
         <span class="lencana lencana-merah">Alfa ${n.alfa}</span>
+        <span class="lencana lencana-ungu">Terlambat ${n.telatKelas}</span>
 
         <div class="sub-judul">Apel pagi</div>
         <span class="lencana lencana-hijau">Ikut ${n.ikut}</span>
         <span class="lencana lencana-kuning">Tidak ikut ${n.tidakIkut}</span>
         <span class="lencana lencana-merah">Tidak hadir ${n.tidakHadir}</span>
+        <span class="lencana lencana-ungu">Terlambat ${n.telatApel}</span>
 
         <div class="sub-judul">Per hari</div>
         <table class="absen">
@@ -2293,13 +1889,7 @@ function detailSiswaHtml(baris, n) {
             kelas += " (jam " + b.jam.join(",") + ")";
         }
 
-        h += `
-            <tr>
-                <td class="nm">${tgl}</td>
-                <td>${apel}</td>
-                <td>${kelas}</td>
-            </tr>
-        `;
+        h += `<tr><td class="nm">${tgl}</td><td>${apel}</td><td>${kelas}</td></tr>`;
 
     });
 
@@ -2314,36 +1904,31 @@ function barisSiswaHtml(nama, i) {
     let baris = hdSiswa[nama] || [];
     let n = hitungSiswa(baris);
 
-    let pk = n.totalKelas > 0 ? Math.round(n.hadir / n.totalKelas * 100) : -1;
-    let pa = n.totalApel > 0 ? Math.round(n.ikut / n.totalApel * 100) : -1;
+    let pk = n.totalKelas > 0 ? Math.round((n.hadir + n.telatKelas) / n.totalKelas * 100) : -1;
+    let pa = n.totalApel > 0 ? Math.round((n.ikut + n.telatApel) / n.totalApel * 100) : -1;
 
-    let kosong = { teks: "var(--redup)", bar: "var(--kartu2)" };
+    let kosongW = { teks: "var(--redup)", bar: "var(--kartu2)" };
 
-    let wk = pk >= 0 ? warnaPersen(pk) : kosong;
-    let wa = pa >= 0 ? warnaPersen(pa) : kosong;
+    let wk = pk >= 0 ? warnaPersen(pk) : kosongW;
+    let wa = pa >= 0 ? warnaPersen(pa) : kosongW;
 
     return `
         <div class="baris-hd" style="animation-delay: ${Math.min(i, 10) * 0.03}s">
-
-            <button class="baris-hd-kepala"
-            onclick="this.parentElement.classList.toggle('buka')">
-                <span class="avatar-kecil ${kelasAvatar(i)}">${inisialNama(nama)}</span>
-                <span class="baris-hd-nama">${i + 1}. ${nama}</span>
+            <button class="baris-hd-kepala" onclick="this.parentElement.classList.toggle('buka')">
+                <span class="avatar-kecil ${kelasAvatar(i)}">${esc(inisialNama(nama))}</span>
+                <span class="baris-hd-nama">${i + 1}. ${esc(nama)}</span>
                 <span class="baris-hd-angka">
                     <span>Kelas <b style="color: ${wk.teks};">${pk >= 0 ? pk + "%" : "-"}</b></span>
                     <span>Apel <b style="color: ${wa.teks};">${pa >= 0 ? pa + "%" : "-"}</b></span>
                 </span>
                 <span class="panah">›</span>
             </button>
-
             <div class="rekap-bar">
                 <div style="width: ${pk >= 0 ? pk : 0}%; background: ${wk.bar};"></div>
             </div>
-
             <div class="baris-hd-detail">
                 ${detailSiswaHtml(baris, n)}
             </div>
-
         </div>
     `;
 
@@ -2354,13 +1939,10 @@ function gambarDaftarHd() {
     let info = "Belum ada data kehadiran di bulan ini.";
 
     if (hdHari.length > 0) {
-
         let pertama = tglPendek(hdHari[0], { day: "numeric", month: "long" });
         let terakhir = tglPendek(hdHari[hdHari.length - 1], { day: "numeric", month: "long" });
-
         info = "Dihitung dari " + hdHari.length + " hari yang sudah diisi (" +
                pertama + " sampai " + terakhir + "). Ketuk nama untuk melihat rincian.";
-
     }
 
     let h = `
@@ -2368,15 +1950,13 @@ function gambarDaftarHd() {
         <p class="deskripsi" style="margin-top: 10px;">${info}</p>
     `;
 
-    DAFTAR_SISWA.forEach(function(nama, i) {
-        h += barisSiswaHtml(nama, i);
-    });
+    DAFTAR_SISWA.forEach(function(nama, i) { h += barisSiswaHtml(nama, i); });
 
     h += `
         <p class="deskripsi" style="margin-top: 14px;">
-            Kelas = hari hadir tanpa keterangan dibagi hari yang sudah diisi.
+            Kelas = hari hadir (termasuk terlambat) dibagi hari yang sudah diisi.
             Izin, sakit, bolos, dan alfa mengurangi persen.
-            Apel = hari mengikuti apel dibagi hari yang sudah diisi.
+            Apel = hari mengikuti apel (termasuk terlambat) dibagi hari yang sudah diisi.
         </p>
     `;
 
@@ -2384,11 +1964,718 @@ function gambarDaftarHd() {
 
 }
 
-/* JALANKAN SAAT APLIKASI DIBUKA */
+
+/* KAS KELAS (BENDAHARA) */
+
+const UID_BENDAHARA = "GANTI_DENGAN_UID_BENDAHARA";
+
+/* Senin minggu ke-1 pencatatan kas. */
+const KAS_MULAI = "2026-11-23";
+
+let kasData = {};
+let kasBulan = "";
+let kasBerhenti = null;
+
+function adalahPetugasKas() {
+    return auth !== null && auth.currentUser !== null
+        && (auth.currentUser.uid === UID_ADMIN || auth.currentUser.uid === UID_BENDAHARA);
+}
+
+function pesanKas(t) { document.getElementById("kas-pesan").textContent = t; }
+
+function rp(n) { return (n < 0 ? "-" : "") + "Rp" + Math.abs(n).toLocaleString("id-ID"); }
+
+function masukKas() {
+
+    if (auth === null) { pesanKas("Login belum siap. Periksa internet."); return; }
+
+    let email = document.getElementById("kas-email").value.trim();
+    let sandi = document.getElementById("kas-sandi").value;
+
+    if (email === "" || sandi === "") { pesanKas("Isi email dan password dulu."); return; }
+
+    pesanKas("Sedang masuk...");
+
+    auth.signInWithEmailAndPassword(email, sandi)
+    .then(function(h) {
+        if (h.user.uid !== UID_ADMIN && h.user.uid !== UID_BENDAHARA) {
+            auth.signOut();
+            pesanKas("Akun ini tidak punya izin mengakses kas.");
+            return;
+        }
+        document.getElementById("kas-sandi").value = "";
+        pesanKas("");
+    })
+    .catch(function(e) {
+        console.log("Gagal masuk:", e);
+        pesanKas("Gagal masuk. Cek email dan password.");
+    });
+
+}
+
+function keluarKas() {
+    if (auth === null) { return; }
+    auth.signOut().then(function() { pesanKas("Kamu sudah keluar."); });
+}
+
+function tampilkanKas() {
+    pesanKas("");
+    perbaruiTampilanKas();
+}
+
+function perbaruiTampilanKas() {
+
+    let masuk = adalahPetugasKas();
+
+    document.getElementById("kas-login").style.display = masuk ? "none" : "block";
+    document.getElementById("kas-panel").style.display = masuk ? "block" : "none";
+    document.getElementById("tombol-kas").textContent = masuk ? "💵" : "💰";
+
+    if (!masuk) {
+        if (kasBerhenti) { kasBerhenti(); kasBerhenti = null; }
+        kasData = {};
+        return;
+    }
+
+    document.getElementById("kas-info").textContent = auth.currentUser.email;
+
+    if (kasBulan === "") { kasBulan = bulanSekarang(); }
+
+    bangunChipKas();
+    aturTanggalKas();
+    isiPilihanNama();
+
+    if (!kasBerhenti && db !== null && document.getElementById("kas").classList.contains("aktif")) {
+        kasBerhenti = db.collection("kas").onSnapshot(function(s) {
+            kasData = {};
+            s.forEach(function(d) { kasData[d.id] = d.data(); });
+            gambarKas();
+        }, function(e) {
+            console.log("Gagal membaca kas:", e);
+            pesanKas("Gagal memuat kas. Cek aturan Firestore dan internet.");
+        });
+    }
+
+    gambarKas();
+
+}
+
+function bangunChipKas() {
+
+    let h = "";
+
+    daftarBulan().forEach(function(b) {
+        h += `<button class="chip-bulan ${b === kasBulan ? "aktif" : ""}" onclick="pilihBulanKas('${b}')">${namaBulan(b, false)}</button>`;
+    });
+
+    let baris = document.getElementById("kas-bulan-baris");
+    baris.innerHTML = h;
+
+    let aktif = baris.querySelector(".aktif");
+    if (aktif) { baris.scrollLeft = aktif.offsetLeft - (baris.clientWidth - aktif.offsetWidth) / 2; }
+
+}
+
+function pilihBulanKas(b) {
+    kasBulan = b;
+    bangunChipKas();
+    aturTanggalKas();
+    gambarKas();
+}
+
+function aturTanggalKas() {
+
+    let p = kasBulan.split("-");
+    let akhir = new Date(Number(p[0]), Number(p[1]), 0).getDate();
+    let isi = (kasBulan === bulanSekarang()) ? tanggalHariIniISO() : kasBulan + "-01";
+
+    ["kas-bayar-tgl", "kas-masuk-tgl", "kas-keluar-tgl"].forEach(function(id) {
+        let k = document.getElementById(id);
+        k.min = kasBulan + "-01";
+        k.max = kasBulan + "-" + String(akhir).padStart(2, "0");
+        k.value = isi;
+    });
+
+}
+
+function dataBulanKas(b, sumber) {
+
+    let src = sumber || kasData;
+    let d = src[b] || {};
+    let iuran = d.iuran;
+
+    if (typeof iuran !== "number") {
+        iuran = 0;
+        Object.keys(src).sort().forEach(function(k) {
+            if (k < b && typeof src[k].iuran === "number") { iuran = src[k].iuran; }
+        });
+    }
+
+    return { iuran: iuran, bayar: d.bayar || [], masuk: d.masuk || [], keluar: d.keluar || [] };
+
+}
+
+function jumlahDari(arr) {
+    return arr.reduce(function(s, x) { return s + (Number(x.jumlah) || 0); }, 0);
+}
+
+function hitungKas(b, sumber) {
+
+    let d = dataBulanKas(b, sumber);
+
+    let iuran = jumlahDari(d.bayar);
+    let tambahan = jumlahDari(d.masuk);
+    let keluar = jumlahDari(d.keluar);
+
+    return {
+        d: d, iuran: iuran, tambahan: tambahan,
+        masuk: iuran + tambahan, keluar: keluar, saldo: iuran + tambahan - keluar
+    };
+
+}
+
+/* Sistem minggu */
+
+function nomorMinggu(tglISO) {
+    let a = new Date(KAS_MULAI + "T00:00:00");
+    let b = new Date(tglISO + "T00:00:00");
+    return Math.floor(Math.round((b - a) / 86400000) / 7) + 1;
+}
+
+function akhirMinggu(n) {
+    let d = new Date(KAS_MULAI + "T00:00:00");
+    d.setDate(d.getDate() + n * 7 - 1);
+    return d.toLocaleDateString("id-ID", { day: "numeric", month: "short" });
+}
+
+function mingguDibayar(nama, sumber) {
+    let src = sumber || kasData;
+    let n = 0;
+    Object.keys(src).forEach(function(k) {
+        (src[k].bayar || []).forEach(function(x) {
+            if (x.nama === nama) { n += Number(x.minggu) || 0; }
+        });
+    });
+    return n;
+}
+
+function ringkasStatus(sumber) {
+
+    let sk = Math.max(1, nomorMinggu(tanggalHariIniISO()));
+    let sudahN = 0;
+    let daftar = [];
+
+    DAFTAR_SISWA.forEach(function(nama) {
+        let dibayar = mingguDibayar(nama, sumber);
+        let aman = dibayar >= sk;
+        if (aman) { sudahN++; }
+        daftar.push({ nama: nama, dibayar: dibayar, aman: aman });
+    });
+
+    return { sk: sk, sudahN: sudahN, daftar: daftar };
+
+}
+
+function itemBayarHtml(x, bolehHapus) {
+
+    let tgl = x.tanggal ? tglPendek(x.tanggal, { day: "numeric", month: "short" }) : "";
+    let hapus = bolehHapus
+        ? `<button class="tombol-hapus" onclick="hapusKas('bayar', '${esc(x.id)}', this)">🗑</button>`
+        : "";
+
+    return `
+        <div class="kelola-item">
+            <span style="flex: 1; min-width: 0;">${esc(x.nama)}<br><small class="kas-tgl">${esc(x.minggu)} minggu • ${tgl}</small></span>
+            <b class="kas-plus">+${rp(x.jumlah)}</b>
+            ${hapus}
+        </div>
+    `;
+
+}
+
+function isiPilihanNama() {
+
+    let sel = document.getElementById("kas-bayar-nama");
+
+    if (sel.options.length > 0) { return; }
+
+    let h = `<option value="">Pilih nama siswa</option>`;
+
+    DAFTAR_SISWA.forEach(function(nama) {
+        h += `<option value="${esc(nama)}">${esc(nama)}</option>`;
+    });
+
+    sel.innerHTML = h;
+
+}
+
+function isiNominalOtomatis() {
+
+    let iuran = dataBulanKas(kasBulan).iuran;
+    let minggu = Number(document.getElementById("kas-bayar-minggu").value);
+
+    if (iuran > 0 && minggu > 0) {
+        document.getElementById("kas-bayar-jml").value = iuran * minggu;
+    }
+
+}
+
+function catatBayar() {
+
+    let nama = document.getElementById("kas-bayar-nama").value;
+    let jml = Math.round(Number(document.getElementById("kas-bayar-jml").value));
+    let minggu = Number(document.getElementById("kas-bayar-minggu").value);
+    let tgl = document.getElementById("kas-bayar-tgl").value;
+
+    if (nama === "" || !(jml > 0) || !(minggu > 0)) {
+        pesanKas("Pilih nama siswa, isi nominal, dan pilih jumlah minggu.");
+        return;
+    }
+
+    let arr = dataBulanKas(kasBulan).bayar.concat([{
+        id: String(Date.now()), nama: nama, jumlah: jml, minggu: minggu, tanggal: tgl
+    }]);
+
+    simpanKas(kasBulan, { bayar: arr }, "Pembayaran " + nama + " tersimpan ✅");
+
+    document.getElementById("kas-bayar-jml").value = "";
+    document.getElementById("kas-bayar-nama").value = "";
+
+}
+
+function saldoTotalKas(sumber) {
+    let src = sumber || kasData;
+    let total = 0;
+    Object.keys(src).forEach(function(k) { total += hitungKas(k, src).saldo; });
+    return total;
+}
+
+function daftarKasHtml(arr, jenis) {
+
+    if (arr.length === 0) {
+        return `<div class="kosong" style="margin-top: 8px; padding: 16px;">Belum ada data.</div>`;
+    }
+
+    let h = "";
+
+    arr.slice().reverse().forEach(function(x) {
+        let tgl = x.tanggal ? tglPendek(x.tanggal, { day: "numeric", month: "short" }) : "";
+        h += `
+            <div class="kelola-item">
+                <span style="flex: 1; min-width: 0;">${esc(x.ket)}<br><small class="kas-tgl">${tgl}</small></span>
+                <b class="${jenis === "masuk" ? "kas-plus" : "kas-minus"}">${jenis === "masuk" ? "+" : "-"}${rp(x.jumlah)}</b>
+                <button class="tombol-hapus" onclick="hapusKas('${jenis}', '${esc(x.id)}', this)">🗑</button>
+            </div>
+        `;
+    });
+
+    return h;
+
+}
+
+function tabelRiwayatHtml(sumber) {
+
+    let rt = `
+        <table class="absen">
+            <colgroup><col style="width:25%"><col style="width:25%"><col style="width:25%"><col style="width:25%"></colgroup>
+            <thead><tr><th style="text-align:left; padding-left:6px;">Bulan</th><th>Masuk</th><th>Keluar</th><th>Saldo</th></tr></thead>
+            <tbody>
+    `;
+
+    daftarBulan().slice().reverse().forEach(function(bl) {
+        let x = hitungKas(bl, sumber);
+        rt += `
+            <tr>
+                <td class="nm">${namaBulan(bl, false)}</td>
+                <td>${x.masuk.toLocaleString("id-ID")}</td>
+                <td>${x.keluar.toLocaleString("id-ID")}</td>
+                <td><b>${x.saldo.toLocaleString("id-ID")}</b></td>
+            </tr>
+        `;
+    });
+
+    rt += `</tbody></table><p class="deskripsi" style="margin-top: 8px;">Angka dalam rupiah.</p>`;
+
+    return rt;
+
+}
+
+function gambarKas() {
+
+    if (!adalahPetugasKas() || kasBulan === "") { return; }
+
+    let h = hitungKas(kasBulan);
+    let d = h.d;
+    let r = ringkasStatus();
+    let persen = Math.round(r.sudahN / DAFTAR_SISWA.length * 100);
+
+    document.getElementById("kas-ringkasan").innerHTML = `
+        <div class="kartu kartu-hari" style="margin-top: 6px;">
+            <p class="tanggal">Saldo kas total</p>
+            <div class="kas-besar">${rp(saldoTotalKas())}</div>
+            <p class="piket-info">${namaBulan(kasBulan, true)}: saldo ${rp(h.saldo)}</p>
+        </div>
+        <div class="kas-dua">
+            <div class="kas-kotak"><span>⬇️ Pemasukan</span><b class="kas-plus">${rp(h.masuk)}</b></div>
+            <div class="kas-kotak"><span>⬆️ Pengeluaran</span><b class="kas-minus">${rp(h.keluar)}</b></div>
+        </div>
+    `;
+
+    let kolomIuran = document.getElementById("kas-iuran");
+    if (document.activeElement !== kolomIuran) { kolomIuran.value = d.iuran > 0 ? d.iuran : ""; }
+
+    document.getElementById("kas-iuran-info").innerHTML = `
+        <p class="deskripsi" style="margin: 0 0 8px 0;">
+            Minggu ke-${r.sk} • ${r.sudahN} dari ${DAFTAR_SISWA.length} siswa sudah bayar (${persen}%)
+        </p>
+        <div class="rekap-bar"><div style="width: ${persen}%; background: var(--teal);"></div></div>
+    `;
+
+    let st = "";
+
+    r.daftar.forEach(function(x, i) {
+        let label = x.aman
+            ? `<span class="lencana lencana-hijau">✓ Lunas s/d ${akhirMinggu(x.dibayar)}</span>`
+            : `<span class="lencana lencana-merah">Nunggak ${r.sk - x.dibayar} minggu</span>`;
+        st += `
+            <div class="kelola-item">
+                <span>${i + 1}. ${esc(x.nama)}</span>
+                ${label}
+            </div>
+        `;
+    });
+
+    document.getElementById("kas-status-siswa").innerHTML = st;
+
+    let b = "";
+
+    d.bayar.slice().reverse().forEach(function(x) { b += itemBayarHtml(x, true); });
+
+    if (b === "") { b = `<div class="kosong" style="margin-top: 8px; padding: 16px;">Belum ada pembayaran bulan ini.</div>`; }
+
+    document.getElementById("kas-list-bayar").innerHTML =
+        `<p class="deskripsi" style="margin: 0;">Total: ${rp(h.iuran)}</p>` + b;
+
+    document.getElementById("kas-list-masuk").innerHTML =
+        `<p class="deskripsi" style="margin: 10px 0 0 0;">Total: ${rp(h.tambahan)}</p>` + daftarKasHtml(d.masuk, "masuk");
+
+    document.getElementById("kas-list-keluar").innerHTML =
+        `<p class="deskripsi" style="margin: 10px 0 0 0;">Total: ${rp(h.keluar)}</p>` + daftarKasHtml(d.keluar, "keluar");
+
+    document.getElementById("kas-riwayat").innerHTML = tabelRiwayatHtml(kasData);
+
+}
+
+function simpanKas(bulan, data, ok) {
+
+    data.bulan = bulan;
+
+    db.collection("kas").doc(bulan).set(data, { merge: true })
+    .then(function() { pesanKas(ok || "Tersimpan ✅"); })
+    .catch(function(e) {
+        console.log("Gagal menyimpan kas:", e);
+        if (e && e.code === "permission-denied") {
+            pesanKas("Ditolak Firestore. Cek aturan kas dan UID bendahara.");
+        } else {
+            pesanKas("Gagal menyimpan. Cek internet.");
+        }
+    });
+
+}
+
+function simpanIuran() {
+
+    let nilai = document.getElementById("kas-iuran").value;
+    let n = Number(nilai);
+
+    if (nilai === "" || !(n >= 0)) {
+        pesanKas("Isi nominal iuran dengan angka.");
+        return;
+    }
+
+    simpanKas(kasBulan, { iuran: Math.round(n) }, "Iuran disimpan ✅");
+
+}
+
+function tambahKas(jenis) {
+
+    let ket = document.getElementById("kas-" + jenis + "-ket").value.trim();
+    let jml = Math.round(Number(document.getElementById("kas-" + jenis + "-jml").value));
+    let tgl = document.getElementById("kas-" + jenis + "-tgl").value;
+
+    if (ket === "" || !(jml > 0)) {
+        pesanKas("Isi keterangan dan jumlah (lebih dari 0).");
+        return;
+    }
+
+    let arr = dataBulanKas(kasBulan)[jenis].concat([{
+        id: String(Date.now()), ket: ket, jumlah: jml, tanggal: tgl
+    }]);
+
+    let data = {};
+    data[jenis] = arr;
+
+    simpanKas(kasBulan, data, jenis === "masuk" ? "Pemasukan tersimpan ✅" : "Pengeluaran tersimpan ✅");
+
+    document.getElementById("kas-" + jenis + "-ket").value = "";
+    document.getElementById("kas-" + jenis + "-jml").value = "";
+
+}
+
+function hapusKas(jenis, id, tombol) {
+
+    if (!adalahPetugasKas()) { return; }
+
+    let kunci = "kas:" + jenis + ":" + id;
+
+    if (hapusMenunggu !== kunci) {
+        hapusMenunggu = kunci;
+        tombol.textContent = "Yakin?";
+        setTimeout(function() {
+            if (hapusMenunggu === kunci) { hapusMenunggu = ""; tombol.textContent = "🗑"; }
+        }, 4000);
+        return;
+    }
+
+    hapusMenunggu = "";
+
+    let data = {};
+    data[jenis] = dataBulanKas(kasBulan)[jenis].filter(function(x) { return x.id !== id; });
+
+    simpanKas(kasBulan, data, "Data dihapus ✅");
+
+}
+
+function salinLaporan() {
+
+    let h = hitungKas(kasBulan);
+    let d = h.d;
+    let r = ringkasStatus();
+
+    let belum = r.daftar.filter(function(x) { return !x.aman; }).map(function(x) { return x.nama; });
+
+    let t = "*Laporan Kas X TKR 2*\n" + namaBulan(kasBulan, true) + "\n\n";
+    t += "Iuran " + rp(d.iuran) + "/minggu\n";
+    t += "Minggu ke-" + r.sk + ": sudah bayar " + r.sudahN + " orang\n";
+    t += "Belum bayar (" + belum.length + "): " + (belum.join(", ") || "-") + "\n\n";
+    t += "Kas siswa bulan ini: " + rp(h.iuran) + "\n";
+    d.bayar.forEach(function(x) { t += "+ " + x.nama + " (" + x.minggu + " minggu): " + rp(x.jumlah) + "\n"; });
+    t += "\nPemasukan lain: " + rp(h.tambahan) + "\n";
+    d.masuk.forEach(function(x) { t += "+ " + x.ket + ": " + rp(x.jumlah) + "\n"; });
+    t += "\nPengeluaran: " + rp(h.keluar) + "\n";
+    d.keluar.forEach(function(x) { t += "- " + x.ket + ": " + rp(x.jumlah) + "\n"; });
+    t += "\nSaldo bulan ini: " + rp(h.saldo) + "\nSaldo kas total: " + rp(saldoTotalKas());
+
+    try {
+        navigator.clipboard.writeText(t)
+        .then(function() { pesanKas("Laporan disalin, tinggal tempel di WhatsApp ✅"); })
+        .catch(function() { pesanKas("Gagal menyalin laporan."); });
+    } catch (e) {
+        pesanKas("Gagal menyalin laporan.");
+    }
+
+}
+
+
+/* KAS KELAS: TAMPILAN SISWA (hanya melihat) */
+
+let klData = {};
+let klBulan = "";
+
+function siapkanKasLihat() {
+    klBulan = bulanSekarang();
+    bangunChipKl();
+    muatKasLihat();
+}
+
+function bangunChipKl() {
+
+    let h = "";
+
+    daftarBulan().forEach(function(b) {
+        h += `<button class="chip-bulan ${b === klBulan ? "aktif" : ""}" onclick="pilihBulanKl('${b}')">${namaBulan(b, false)}</button>`;
+    });
+
+    let baris = document.getElementById("kl-bulan-baris");
+    baris.innerHTML = h;
+
+    let aktif = baris.querySelector(".aktif");
+    if (aktif) { baris.scrollLeft = aktif.offsetLeft - (baris.clientWidth - aktif.offsetWidth) / 2; }
+
+}
+
+function pilihBulanKl(b) {
+    klBulan = b;
+    bangunChipKl();
+    gambarKasLihat();
+}
+
+function muatKasLihat() {
+
+    let tempat = document.getElementById("kl-isi");
+
+    if (db === null) {
+        tempat.innerHTML = `<div class="kosong">Database belum siap. Periksa internet, lalu muat ulang.</div>`;
+        return;
+    }
+
+    tempat.innerHTML = `<div class="kosong">Memuat...</div>`;
+
+    db.collection("kas").get()
+    .then(function(s) {
+        klData = {};
+        s.forEach(function(d) { klData[d.id] = d.data(); });
+        gambarKasLihat();
+    })
+    .catch(function(e) {
+        console.log("Gagal memuat kas:", e);
+        tempat.innerHTML = `<div class="kosong">Gagal memuat. Cek aturan Firestore dan internet.</div>`;
+    });
+
+}
+
+function itemKasLihat(x, jenis) {
+
+    let tgl = x.tanggal ? tglPendek(x.tanggal, { day: "numeric", month: "short" }) : "";
+
+    return `
+        <div class="kelola-item">
+            <span style="flex: 1; min-width: 0;">${esc(x.ket)}<br><small class="kas-tgl">${tgl}</small></span>
+            <b class="${jenis === "masuk" ? "kas-plus" : "kas-minus"}">${jenis === "masuk" ? "+" : "-"}${rp(x.jumlah)}</b>
+        </div>
+    `;
+
+}
+
+function gambarKasLihat() {
+
+    let h = hitungKas(klBulan, klData);
+    let d = h.d;
+    let r = ringkasStatus(klData);
+
+    let bayar = "";
+    d.bayar.slice().reverse().forEach(function(x) { bayar += itemBayarHtml(x, false); });
+    if (bayar === "") { bayar = `<div class="kosong" style="margin-top: 8px; padding: 16px;">Belum ada pembayaran di bulan ini.</div>`; }
+
+    let masuk = "";
+    d.masuk.slice().reverse().forEach(function(x) { masuk += itemKasLihat(x, "masuk"); });
+    if (masuk === "") { masuk = `<div class="kosong" style="margin-top: 8px; padding: 16px;">Belum ada pemasukan lain.</div>`; }
+
+    let keluar = "";
+    d.keluar.slice().reverse().forEach(function(x) { keluar += itemKasLihat(x, "keluar"); });
+    if (keluar === "") { keluar = `<div class="kosong" style="margin-top: 8px; padding: 16px;">Belum ada pengeluaran.</div>`; }
+
+    document.getElementById("kl-isi").innerHTML = `
+        <div class="kartu kartu-hari" style="margin-top: 6px;">
+            <p class="tanggal">Uang kas kelas saat ini</p>
+            <div class="kas-besar">${rp(saldoTotalKas(klData))}</div>
+            <p class="piket-info">${namaBulan(klBulan, true)}: saldo ${rp(h.saldo)}</p>
+        </div>
+        <div class="kas-dua">
+            <div class="kas-kotak"><span>⬇️ Pemasukan</span><b class="kas-plus">${rp(h.masuk)}</b></div>
+            <div class="kas-kotak"><span>⬆️ Pengeluaran</span><b class="kas-minus">${rp(h.keluar)}</b></div>
+        </div>
+
+        <h3 class="judul-bagian">Kas dari Siswa</h3>
+        <p class="deskripsi" style="margin: 10px 0 0 0;">Minggu ke-${r.sk}: ${r.sudahN} dari ${DAFTAR_SISWA.length} siswa sudah bayar • Total ${rp(h.iuran)}</p>
+        ${bayar}
+
+        <h3 class="judul-bagian">Pemasukan di Luar Kas Siswa</h3>
+        ${masuk}
+
+        <h3 class="judul-bagian">Pengeluaran (untuk apa saja)</h3>
+        ${keluar}
+
+        <h3 class="judul-bagian">Riwayat Per Bulan</h3>
+        <div style="margin-top: 10px;">${tabelRiwayatHtml(klData)}</div>
+    `;
+
+}
+
+
+/* BERANDA: CHIP INFO, JAM, KUTIPAN (bagian yang sebelumnya terpotong) */
+
+function tampilkanChipInfo() {
+
+    let el = document.getElementById("chip-info");
+
+    if (!el) { return; }
+
+    let nMapel = jadwal[hariIni()].length;
+    let tersimpan = ambilStatusTersimpan();
+
+    let belum = daftarTugas.filter(function(t) {
+        return (tersimpan[t.id] || t.status) !== "Selesai";
+    }).length;
+
+    let dibaca = ambilPengumumanDibaca();
+
+    let baru = daftarPengumuman.filter(function(p) {
+        return !dibaca.includes(p.id);
+    }).length;
+
+    el.innerHTML =
+        `<span class="chip-info">📅 ${nMapel} mapel hari ini</span>` +
+        `<span class="chip-info">📚 ${belum} tugas belum selesai</span>` +
+        `<span class="chip-info">📢 ${baru} pengumuman baru</span>`;
+
+}
+
+function tampilkanJam() {
+
+    let el = document.getElementById("hero-jam");
+    let tgl = document.getElementById("hero-tgl");
+
+    if (!el) { return; }
+
+    let d = new Date();
+    let j = String(d.getHours()).padStart(2, "0");
+    let m = String(d.getMinutes()).padStart(2, "0");
+
+    el.innerHTML = j + '<span class="kedip">:</span>' + m;
+
+    if (tgl) {
+        tgl.textContent = d.toLocaleDateString("id-ID", {
+            weekday: "long", day: "numeric", month: "long", year: "numeric"
+        });
+    }
+
+}
+
+const DAFTAR_KUTIPAN = [
+    "Kerja keras hari ini adalah bengkel masa depanmu.",
+    "Mesin yang bagus lahir dari tangan yang sabar.",
+    "Jangan takut salah, dari situ kita belajar.",
+    "Kompak itu kuat. TKR 2 pasti bisa!",
+    "Disiplin kecil setiap hari, hasil besar di kemudian hari."
+];
+
+let kutipanTerakhir = -1;
+
+function tampilkanKutipan(acak) {
+
+    let i = kutipanTerakhir;
+
+    if (acak || i < 0) {
+        do {
+            i = Math.floor(Math.random() * DAFTAR_KUTIPAN.length);
+        } while (i === kutipanTerakhir && DAFTAR_KUTIPAN.length > 1);
+    }
+
+    kutipanTerakhir = i;
+
+    document.getElementById("kutipan-teks").textContent = DAFTAR_KUTIPAN[i];
+
+}
+
+
+/* MULAI APLIKASI */
 
 perbaruiTombolTema();
-tampilkanBeranda();
 mulaiFirebase();
+tampilkanBeranda();
+tampilkanJam();
+setInterval(tampilkanJam, 1000);
 
 </script>
 </body>
