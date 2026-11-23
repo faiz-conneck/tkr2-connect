@@ -410,6 +410,21 @@ textarea.input-admin { min-height: 90px; resize: vertical; }
     margin-top: 10px; font-size: 14px; color: var(--teks2);
 }
 
+/* KEHADIRAN */
+.absen-kartu {
+    background: var(--kartu);
+    border: 1px solid var(--garis);
+    border-left: 4px solid var(--teal);
+    border-radius: 12px;
+    padding: 14px 16px;
+    margin-top: 12px;
+    box-shadow: var(--bayangan);
+}
+.absen-nama { font-weight: bold; margin-bottom: 4px; }
+.absen-judul { font-size: 12px; color: var(--teal-teks); font-weight: bold; margin: 10px 0 2px; }
+.absen-kartu label { display: inline-block; margin: 3px 12px 3px 0; font-size: 14px; color: var(--teks2); }
+.absen-jam { background: var(--kartu2); border-radius: 8px; padding: 8px; margin-top: 6px; }
+
 .footer { text-align: center; color: var(--redup); margin-top: 35px; font-size: 12px; }
 
 /* Hormati pengguna yang mematikan animasi di HP-nya */
@@ -472,8 +487,8 @@ textarea.input-admin { min-height: 90px; resize: vertical; }
         <button class="menu-item" onclick="bukaHalaman('pengumuman')">
             <div class="ikon">📢</div>Pengumuman
         </button>
-        <button class="menu-item menu-lebar" onclick="bukaHalaman('chat')">
-            <div class="ikon">💬</div>Chat Kelas
+        <button class="menu-item menu-lebar" onclick="bukaHalaman('kehadiran')">
+            <div class="ikon">✅</div>Daftar Kehadiran
         </button>
     </div>
 
@@ -530,13 +545,27 @@ textarea.input-admin { min-height: 90px; resize: vertical; }
     <button class="tombol-kembali" onclick="beranda()">← Kembali</button>
 </div>
 
-<!-- HALAMAN CHAT -->
-<div id="chat" class="halaman">
-    <h1>💬 Chat Kelas</h1>
-    <div class="kartu">
-        <h3>Ruang Komunikasi</h3>
-        <p>Fitur chat akan dikembangkan nanti.</p>
+<!-- HALAMAN KEHADIRAN -->
+<div id="kehadiran" class="halaman">
+    <h1>✅ Daftar Kehadiran</h1>
+    <p class="deskripsi">Hanya sekretaris dan admin yang bisa mengisi.</p>
+
+    <div id="absen-login">
+        <input class="input-admin" type="email" id="absen-email" placeholder="Email sekretaris/admin" autocomplete="username">
+        <input class="input-admin" type="password" id="absen-sandi" placeholder="Password" autocomplete="current-password">
+        <button class="tombol-utama" onclick="masukAbsen()">Masuk</button>
     </div>
+
+    <div id="absen-panel" style="display: none;">
+        <p class="deskripsi">Masuk sebagai: <span id="absen-info"></span></p>
+        <input class="input-admin" type="date" id="absen-tanggal" onchange="muatAbsen()">
+        <p class="deskripsi" id="absen-hari"></p>
+        <div id="absen-daftar"></div>
+        <button class="tombol-utama" style="width:100%" onclick="simpanAbsen()">Simpan Kehadiran</button>
+        <button class="tombol-keluar" onclick="keluarAbsen()">Keluar</button>
+    </div>
+
+    <p class="pesan-admin" id="absen-pesan"></p>
     <button class="tombol-kembali" onclick="beranda()">← Kembali</button>
 </div>
 
@@ -817,6 +846,7 @@ function mulaiFirebase() {
 
         auth.onAuthStateChanged(function() {
             perbaruiTampilanAdmin();
+            perbaruiTampilanAbsen();
         });
 
     } catch (e) {
@@ -1173,6 +1203,7 @@ function bukaHalaman(nama) {
     if (nama === "pengumuman") { tampilkanPengumuman(); }
     if (nama === "beranda") { tampilkanBeranda(); }
     if (nama === "admin") { pesanAdmin(""); perbaruiTampilanAdmin(); }
+    if (nama === "kehadiran") { tampilkanAbsen(); }
 
     window.scrollTo(0, 0);
 
@@ -1506,6 +1537,247 @@ function tampilkanPengumumanTerbaru() {
 
         </div>
     `;
+
+}
+
+
+/* KEHADIRAN SISWA
+   Yang boleh mengisi: admin dan sekretaris (dikenali lewat UID). */
+
+const UID_SEKRETARIS = "ISI_UID_SEKRETARIS_DI_SINI";
+
+const DAFTAR_SISWA = [
+    "Adnan", "Akmal Maulana", "Amar Ma'ruf", "Andika", "Asraf",
+    "Azhar Mubaraq", "Faerul Fahmi", "Jusri Wahyudi", "M. Saiful Anwar",
+    "Muh. Afiq Alfauzan", "Muh. Fais Mulyaqin", "Muh. Iksan",
+    "Muh. Khairil Bakri", "Muh. Padlan", "Riski", "Zulkifli", "Zahid"
+];
+
+const JAM_BIASA = 8;
+const JAM_JUMAT = 5;   // SESUAIKAN dengan jumlah jam pelajaran Jumat
+
+const OPSI_APEL  = ["Mengikuti apel", "Tidak mengikuti apel", "Tidak hadir"];
+const OPSI_KELAS = ["Hadir tanpa keterangan", "Izin", "Sakit", "Bolos"];
+
+let jamAbsenSekarang = JAM_BIASA;
+
+function adalahPetugasAbsen() {
+    return auth !== null
+        && auth.currentUser !== null
+        && (auth.currentUser.uid === UID_ADMIN
+            || auth.currentUser.uid === UID_SEKRETARIS);
+}
+
+function pesanAbsen(teks) {
+    document.getElementById("absen-pesan").textContent = teks;
+}
+
+function masukAbsen() {
+
+    if (auth === null) {
+        pesanAbsen("Login belum siap. Periksa internet.");
+        return;
+    }
+
+    let email = document.getElementById("absen-email").value.trim();
+    let sandi = document.getElementById("absen-sandi").value;
+
+    if (email === "" || sandi === "") {
+        pesanAbsen("Isi email dan password dulu.");
+        return;
+    }
+
+    pesanAbsen("Sedang masuk...");
+
+    auth.signInWithEmailAndPassword(email, sandi)
+    .then(function(hasil) {
+
+        let uid = hasil.user.uid;
+
+        if (uid !== UID_ADMIN && uid !== UID_SEKRETARIS) {
+            auth.signOut();
+            pesanAbsen("Akun ini tidak punya izin mengisi kehadiran.");
+            return;
+        }
+
+        document.getElementById("absen-sandi").value = "";
+        pesanAbsen("");
+
+    })
+    .catch(function(error) {
+        console.log("Gagal masuk:", error);
+        pesanAbsen("Gagal masuk. Cek email dan password.");
+    });
+
+}
+
+function keluarAbsen() {
+    if (auth === null) { return; }
+    auth.signOut().then(function() {
+        pesanAbsen("Kamu sudah keluar.");
+    });
+}
+
+function perbaruiTampilanAbsen() {
+
+    let masuk = adalahPetugasAbsen();
+
+    document.getElementById("absen-login").style.display = masuk ? "none" : "block";
+    document.getElementById("absen-panel").style.display = masuk ? "block" : "none";
+
+    if (masuk) {
+
+        document.getElementById("absen-info").textContent = auth.currentUser.email;
+
+        let kolom = document.getElementById("absen-tanggal");
+
+        if (kolom.value === "") {
+            let d = new Date();
+            d.setMinutes(d.getMinutes() - d.getTimezoneOffset());
+            kolom.value = d.toISOString().slice(0, 10);
+        }
+
+        muatAbsen();
+
+    }
+
+}
+
+function tampilkanAbsen() {
+    pesanAbsen("");
+    perbaruiTampilanAbsen();
+}
+
+function muatAbsen() {
+
+    if (!adalahPetugasAbsen() || db === null) { return; }
+
+    let tanggal = document.getElementById("absen-tanggal").value;
+
+    if (tanggal === "") { return; }
+
+    let hariKe = new Date(tanggal + "T00:00:00").getDay();
+    let namaHari = ["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"][hariKe];
+
+    jamAbsenSekarang = (hariKe === 5) ? JAM_JUMAT : JAM_BIASA;
+
+    document.getElementById("absen-hari").textContent =
+        namaHari + " • " + jamAbsenSekarang + " jam pelajaran";
+
+    pesanAbsen("Memuat...");
+
+    db.collection("kehadiran").doc(tanggal).get()
+    .then(function(dok) {
+        pesanAbsen("");
+        gambarAbsen(dok.exists ? dok.data().data : []);
+    })
+    .catch(function(error) {
+        console.log("Gagal memuat kehadiran:", error);
+        pesanAbsen("Gagal memuat. Cek aturan Firestore dan internet.");
+        gambarAbsen([]);
+    });
+
+}
+
+function gambarAbsen(tersimpan) {
+
+    let hasil = "";
+
+    DAFTAR_SISWA.forEach(function(nama, i) {
+
+        let d = tersimpan[i] || {};
+
+        hasil += `<div class="absen-kartu">
+            <div class="absen-nama">${i + 1}. ${nama}</div>
+            <div class="absen-judul">APEL PAGI</div>`;
+
+        OPSI_APEL.forEach(function(opsi) {
+            hasil += `<label><input type="radio" name="ap${i}" value="${opsi}"
+                ${d.apel === opsi ? "checked" : ""}> ${opsi}</label>`;
+        });
+
+        hasil += `<div class="absen-judul">ABSEN KELAS</div>`;
+
+        OPSI_KELAS.forEach(function(opsi) {
+            hasil += `<label><input type="radio" name="kl${i}" value="${opsi}"
+                ${d.kelas === opsi ? "checked" : ""}
+                onchange="tampilJamAbsen(${i})"> ${opsi}</label>`;
+        });
+
+        hasil += `<div class="absen-jam" id="jam${i}" style="display:none">Bolos jam ke: `;
+
+        for (let j = 1; j <= jamAbsenSekarang; j++) {
+            let cek = (d.jam && d.jam.indexOf(j) > -1) ? "checked" : "";
+            hasil += `<label><input type="checkbox" name="jk${i}" value="${j}" ${cek}> ${j}</label>`;
+        }
+
+        hasil += `</div></div>`;
+
+    });
+
+    document.getElementById("absen-daftar").innerHTML = hasil;
+
+    DAFTAR_SISWA.forEach(function(nama, i) { tampilJamAbsen(i); });
+
+}
+
+function tampilJamAbsen(i) {
+    let pilih = document.querySelector('input[name="kl' + i + '"]:checked');
+    document.getElementById("jam" + i).style.display =
+        (pilih && pilih.value === "Bolos") ? "block" : "none";
+}
+
+function simpanAbsen() {
+
+    if (!adalahPetugasAbsen()) {
+        pesanAbsen("Masuk sebagai sekretaris atau admin dulu.");
+        return;
+    }
+
+    let tanggal = document.getElementById("absen-tanggal").value;
+
+    if (tanggal === "") {
+        pesanAbsen("Pilih tanggal dulu.");
+        return;
+    }
+
+    let data = [];
+
+    for (let i = 0; i < DAFTAR_SISWA.length; i++) {
+
+        let ap = document.querySelector('input[name="ap' + i + '"]:checked');
+        let kl = document.querySelector('input[name="kl' + i + '"]:checked');
+
+        let jam = [];
+
+        document.querySelectorAll('input[name="jk' + i + '"]:checked')
+        .forEach(function(c) { jam.push(Number(c.value)); });
+
+        data.push({
+            nama: DAFTAR_SISWA[i],
+            apel: ap ? ap.value : "",
+            kelas: kl ? kl.value : "",
+            jam: (kl && kl.value === "Bolos") ? jam : []
+        });
+
+    }
+
+    pesanAbsen("Menyimpan...");
+
+    db.collection("kehadiran").doc(tanggal).set({
+        tanggal: tanggal,
+        jamPelajaran: jamAbsenSekarang,
+        data: data,
+        diisiOleh: auth.currentUser.email,
+        diperbarui: Date.now()
+    })
+    .then(function() {
+        pesanAbsen("Kehadiran tersimpan ✅");
+    })
+    .catch(function(error) {
+        console.log("Gagal menyimpan kehadiran:", error);
+        pesanAbsen("Gagal menyimpan. Cek aturan Firestore dan internet.");
+    });
 
 }
 
