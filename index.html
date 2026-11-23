@@ -411,19 +411,133 @@ textarea.input-admin { min-height: 90px; resize: vertical; }
 }
 
 /* KEHADIRAN */
-.absen-kartu {
+:root { --koral-teks: #ee8a7c; --biru-teks: #7fa8ff; }
+:root[data-tema="terang"] { --koral-teks: #b4432f; --biru-teks: #1d4fc4; }
+
+/* Header lebih ringkas di HP kecil (ada tiga tombol sekarang) */
+@media (max-width: 420px) {
+    .tema { width: 38px; height: 38px; font-size: 17px; }
+}
+@media (max-width: 370px) {
+    .nama { font-size: 15px; }
+    .logo { margin-right: 8px; }
+}
+
+.judul-tabel {
+    font-size: 15px; font-weight: bold;
+    margin: 22px 0 8px 0;
+    border-left: 3px solid var(--teal);
+    padding-left: 10px;
+}
+table.absen {
+    width: 100%; border-collapse: collapse;
+    table-layout: fixed; font-size: 13px;
     background: var(--kartu);
     border: 1px solid var(--garis);
-    border-left: 4px solid var(--teal);
-    border-radius: 12px;
-    padding: 14px 16px;
-    margin-top: 12px;
-    box-shadow: var(--bayangan);
 }
-.absen-nama { font-weight: bold; margin-bottom: 4px; }
-.absen-judul { font-size: 12px; color: var(--teal-teks); font-weight: bold; margin: 10px 0 2px; }
-.absen-kartu label { display: inline-block; margin: 3px 12px 3px 0; font-size: 14px; color: var(--teks2); }
-.absen-jam { background: var(--kartu2); border-radius: 8px; padding: 8px; margin-top: 6px; }
+table.absen th {
+    font-size: 11px; color: var(--abu);
+    padding: 8px 2px; text-align: center;
+    border-bottom: 1px solid var(--garis);
+}
+table.absen td {
+    padding: 7px 2px; text-align: center;
+    border-bottom: 1px solid var(--garis);
+}
+table.absen td.nm {
+    text-align: left; padding-left: 6px;
+    overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+table.absen td.ket { font-size: 11px; color: var(--abu); }
+table.absen td.baris-jam {
+    background: var(--kartu2); text-align: left;
+    padding: 8px; font-size: 12px; color: var(--teks2);
+}
+.pilih {
+    width: 24px; height: 24px; border-radius: 50%;
+    border: 2px solid var(--garis2);
+    background: transparent; color: #08201c;
+    cursor: pointer; padding: 0; font-size: 13px; line-height: 1;
+    font-weight: bold;
+}
+.pilih.on { background: var(--teal); border-color: var(--teal); }
+.chip-jam {
+    display: inline-block; min-width: 32px; padding: 6px 8px; margin: 3px 3px 3px 0;
+    border-radius: 8px; border: 1px solid var(--garis2);
+    background: var(--kartu); color: var(--teks);
+    font-size: 13px; cursor: pointer;
+}
+.chip-jam.on { background: var(--koral); border-color: var(--koral); color: #1a1a1a; font-weight: bold; }
+
+.rekap-bar { height: 8px; border-radius: 4px; background: var(--kartu2); overflow: hidden; }
+.rekap-bar div { height: 100%; border-radius: 4px; transition: width 0.4s; }
+.lencana {
+    display: inline-block; font-size: 12px;
+    padding: 5px 10px; border-radius: 8px; margin: 3px 4px 3px 0;
+}
+.lencana-hijau { background: rgba(47, 184, 166, 0.2); color: var(--teal-teks); }
+.lencana-kuning { background: rgba(240, 185, 74, 0.2); color: var(--emas-teks); }
+.lencana-biru { background: rgba(59, 123, 240, 0.2); color: var(--biru-teks); }
+.lencana-merah { background: rgba(238, 138, 124, 0.2); color: var(--koral-teks); }
+
+/* DAFTAR KEHADIRAN SISWA */
+.chip-bulan-baris {
+    display: flex; gap: 8px; overflow-x: auto;
+    position: relative;
+    margin-top: 12px; padding: 4px 0 8px 0;
+    scrollbar-width: none; -webkit-overflow-scrolling: touch;
+}
+.chip-bulan-baris::-webkit-scrollbar { display: none; }
+.chip-bulan {
+    flex: 0 0 auto;
+    padding: 9px 16px; border-radius: 20px;
+    border: 1px solid var(--garis2);
+    background: var(--kartu); color: var(--teks);
+    font-size: 13px; font-family: inherit; cursor: pointer;
+    transition: background-color 0.2s, border-color 0.2s, transform 0.1s;
+}
+.chip-bulan:active { transform: scale(0.95); }
+.chip-bulan.aktif {
+    background: var(--biru); border-color: var(--biru);
+    color: #ffffff; font-weight: bold;
+}
+.avatar-kecil {
+    width: 38px; height: 38px; border-radius: 50%; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    color: #ffffff; font-size: 13px; font-weight: bold;
+}
+.av0 { background: linear-gradient(135deg, var(--teal), var(--biru)); }
+.av1 { background: linear-gradient(135deg, var(--biru), var(--indigo)); }
+.av2 { background: linear-gradient(135deg, var(--ungu), var(--indigo)); }
+.av3 { background: linear-gradient(135deg, #b9730b, var(--koral)); }
+.av4 { background: linear-gradient(135deg, var(--koral), #c2566a); }
+.baris-hd {
+    background: var(--kartu); border: 1px solid var(--garis);
+    border-radius: 14px; margin-top: 10px;
+    box-shadow: var(--bayangan); overflow: hidden;
+    animation: naik 0.4s ease backwards;
+    transition: background-color 0.3s, border-color 0.3s;
+}
+.baris-hd-kepala {
+    display: flex; align-items: center; gap: 10px;
+    width: 100%; padding: 12px;
+    background: transparent; border: none;
+    color: var(--teks); font-family: inherit;
+    text-align: left; cursor: pointer;
+}
+.baris-hd-nama { flex: 1; min-width: 0; font-size: 14px; font-weight: bold; line-height: 1.25; }
+.baris-hd-angka {
+    display: flex; flex-direction: column; gap: 2px;
+    flex-shrink: 0; text-align: right;
+    font-size: 12px; color: var(--abu);
+}
+.baris-hd-angka b { font-size: 14px; margin-left: 2px; }
+.panah { color: var(--abu); font-size: 20px; line-height: 1; flex-shrink: 0; transition: transform 0.2s; }
+.baris-hd.buka .panah { transform: rotate(90deg); }
+.baris-hd .rekap-bar { height: 5px; margin: 0 12px 12px 12px; }
+.baris-hd-detail { display: none; padding: 4px 12px 14px 12px; border-top: 1px solid var(--garis); }
+.baris-hd.buka .baris-hd-detail { display: block; }
+.sub-judul { font-size: 12px; font-weight: bold; color: var(--abu); margin: 12px 0 4px 0; }
 
 .footer { text-align: center; color: var(--redup); margin-top: 35px; font-size: 12px; }
 
@@ -453,6 +567,7 @@ textarea.input-admin { min-height: 90px; resize: vertical; }
         <div class="kelas">X TKR 2</div>
     </div>
     <button class="tema" id="tombol-admin" onclick="bukaHalaman('admin')" aria-label="Admin">🔐</button>
+    <button class="tema" id="tombol-absen" style="margin-left: 8px;" onclick="bukaHalaman('absen')" aria-label="Isi kehadiran">📝</button>
     <button class="tema" id="tombol-tema" style="margin-left: 8px;" onclick="gantiTema()" aria-label="Ganti tema">☀️</button>
 </div>
 
@@ -488,7 +603,7 @@ textarea.input-admin { min-height: 90px; resize: vertical; }
             <div class="ikon">📢</div>Pengumuman
         </button>
         <button class="menu-item menu-lebar" onclick="bukaHalaman('kehadiran')">
-            <div class="ikon">✅</div>Daftar Kehadiran
+            <div class="ikon">📊</div>Kehadiran
         </button>
     </div>
 
@@ -545,13 +660,26 @@ textarea.input-admin { min-height: 90px; resize: vertical; }
     <button class="tombol-kembali" onclick="beranda()">← Kembali</button>
 </div>
 
-<!-- HALAMAN KEHADIRAN -->
+<!-- HALAMAN KEHADIRAN (dilihat siswa) -->
 <div id="kehadiran" class="halaman">
-    <h1>✅ Daftar Kehadiran</h1>
+    <h1>📊 Kehadiran</h1>
+    <p class="deskripsi">Daftar kehadiran seluruh siswa X TKR 2.</p>
+
+    <!-- Pilihan bulan: bulan berjalan di ujung kanan -->
+    <div class="chip-bulan-baris" id="hd-bulan-baris"></div>
+
+    <div id="hd-isi"></div>
+
+    <button class="tombol-kembali" onclick="beranda()">← Kembali</button>
+</div>
+
+<!-- HALAMAN ABSEN (diisi sekretaris dan admin) -->
+<div id="absen" class="halaman">
+    <h1>📝 Isi Kehadiran</h1>
     <p class="deskripsi">Hanya sekretaris dan admin yang bisa mengisi.</p>
 
     <div id="absen-login">
-        <input class="input-admin" type="email" id="absen-email" placeholder="Email sekretaris/admin" autocomplete="username">
+        <input class="input-admin" type="email" id="absen-email" placeholder="Email sekretaris atau admin" autocomplete="username">
         <input class="input-admin" type="password" id="absen-sandi" placeholder="Password" autocomplete="current-password">
         <button class="tombol-utama" onclick="masukAbsen()">Masuk</button>
     </div>
@@ -559,9 +687,24 @@ textarea.input-admin { min-height: 90px; resize: vertical; }
     <div id="absen-panel" style="display: none;">
         <p class="deskripsi">Masuk sebagai: <span id="absen-info"></span></p>
         <input class="input-admin" type="date" id="absen-tanggal" onchange="muatAbsen()">
-        <p class="deskripsi" id="absen-hari"></p>
-        <div id="absen-daftar"></div>
-        <button class="tombol-utama" style="width:100%" onclick="simpanAbsen()">Simpan Kehadiran</button>
+        <p class="deskripsi" id="absen-hari" style="margin-top: 8px;"></p>
+
+        <h3 class="judul-tabel">Tabel 1: Apel pagi</h3>
+        <table class="absen">
+            <colgroup><col style="width:10%"><col style="width:30%"><col style="width:20%"><col style="width:20%"><col style="width:20%"></colgroup>
+            <thead><tr><th>No</th><th style="text-align:left">Nama</th><th>Ikut</th><th>Tdk ikut</th><th>Tdk hadir</th></tr></thead>
+            <tbody id="absen-tabel-apel"></tbody>
+        </table>
+
+        <h3 class="judul-tabel">Tabel 2: Absen kelas</h3>
+        <table class="absen">
+            <colgroup><col style="width:8%"><col style="width:27%"><col style="width:11%"><col style="width:11%"><col style="width:11%"><col style="width:11%"><col style="width:21%"></colgroup>
+            <thead><tr><th>No</th><th style="text-align:left">Nama</th><th>H</th><th>I</th><th>S</th><th>B</th><th>Ket.</th></tr></thead>
+            <tbody id="absen-tabel-kelas"></tbody>
+        </table>
+        <p class="deskripsi" style="margin-top: 8px;">H = hadir tanpa keterangan, I = izin, S = sakit, B = bolos. Pilih B untuk mengisi jam bolos. Ketuk lagi untuk membatalkan pilihan.</p>
+
+        <button class="tombol-utama" style="width: 100%;" onclick="simpanAbsen()">Simpan Kehadiran</button>
         <button class="tombol-keluar" onclick="keluarAbsen()">Keluar</button>
     </div>
 
@@ -1203,7 +1346,8 @@ function bukaHalaman(nama) {
     if (nama === "pengumuman") { tampilkanPengumuman(); }
     if (nama === "beranda") { tampilkanBeranda(); }
     if (nama === "admin") { pesanAdmin(""); perbaruiTampilanAdmin(); }
-    if (nama === "kehadiran") { tampilkanAbsen(); }
+    if (nama === "kehadiran") { siapkanKehadiran(); }
+    if (nama === "absen") { tampilkanAbsen(); }
 
     window.scrollTo(0, 0);
 
@@ -1542,7 +1686,9 @@ function tampilkanPengumumanTerbaru() {
 
 
 /* KEHADIRAN SISWA
-   Yang boleh mengisi: admin dan sekretaris (dikenali lewat UID). */
+   - Halaman "kehadiran": dilihat siswa (pilih nama, lihat persen).
+   - Halaman "absen": diisi sekretaris dan admin (dikenali lewat UID).
+   Data disimpan di Firestore, koleksi "kehadiran", satu dokumen per tanggal. */
 
 const UID_SEKRETARIS = "ISI_UID_SEKRETARIS_DI_SINI";
 
@@ -1554,12 +1700,42 @@ const DAFTAR_SISWA = [
 ];
 
 const JAM_BIASA = 8;
-const JAM_JUMAT = 5;   // SESUAIKAN dengan jumlah jam pelajaran Jumat
+const JAM_JUMAT = 5;   // SESUAIKAN dengan jumlah jam pelajaran hari Jumat
 
 const OPSI_APEL  = ["Mengikuti apel", "Tidak mengikuti apel", "Tidak hadir"];
 const OPSI_KELAS = ["Hadir tanpa keterangan", "Izin", "Sakit", "Bolos"];
 
+const SINGKAT_APEL  = { "Mengikuti apel": "Ikut", "Tidak mengikuti apel": "Tidak ikut", "Tidak hadir": "Tidak hadir" };
+const SINGKAT_KELAS = { "Hadir tanpa keterangan": "Hadir", "Izin": "Izin", "Sakit": "Sakit", "Bolos": "Bolos" };
+
 let jamAbsenSekarang = JAM_BIASA;
+
+/* Pilihan yang sedang diisi sekretaris (satu isi per siswa) */
+let stApel = [];
+let stKelas = [];
+let stJam = [];
+
+function kosongkanIsian() {
+    stApel = [];
+    stKelas = [];
+    stJam = [];
+    DAFTAR_SISWA.forEach(function() {
+        stApel.push("");
+        stKelas.push("");
+        stJam.push([]);
+    });
+}
+
+kosongkanIsian();
+
+function tanggalHariIniISO() {
+    let d = new Date();
+    d.setMinutes(d.getMinutes() - d.getTimezoneOffset());
+    return d.toISOString().slice(0, 10);
+}
+
+
+/* ===== BAGIAN SEKRETARIS DAN ADMIN: MENGISI KEHADIRAN ===== */
 
 function adalahPetugasAbsen() {
     return auth !== null
@@ -1612,10 +1788,13 @@ function masukAbsen() {
 }
 
 function keluarAbsen() {
+
     if (auth === null) { return; }
+
     auth.signOut().then(function() {
         pesanAbsen("Kamu sudah keluar.");
     });
+
 }
 
 function perbaruiTampilanAbsen() {
@@ -1625,6 +1804,8 @@ function perbaruiTampilanAbsen() {
     document.getElementById("absen-login").style.display = masuk ? "none" : "block";
     document.getElementById("absen-panel").style.display = masuk ? "block" : "none";
 
+    document.getElementById("tombol-absen").textContent = masuk ? "✅" : "📝";
+
     if (masuk) {
 
         document.getElementById("absen-info").textContent = auth.currentUser.email;
@@ -1632,12 +1813,12 @@ function perbaruiTampilanAbsen() {
         let kolom = document.getElementById("absen-tanggal");
 
         if (kolom.value === "") {
-            let d = new Date();
-            d.setMinutes(d.getMinutes() - d.getTimezoneOffset());
-            kolom.value = d.toISOString().slice(0, 10);
+            kolom.value = tanggalHariIniISO();
         }
 
-        muatAbsen();
+        if (document.getElementById("absen").classList.contains("aktif")) {
+            muatAbsen();
+        }
 
     }
 
@@ -1668,63 +1849,124 @@ function muatAbsen() {
 
     db.collection("kehadiran").doc(tanggal).get()
     .then(function(dok) {
+
+        kosongkanIsian();
+
+        if (dok.exists) {
+
+            let daftar = dok.data().data || [];
+
+            daftar.forEach(function(d) {
+
+                let i = DAFTAR_SISWA.indexOf(d.nama);
+
+                if (i > -1) {
+                    stApel[i] = d.apel || "";
+                    stKelas[i] = d.kelas || "";
+                    stJam[i] = d.jam || [];
+                }
+
+            });
+
+        }
+
         pesanAbsen("");
-        gambarAbsen(dok.exists ? dok.data().data : []);
+        gambarAbsen();
+
     })
     .catch(function(error) {
         console.log("Gagal memuat kehadiran:", error);
+        kosongkanIsian();
         pesanAbsen("Gagal memuat. Cek aturan Firestore dan internet.");
-        gambarAbsen([]);
+        gambarAbsen();
     });
 
 }
 
-function gambarAbsen(tersimpan) {
+function gambarAbsen() {
 
-    let hasil = "";
+    let a = "";
+    let k = "";
 
     DAFTAR_SISWA.forEach(function(nama, i) {
 
-        let d = tersimpan[i] || {};
+        a += `<tr><td>${i + 1}</td><td class="nm">${nama}</td>`;
 
-        hasil += `<div class="absen-kartu">
-            <div class="absen-nama">${i + 1}. ${nama}</div>
-            <div class="absen-judul">APEL PAGI</div>`;
-
-        OPSI_APEL.forEach(function(opsi) {
-            hasil += `<label><input type="radio" name="ap${i}" value="${opsi}"
-                ${d.apel === opsi ? "checked" : ""}> ${opsi}</label>`;
+        OPSI_APEL.forEach(function(opsi, j) {
+            let on = stApel[i] === opsi;
+            a += `<td><button class="pilih ${on ? "on" : ""}"
+                onclick="pilihApel(${i}, ${j})"
+                aria-label="${opsi}">${on ? "✓" : ""}</button></td>`;
         });
 
-        hasil += `<div class="absen-judul">ABSEN KELAS</div>`;
+        a += `</tr>`;
 
-        OPSI_KELAS.forEach(function(opsi) {
-            hasil += `<label><input type="radio" name="kl${i}" value="${opsi}"
-                ${d.kelas === opsi ? "checked" : ""}
-                onchange="tampilJamAbsen(${i})"> ${opsi}</label>`;
+        k += `<tr><td>${i + 1}</td><td class="nm">${nama}</td>`;
+
+        OPSI_KELAS.forEach(function(opsi, j) {
+            let on = stKelas[i] === opsi;
+            k += `<td><button class="pilih ${on ? "on" : ""}"
+                onclick="pilihKelas(${i}, ${j})"
+                aria-label="${opsi}">${on ? "✓" : ""}</button></td>`;
         });
 
-        hasil += `<div class="absen-jam" id="jam${i}" style="display:none">Bolos jam ke: `;
+        let ket = "";
 
-        for (let j = 1; j <= jamAbsenSekarang; j++) {
-            let cek = (d.jam && d.jam.indexOf(j) > -1) ? "checked" : "";
-            hasil += `<label><input type="checkbox" name="jk${i}" value="${j}" ${cek}> ${j}</label>`;
+        if (stKelas[i] === "Bolos" && stJam[i].length > 0) {
+            ket = "jam " + stJam[i].join(",");
         }
 
-        hasil += `</div></div>`;
+        k += `<td class="ket">${ket}</td></tr>`;
+
+        if (stKelas[i] === "Bolos") {
+
+            k += `<tr><td colspan="7" class="baris-jam">Bolos jam ke: `;
+
+            for (let h = 1; h <= jamAbsenSekarang; h++) {
+                let on = stJam[i].indexOf(h) > -1;
+                k += `<button class="chip-jam ${on ? "on" : ""}"
+                    onclick="pilihJam(${i}, ${h})">${h}</button>`;
+            }
+
+            k += `</td></tr>`;
+
+        }
 
     });
 
-    document.getElementById("absen-daftar").innerHTML = hasil;
-
-    DAFTAR_SISWA.forEach(function(nama, i) { tampilJamAbsen(i); });
+    document.getElementById("absen-tabel-apel").innerHTML = a;
+    document.getElementById("absen-tabel-kelas").innerHTML = k;
 
 }
 
-function tampilJamAbsen(i) {
-    let pilih = document.querySelector('input[name="kl' + i + '"]:checked');
-    document.getElementById("jam" + i).style.display =
-        (pilih && pilih.value === "Bolos") ? "block" : "none";
+function pilihApel(i, j) {
+    stApel[i] = (stApel[i] === OPSI_APEL[j]) ? "" : OPSI_APEL[j];
+    gambarAbsen();
+}
+
+function pilihKelas(i, j) {
+
+    stKelas[i] = (stKelas[i] === OPSI_KELAS[j]) ? "" : OPSI_KELAS[j];
+
+    if (stKelas[i] !== "Bolos") { stJam[i] = []; }
+
+    gambarAbsen();
+
+}
+
+function pilihJam(i, h) {
+
+    let posisi = stJam[i].indexOf(h);
+
+    if (posisi > -1) {
+        stJam[i].splice(posisi, 1);
+    } else {
+        stJam[i].push(h);
+        stJam[i].sort(function(x, y) { return x - y; });
+    }
+
+    gambarAbsen();
+
 }
 
 function simpanAbsen() {
@@ -1745,19 +1987,16 @@ function simpanAbsen() {
 
     for (let i = 0; i < DAFTAR_SISWA.length; i++) {
 
-        let ap = document.querySelector('input[name="ap' + i + '"]:checked');
-        let kl = document.querySelector('input[name="kl' + i + '"]:checked');
-
-        let jam = [];
-
-        document.querySelectorAll('input[name="jk' + i + '"]:checked')
-        .forEach(function(c) { jam.push(Number(c.value)); });
+        if (stKelas[i] === "Bolos" && stJam[i].length === 0) {
+            pesanAbsen("Isi jam bolos untuk " + DAFTAR_SISWA[i] + ".");
+            return;
+        }
 
         data.push({
             nama: DAFTAR_SISWA[i],
-            apel: ap ? ap.value : "",
-            kelas: kl ? kl.value : "",
-            jam: (kl && kl.value === "Bolos") ? jam : []
+            apel: stApel[i],
+            kelas: stKelas[i],
+            jam: (stKelas[i] === "Bolos") ? stJam[i] : []
         });
 
     }
@@ -1781,6 +2020,360 @@ function simpanAbsen() {
 
 }
 
+
+/* ===== BAGIAN SISWA: MELIHAT DAFTAR KEHADIRAN SEMUA SISWA ===== */
+
+/* Bulan paling awal yang muncul di deretan tombol bulan. Boleh diubah. */
+const BULAN_AWAL = "2026-07";
+
+let hdBulan = "";   // bulan yang sedang dilihat, contoh "2026-11"
+let hdSiswa = {};   // nama siswa -> kehadiran per hari di bulan itu
+let hdHari = [];    // tanggal-tanggal yang sudah diisi sekretaris
+
+function bulanSekarang() {
+    return tanggalHariIniISO().slice(0, 7);
+}
+
+function namaBulan(bulan, panjang) {
+
+    let bagian = bulan.split("-");
+
+    return new Date(Number(bagian[0]), Number(bagian[1]) - 1, 1)
+        .toLocaleDateString("id-ID", { month: panjang ? "long" : "short", year: "numeric" });
+
+}
+
+/* Daftar bulan dari BULAN_AWAL sampai bulan ini. Bulan baru muncul sendiri tiap tanggal 1. */
+function daftarBulan() {
+
+    let hasil = [];
+    let akhir = bulanSekarang();
+    let b = BULAN_AWAL;
+
+    if (b > akhir) { b = akhir; }
+
+    while (b <= akhir) {
+
+        hasil.push(b);
+
+        let bagian = b.split("-");
+        let d = new Date(Number(bagian[0]), Number(bagian[1]), 1);
+
+        b = d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0");
+
+    }
+
+    return hasil;
+
+}
+
+/* Huruf awal untuk lingkaran di samping nama (awalan Muh. dan M. dilewati) */
+function inisialNama(nama) {
+
+    let kata = nama.replace(/\./g, " ").split(/\s+/).filter(function(k) {
+        return k !== "";
+    });
+
+    let awalan = ["muh", "m", "muhammad", "muhamad"];
+
+    if (kata.length > 1 && awalan.indexOf(kata[0].toLowerCase()) > -1) {
+        kata.shift();
+    }
+
+    if (kata.length === 1) {
+        return kata[0].slice(0, 2).toUpperCase();
+    }
+
+    return (kata[0].charAt(0) + kata[1].charAt(0)).toUpperCase();
+
+}
+
+/* Warna lingkaran dibedakan per siswa */
+function kelasAvatar(i) {
+    return "av" + (i % 5);
+}
+
+function bangunChipBulan() {
+
+    let h = "";
+
+    daftarBulan().forEach(function(b) {
+        h += `<button class="chip-bulan ${b === hdBulan ? "aktif" : ""}"
+            data-bulan="${b}"
+            onclick="pilihBulan('${b}')">${namaBulan(b, false)}</button>`;
+    });
+
+    let baris = document.getElementById("hd-bulan-baris");
+
+    baris.innerHTML = h;
+
+    /* Geser deretan supaya bulan yang aktif ada di tengah */
+    let aktif = baris.querySelector(".aktif");
+
+    if (aktif) {
+        baris.scrollLeft = aktif.offsetLeft - (baris.clientWidth - aktif.offsetWidth) / 2;
+    }
+
+}
+
+/* Setiap halaman dibuka, selalu mulai dari bulan berjalan */
+function siapkanKehadiran() {
+
+    hdBulan = bulanSekarang();
+
+    bangunChipBulan();
+
+    muatRekap();
+
+}
+
+function pilihBulan(b) {
+
+    hdBulan = b;
+
+    document.querySelectorAll("#hd-bulan-baris .chip-bulan").forEach(function(c) {
+        c.classList.toggle("aktif", c.dataset.bulan === b);
+    });
+
+    muatRekap();
+
+}
+
+function pesanRekap(teks) {
+    document.getElementById("hd-isi").innerHTML = `<div class="kosong">${teks}</div>`;
+}
+
+function muatRekap() {
+
+    if (db === null) {
+        pesanRekap("Database belum siap. Periksa internet, lalu muat ulang.");
+        return;
+    }
+
+    let bulan = hdBulan;
+
+    pesanRekap("Memuat...");
+
+    db.collection("kehadiran")
+      .where("tanggal", ">=", bulan + "-01")
+      .where("tanggal", "<=", bulan + "-31")
+      .get()
+    .then(function(hasil) {
+
+        /* Abaikan hasil lama kalau bulan sudah diganti */
+        if (bulan !== hdBulan) { return; }
+
+        hdHari = [];
+        hdSiswa = {};
+
+        DAFTAR_SISWA.forEach(function(nama) {
+            hdSiswa[nama] = [];
+        });
+
+        hasil.forEach(function(dok) {
+
+            let d = dok.data();
+
+            hdHari.push(d.tanggal);
+
+            (d.data || []).forEach(function(e) {
+
+                if (hdSiswa[e.nama]) {
+                    hdSiswa[e.nama].push({
+                        tanggal: d.tanggal,
+                        apel: e.apel || "",
+                        kelas: e.kelas || "",
+                        jam: e.jam || []
+                    });
+                }
+
+            });
+
+        });
+
+        hdHari.sort();
+
+        DAFTAR_SISWA.forEach(function(nama) {
+            hdSiswa[nama].sort(function(x, y) { return x.tanggal < y.tanggal ? -1 : 1; });
+        });
+
+        gambarDaftarHd();
+
+    })
+    .catch(function(error) {
+        console.log("Gagal memuat rekap:", error);
+        pesanRekap("Gagal memuat. Cek aturan Firestore dan internet.");
+    });
+
+}
+
+function warnaPersen(p) {
+    if (p >= 90) { return { teks: "var(--teal-teks)", bar: "var(--teal)" }; }
+    if (p >= 75) { return { teks: "var(--emas-teks)", bar: "var(--emas)" }; }
+    return { teks: "var(--koral-teks)", bar: "var(--koral)" };
+}
+
+function tglPendek(tanggal, opsi) {
+    return new Date(tanggal + "T00:00:00").toLocaleDateString("id-ID", opsi);
+}
+
+/* Menghitung jumlah hadir, izin, sakit, bolos, dan apel satu siswa */
+function hitungSiswa(baris) {
+
+    let n = {
+        hadir: 0, izin: 0, sakit: 0, bolos: 0, totalKelas: 0,
+        ikut: 0, tidakIkut: 0, tidakHadir: 0, totalApel: 0
+    };
+
+    baris.forEach(function(b) {
+
+        if (b.kelas !== "") {
+            n.totalKelas++;
+            if (b.kelas === "Hadir tanpa keterangan") { n.hadir++; }
+            if (b.kelas === "Izin") { n.izin++; }
+            if (b.kelas === "Sakit") { n.sakit++; }
+            if (b.kelas === "Bolos") { n.bolos++; }
+        }
+
+        if (b.apel !== "") {
+            n.totalApel++;
+            if (b.apel === "Mengikuti apel") { n.ikut++; }
+            if (b.apel === "Tidak mengikuti apel") { n.tidakIkut++; }
+            if (b.apel === "Tidak hadir") { n.tidakHadir++; }
+        }
+
+    });
+
+    return n;
+
+}
+
+/* Isi yang terbuka kalau nama siswa diketuk */
+function detailSiswaHtml(baris, n) {
+
+    if (baris.length === 0) {
+        return `<p class="deskripsi" style="margin: 12px 0 0 0;">Belum ada data di bulan ini.</p>`;
+    }
+
+    let h = `
+        <div class="sub-judul">Absen kelas</div>
+        <span class="lencana lencana-hijau">Hadir ${n.hadir}</span>
+        <span class="lencana lencana-kuning">Izin ${n.izin}</span>
+        <span class="lencana lencana-biru">Sakit ${n.sakit}</span>
+        <span class="lencana lencana-merah">Bolos ${n.bolos}</span>
+
+        <div class="sub-judul">Apel pagi</div>
+        <span class="lencana lencana-hijau">Ikut ${n.ikut}</span>
+        <span class="lencana lencana-kuning">Tidak ikut ${n.tidakIkut}</span>
+        <span class="lencana lencana-merah">Tidak hadir ${n.tidakHadir}</span>
+
+        <div class="sub-judul">Per hari</div>
+        <table class="absen">
+            <colgroup><col style="width:28%"><col style="width:30%"><col style="width:42%"></colgroup>
+            <thead><tr><th style="text-align:left; padding-left:6px;">Tanggal</th><th>Apel</th><th>Kelas</th></tr></thead>
+            <tbody>
+    `;
+
+    baris.forEach(function(b) {
+
+        let tgl = tglPendek(b.tanggal, { weekday: "short", day: "numeric" });
+        let apel = SINGKAT_APEL[b.apel] || "-";
+        let kelas = SINGKAT_KELAS[b.kelas] || "-";
+
+        if (b.kelas === "Bolos" && b.jam.length > 0) {
+            kelas += " (jam " + b.jam.join(",") + ")";
+        }
+
+        h += `
+            <tr>
+                <td class="nm">${tgl}</td>
+                <td>${apel}</td>
+                <td>${kelas}</td>
+            </tr>
+        `;
+
+    });
+
+    h += `</tbody></table>`;
+
+    return h;
+
+}
+
+function barisSiswaHtml(nama, i) {
+
+    let baris = hdSiswa[nama] || [];
+    let n = hitungSiswa(baris);
+
+    let pk = n.totalKelas > 0 ? Math.round(n.hadir / n.totalKelas * 100) : -1;
+    let pa = n.totalApel > 0 ? Math.round(n.ikut / n.totalApel * 100) : -1;
+
+    let kosong = { teks: "var(--redup)", bar: "var(--kartu2)" };
+
+    let wk = pk >= 0 ? warnaPersen(pk) : kosong;
+    let wa = pa >= 0 ? warnaPersen(pa) : kosong;
+
+    return `
+        <div class="baris-hd" style="animation-delay: ${Math.min(i, 10) * 0.03}s">
+
+            <button class="baris-hd-kepala"
+            onclick="this.parentElement.classList.toggle('buka')">
+                <span class="avatar-kecil ${kelasAvatar(i)}">${inisialNama(nama)}</span>
+                <span class="baris-hd-nama">${i + 1}. ${nama}</span>
+                <span class="baris-hd-angka">
+                    <span>Kelas <b style="color: ${wk.teks};">${pk >= 0 ? pk + "%" : "-"}</b></span>
+                    <span>Apel <b style="color: ${wa.teks};">${pa >= 0 ? pa + "%" : "-"}</b></span>
+                </span>
+                <span class="panah">›</span>
+            </button>
+
+            <div class="rekap-bar">
+                <div style="width: ${pk >= 0 ? pk : 0}%; background: ${wk.bar};"></div>
+            </div>
+
+            <div class="baris-hd-detail">
+                ${detailSiswaHtml(baris, n)}
+            </div>
+
+        </div>
+    `;
+
+}
+
+function gambarDaftarHd() {
+
+    let info = "Belum ada data kehadiran di bulan ini.";
+
+    if (hdHari.length > 0) {
+
+        let pertama = tglPendek(hdHari[0], { day: "numeric", month: "long" });
+        let terakhir = tglPendek(hdHari[hdHari.length - 1], { day: "numeric", month: "long" });
+
+        info = "Dihitung dari " + hdHari.length + " hari yang sudah diisi (" +
+               pertama + " sampai " + terakhir + "). Ketuk nama untuk melihat rincian.";
+
+    }
+
+    let h = `
+        <h3 class="judul-bagian" style="margin-top: 14px;">${namaBulan(hdBulan, true)}</h3>
+        <p class="deskripsi" style="margin-top: 10px;">${info}</p>
+    `;
+
+    DAFTAR_SISWA.forEach(function(nama, i) {
+        h += barisSiswaHtml(nama, i);
+    });
+
+    h += `
+        <p class="deskripsi" style="margin-top: 14px;">
+            Kelas = hari hadir tanpa keterangan dibagi hari yang sudah diisi.
+            Izin, sakit, dan bolos mengurangi persen.
+            Apel = hari mengikuti apel dibagi hari yang sudah diisi.
+        </p>
+    `;
+
+    document.getElementById("hd-isi").innerHTML = h;
+
+}
 
 /* JALANKAN SAAT APLIKASI DIBUKA */
 
