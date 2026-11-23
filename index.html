@@ -698,11 +698,11 @@ table.absen td.baris-jam {
 
         <h3 class="judul-tabel">Tabel 2: Absen kelas</h3>
         <table class="absen">
-            <colgroup><col style="width:8%"><col style="width:27%"><col style="width:11%"><col style="width:11%"><col style="width:11%"><col style="width:11%"><col style="width:21%"></colgroup>
-            <thead><tr><th>No</th><th style="text-align:left">Nama</th><th>H</th><th>I</th><th>S</th><th>B</th><th>Ket.</th></tr></thead>
+            <colgroup><col style="width:8%"><col style="width:25%"><col style="width:9%"><col style="width:9%"><col style="width:9%"><col style="width:9%"><col style="width:9%"><col style="width:22%"></colgroup>
+            <thead><tr><th>No</th><th style="text-align:left">Nama</th><th>H</th><th>I</th><th>S</th><th>B</th><th>A</th><th>Ket.</th></tr></thead>
             <tbody id="absen-tabel-kelas"></tbody>
         </table>
-        <p class="deskripsi" style="margin-top: 8px;">H = hadir tanpa keterangan, I = izin, S = sakit, B = bolos. Pilih B untuk mengisi jam bolos. Ketuk lagi untuk membatalkan pilihan.</p>
+        <p class="deskripsi" style="margin-top: 8px;">H = hadir tanpa keterangan, I = izin, S = sakit, B = bolos, A = alfa (tidak hadir tanpa keterangan). Pilih B untuk mengisi jam bolos. Ketuk lagi untuk membatalkan pilihan.</p>
 
         <button class="tombol-utama" style="width: 100%;" onclick="simpanAbsen()">Simpan Kehadiran</button>
         <button class="tombol-keluar" onclick="keluarAbsen()">Keluar</button>
@@ -1703,10 +1703,10 @@ const JAM_BIASA = 8;
 const JAM_JUMAT = 5;   // SESUAIKAN dengan jumlah jam pelajaran hari Jumat
 
 const OPSI_APEL  = ["Mengikuti apel", "Tidak mengikuti apel", "Tidak hadir"];
-const OPSI_KELAS = ["Hadir tanpa keterangan", "Izin", "Sakit", "Bolos"];
+const OPSI_KELAS = ["Hadir tanpa keterangan", "Izin", "Sakit", "Bolos", "Alfa"];
 
 const SINGKAT_APEL  = { "Mengikuti apel": "Ikut", "Tidak mengikuti apel": "Tidak ikut", "Tidak hadir": "Tidak hadir" };
-const SINGKAT_KELAS = { "Hadir tanpa keterangan": "Hadir", "Izin": "Izin", "Sakit": "Sakit", "Bolos": "Bolos" };
+const SINGKAT_KELAS = { "Hadir tanpa keterangan": "Hadir", "Izin": "Izin", "Sakit": "Sakit", "Bolos": "Bolos", "Alfa": "Alfa" };
 
 let jamAbsenSekarang = JAM_BIASA;
 
@@ -1920,7 +1920,7 @@ function gambarAbsen() {
 
         if (stKelas[i] === "Bolos") {
 
-            k += `<tr><td colspan="7" class="baris-jam">Bolos jam ke: `;
+            k += `<tr><td colspan="8" class="baris-jam">Bolos jam ke: `;
 
             for (let h = 1; h <= jamAbsenSekarang; h++) {
                 let on = stJam[i].indexOf(h) > -1;
@@ -2217,11 +2217,11 @@ function tglPendek(tanggal, opsi) {
     return new Date(tanggal + "T00:00:00").toLocaleDateString("id-ID", opsi);
 }
 
-/* Menghitung jumlah hadir, izin, sakit, bolos, dan apel satu siswa */
+/* Menghitung jumlah hadir, izin, sakit, bolos, alfa, dan apel satu siswa */
 function hitungSiswa(baris) {
 
     let n = {
-        hadir: 0, izin: 0, sakit: 0, bolos: 0, totalKelas: 0,
+        hadir: 0, izin: 0, sakit: 0, bolos: 0, alfa: 0, totalKelas: 0,
         ikut: 0, tidakIkut: 0, tidakHadir: 0, totalApel: 0
     };
 
@@ -2233,6 +2233,7 @@ function hitungSiswa(baris) {
             if (b.kelas === "Izin") { n.izin++; }
             if (b.kelas === "Sakit") { n.sakit++; }
             if (b.kelas === "Bolos") { n.bolos++; }
+            if (b.kelas === "Alfa") { n.alfa++; }
         }
 
         if (b.apel !== "") {
@@ -2261,6 +2262,7 @@ function detailSiswaHtml(baris, n) {
         <span class="lencana lencana-kuning">Izin ${n.izin}</span>
         <span class="lencana lencana-biru">Sakit ${n.sakit}</span>
         <span class="lencana lencana-merah">Bolos ${n.bolos}</span>
+        <span class="lencana lencana-merah">Alfa ${n.alfa}</span>
 
         <div class="sub-judul">Apel pagi</div>
         <span class="lencana lencana-hijau">Ikut ${n.ikut}</span>
@@ -2366,7 +2368,7 @@ function gambarDaftarHd() {
     h += `
         <p class="deskripsi" style="margin-top: 14px;">
             Kelas = hari hadir tanpa keterangan dibagi hari yang sudah diisi.
-            Izin, sakit, dan bolos mengurangi persen.
+            Izin, sakit, bolos, dan alfa mengurangi persen.
             Apel = hari mengikuti apel dibagi hari yang sudah diisi.
         </p>
     `;
