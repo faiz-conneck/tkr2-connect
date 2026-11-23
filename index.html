@@ -1693,7 +1693,7 @@ function tampilkanPengumumanTerbaru() {
 const UID_SEKRETARIS = "ISI_UID_SEKRETARIS_DI_SINI";
 
 const DAFTAR_SISWA = [
-    "Adnan", "Akmal Maulana", "Amar Ma'ruf", "Andika", "Asraf",
+    "Adnan", "Amar Ma'ruf", "Andika", "Asraf",
     "Azhar Mubaraq", "Faerul Fahmi", "Jusri Wahyudi", "M. Saiful Anwar",
     "Muh. Afiq Alfauzan", "Muh. Fais Mulyaqin", "Muh. Iksan",
     "Muh. Khairil Bakri", "Muh. Padlan", "Riski", "Zulkifli", "Zahid"
@@ -2015,7 +2015,14 @@ function simpanAbsen() {
     })
     .catch(function(error) {
         console.log("Gagal menyimpan kehadiran:", error);
-        pesanAbsen("Gagal menyimpan. Cek aturan Firestore dan internet.");
+        let kode = error && error.code ? error.code : "tidak diketahui";
+        if (kode === "permission-denied") {
+            pesanAbsen("Ditolak Firestore (permission-denied). Aturan belum di-Publish atau UID akun ini belum ada di aturan.");
+        } else if (kode === "unavailable") {
+            pesanAbsen("Tidak ada koneksi internet. Coba lagi.");
+        } else {
+            pesanAbsen("Gagal menyimpan. Kode error: " + kode);
+        }
     });
 
 }
