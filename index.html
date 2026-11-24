@@ -194,7 +194,7 @@ h1 { font-size: 22px; margin: 0 0 6px 0; }
     padding: 12px 18px; border-radius: 10px; margin-top: 22px; cursor: pointer; font-size: 14px;
 }
 
-/* ADMIN */
+/* ADMIN (input dasar, dipakai juga di halaman absen dan kas) */
 .input-admin {
     display: block; width: 100%; margin-top: 8px; padding: 12px 14px;
     border-radius: 10px; border: 1px solid var(--garis2);
@@ -219,9 +219,85 @@ textarea.input-admin { min-height: 90px; resize: vertical; }
     border: 1px solid var(--garis); border-radius: 10px; font-size: 14px;
 }
 .pesan-admin { color: var(--emas-teks); font-size: 13px; margin-top: 12px; min-height: 18px; }
-.cek-penting { display: flex; align-items: center; gap: 8px; margin-top: 10px; font-size: 14px; color: var(--teks2); }
+.cek-penting { display: flex; align-items: center; gap: 8px; margin-top: 12px; font-size: 14px; color: var(--teks2); }
 
 @media (max-width: 370px) { .nama { font-size: 15px; } .logo { margin-right: 8px; } }
+
+/* MENU ADMIN BARU */
+.admin-profil {
+    display: flex; align-items: center; gap: 12px; margin-top: 6px;
+    background: var(--kartu); border: 1px solid var(--garis); border-radius: 16px;
+    padding: 12px 14px; box-shadow: var(--bayangan);
+}
+.admin-profil .avatar-kecil { width: 44px; height: 44px; font-size: 20px; }
+.admin-peran { font-size: 15px; font-weight: bold; }
+.admin-profil .deskripsi { margin: 2px 0 0 0; font-size: 12px; word-break: break-all; }
+
+.tab-admin { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-top: 14px; }
+.tab-btn {
+    display: flex; flex-direction: column; align-items: center; gap: 5px;
+    padding: 11px 2px; border-radius: 14px; border: 1px solid var(--garis);
+    background: var(--kartu); color: var(--abu); font-size: 11px; font-weight: bold;
+    cursor: pointer; box-shadow: var(--bayangan);
+    transition: background-color 0.2s, color 0.2s, transform 0.1s;
+}
+.tab-btn:active { transform: scale(0.94); }
+.tab-btn .t-ikon { font-size: 20px; line-height: 1; }
+.tab-btn.aktif { background: linear-gradient(135deg, var(--biru), var(--indigo)); border-color: transparent; color: #ffffff; }
+
+.seksi-admin { display: none; }
+.seksi-admin.aktif { display: block; animation: muncul 0.25s ease; }
+
+.kartu-form {
+    background: var(--kartu); border: 1px solid var(--garis); border-radius: 18px;
+    padding: 18px 16px; margin-top: 14px; box-shadow: var(--bayangan);
+}
+.kartu-form h3 { margin: 0 0 4px 0; font-size: 16px; }
+.kartu-form .deskripsi { margin: 0 0 4px 0; font-size: 12px; line-height: 1.5; }
+.label-in { display: block; font-size: 12px; font-weight: bold; color: var(--abu); margin-top: 14px; }
+.kartu-form .input-admin { background: var(--kartu2); border-color: transparent; margin-top: 6px; }
+.kartu-form .input-admin:focus { outline: none; border-color: var(--biru); }
+.kartu-form .cek-penting { background: var(--kartu2); padding: 11px 12px; border-radius: 10px; }
+.tombol-lebar { display: block; width: 100%; padding: 13px 18px; font-size: 15px; font-weight: bold; }
+
+.seg {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 4px; margin-top: 12px;
+    background: var(--kartu2); border-radius: 12px; padding: 4px;
+}
+.seg button {
+    border: none; background: transparent; color: var(--abu); padding: 10px 6px;
+    border-radius: 9px; font-size: 13px; font-weight: bold; cursor: pointer;
+    transition: background-color 0.2s, color 0.2s;
+}
+.seg button.aktif { background: var(--biru); color: #ffffff; }
+.seg.mode-piket button.aktif { background: var(--teal); color: #08201c; }
+
+.ed-baris {
+    display: flex; align-items: flex-start; gap: 10px; margin-top: 10px; padding: 12px;
+    background: var(--kartu2); border-radius: 14px; animation: naik 0.3s ease backwards;
+}
+.ed-no {
+    width: 26px; height: 26px; margin-top: 7px; border-radius: 50%; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    background: var(--biru); color: #ffffff; font-size: 12px; font-weight: bold;
+}
+.ed-no.teal { background: var(--teal); color: #08201c; }
+.ed-isi { flex: 1; min-width: 0; }
+.kartu-form .ed-isi .input-admin { background: var(--kartu); margin-top: 0; }
+.kartu-form .ed-isi .input-admin + .input-admin { margin-top: 8px; }
+.ed-x {
+    width: 32px; height: 32px; margin-top: 4px; padding: 0; border: none; border-radius: 50%;
+    background: rgba(238, 138, 124, 0.18); color: var(--koral-teks);
+    font-size: 15px; cursor: pointer; flex-shrink: 0;
+}
+.ed-tambah {
+    display: block; width: 100%; margin-top: 12px; padding: 13px; border-radius: 14px;
+    border: 2px dashed var(--garis2); background: transparent; color: var(--biru-teks);
+    font-size: 14px; font-weight: bold; cursor: pointer;
+}
+.ed-tambah:active { background: var(--kartu2); }
+.ed-kosong { text-align: center; color: var(--abu); font-size: 13px; padding: 20px 0 6px 0; }
+.ed-kotor { color: var(--emas-teks); font-size: 12px; margin: 12px 0 0 0; min-height: 16px; }
 
 /* MODE BACA SAJA (wali kelas di halaman absen dan kas) */
 .baca-saja .tombol-utama,
@@ -638,59 +714,105 @@ table.absen td.baris-jam { background: var(--kartu2); text-align: left; padding:
     <button class="tombol-kembali" onclick="beranda()">← Kembali</button>
 </div>
 
-<!-- ADMIN (admin penuh, wali kelas terbatas) -->
+<!-- ADMIN (admin dan wali kelas: pengumuman, tugas, jadwal) -->
 <div id="admin" class="halaman">
     <h1>🔐 Admin</h1>
 
     <div id="admin-login">
-        <p class="deskripsi">Masuk untuk mengelola pengumuman, jadwal, dan tugas.</p>
-        <input class="input-admin" type="email" id="admin-email-input" placeholder="Email admin atau wali kelas" autocomplete="username">
-        <input class="input-admin" type="password" id="admin-sandi" placeholder="Password" autocomplete="current-password">
-        <button class="tombol-utama" onclick="masukAdmin()">Masuk</button>
+        <div class="kartu-form" style="margin-top: 10px;">
+            <h3>Masuk</h3>
+            <p class="deskripsi">Untuk mengelola pengumuman, tugas, dan jadwal.</p>
+            <input class="input-admin" type="email" id="admin-email-input" placeholder="Email admin atau wali kelas" autocomplete="username">
+            <input class="input-admin" type="password" id="admin-sandi" placeholder="Password" autocomplete="current-password">
+            <button class="tombol-utama tombol-lebar" onclick="masukAdmin()">Masuk</button>
+        </div>
     </div>
 
     <div id="admin-panel" style="display: none;">
-        <p class="deskripsi">Masuk sebagai: <span id="admin-info"></span></p>
 
-        <h3 class="judul-bagian">Tambah Pengumuman</h3>
-        <input class="input-admin" type="text" id="in-judul" placeholder="Judul pengumuman">
-        <textarea class="input-admin" id="in-isi" placeholder="Isi pengumuman"></textarea>
-        <input class="input-admin" type="text" id="in-pembuat" placeholder="Pembuat (kosongkan = nama peran kamu)">
-        <label class="cek-penting"><input type="checkbox" id="in-penting"> Tandai sebagai penting</label>
-        <button class="tombol-utama" onclick="simpanPengumuman()">Simpan Pengumuman</button>
-
-        <div id="admin-tugas-tambah">
-            <h3 class="judul-bagian">Tambah Tugas</h3>
-            <input class="input-admin" type="text" id="in-mapel" placeholder="Mata pelajaran">
-            <input class="input-admin" type="text" id="in-nama" placeholder="Nama tugas">
-            <textarea class="input-admin" id="in-keterangan" placeholder="Keterangan tugas"></textarea>
-            <input class="input-admin" type="text" id="in-batas" placeholder="Batas pengumpulan (misal 28 November 2026)">
-            <button class="tombol-utama" onclick="simpanTugas()">Simpan Tugas</button>
+        <div class="admin-profil">
+            <div class="avatar-kecil av1">🛠️</div>
+            <div>
+                <div class="admin-peran" id="admin-peran"></div>
+                <p class="deskripsi" id="admin-info"></p>
+            </div>
         </div>
 
-        <h3 class="judul-bagian">Ubah Jadwal</h3>
-        <select class="input-admin" id="ed-jenis" onchange="isiEditorJadwal()">
-            <option value="mapel">Jadwal Pelajaran</option>
-            <option value="piket">Jadwal Piket</option>
-        </select>
-        <select class="input-admin" id="ed-hari" onchange="isiEditorJadwal()">
-            <option value="senin">Senin</option>
-            <option value="selasa">Selasa</option>
-            <option value="rabu">Rabu</option>
-            <option value="kamis">Kamis</option>
-            <option value="jumat">Jumat</option>
-            <option value="sabtu">Sabtu</option>
-        </select>
-        <p class="deskripsi" id="ed-petunjuk" style="margin: 8px 0 0 0;"></p>
-        <textarea class="input-admin" id="ed-isi" style="min-height: 160px;"></textarea>
-        <button class="tombol-utama" onclick="simpanJadwalEdit()">Simpan Jadwal</button>
+        <div class="tab-admin">
+            <button class="tab-btn aktif" data-tab="pengumuman" onclick="pilihTabAdmin('pengumuman')"><span class="t-ikon">📢</span>Info</button>
+            <button class="tab-btn" data-tab="tugas" onclick="pilihTabAdmin('tugas')"><span class="t-ikon">📚</span>Tugas</button>
+            <button class="tab-btn" data-tab="jadwal" onclick="pilihTabAdmin('jadwal')"><span class="t-ikon">📅</span>Jadwal</button>
+            <button class="tab-btn" data-tab="hapus" onclick="pilihTabAdmin('hapus')"><span class="t-ikon">🗑️</span>Hapus</button>
+        </div>
 
-        <h3 class="judul-bagian">Hapus Pengumuman</h3>
-        <div id="kelola-pengumuman"></div>
+        <!-- TAB: PENGUMUMAN -->
+        <div class="seksi-admin aktif" id="seksi-pengumuman">
+            <div class="kartu-form">
+                <h3>📢 Tambah Pengumuman</h3>
+                <p class="deskripsi">Pengumuman akan langsung tampil di beranda semua siswa.</p>
+                <label class="label-in" for="in-judul">Judul</label>
+                <input class="input-admin" type="text" id="in-judul" placeholder="Contoh: Rapat kelas hari Jumat">
+                <label class="label-in" for="in-isi">Isi pengumuman</label>
+                <textarea class="input-admin" id="in-isi" placeholder="Tulis isi pengumuman di sini"></textarea>
+                <label class="label-in" for="in-pembuat">Pembuat</label>
+                <input class="input-admin" type="text" id="in-pembuat" placeholder="Kosongkan = nama peran kamu">
+                <label class="cek-penting"><input type="checkbox" id="in-penting"> ❗ Tandai sebagai penting</label>
+                <button class="tombol-utama tombol-lebar" onclick="simpanPengumuman()">Simpan Pengumuman</button>
+            </div>
+        </div>
 
-        <div id="admin-tugas-hapus">
-            <h3 class="judul-bagian">Hapus Tugas</h3>
-            <div id="kelola-tugas"></div>
+        <!-- TAB: TUGAS -->
+        <div class="seksi-admin" id="seksi-tugas">
+            <div class="kartu-form">
+                <h3>📚 Tambah Tugas</h3>
+                <p class="deskripsi">Tugas akan tampil di halaman Tugas semua siswa.</p>
+                <label class="label-in" for="in-mapel">Mata pelajaran</label>
+                <input class="input-admin" type="text" id="in-mapel" placeholder="Contoh: Matematika">
+                <label class="label-in" for="in-nama">Nama tugas</label>
+                <input class="input-admin" type="text" id="in-nama" placeholder="Contoh: Latihan soal bab 3">
+                <label class="label-in" for="in-keterangan">Keterangan</label>
+                <textarea class="input-admin" id="in-keterangan" placeholder="Penjelasan singkat tugas"></textarea>
+                <label class="label-in" for="in-batas">Batas pengumpulan</label>
+                <input class="input-admin" type="text" id="in-batas" placeholder="Contoh: 28 November 2026">
+                <button class="tombol-utama tombol-lebar" onclick="simpanTugas()">Simpan Tugas</button>
+            </div>
+        </div>
+
+        <!-- TAB: JADWAL -->
+        <div class="seksi-admin" id="seksi-jadwal">
+            <div class="kartu-form">
+                <h3>📅 Ubah Jadwal</h3>
+                <p class="deskripsi">Pilih jenis jadwal dan hari, lalu ubah isinya. Jangan lupa simpan sebelum pindah hari.</p>
+
+                <div class="seg" id="ed-seg">
+                    <button class="aktif" data-jenis="mapel" onclick="edGantiJenis('mapel')">📖 Pelajaran</button>
+                    <button data-jenis="piket" onclick="edGantiJenis('piket')">🧹 Piket</button>
+                </div>
+
+                <div class="chip-bulan-baris" id="ed-hari-baris"></div>
+
+                <div id="ed-daftar"></div>
+
+                <button class="ed-tambah" id="ed-tombol-tambah" onclick="edTambah()">＋ Tambah mapel</button>
+
+                <p class="ed-kotor" id="ed-kotor"></p>
+
+                <button class="tombol-utama tombol-lebar" onclick="simpanJadwalEdit()">Simpan Jadwal</button>
+            </div>
+        </div>
+
+        <!-- TAB: HAPUS -->
+        <div class="seksi-admin" id="seksi-hapus">
+            <div class="kartu-form">
+                <h3>🗑️ Hapus Pengumuman</h3>
+                <p class="deskripsi">Ketuk Hapus dua kali untuk menghapus.</p>
+                <div id="kelola-pengumuman"></div>
+            </div>
+            <div class="kartu-form">
+                <h3>🗑️ Hapus Tugas</h3>
+                <p class="deskripsi">Ketuk Hapus dua kali untuk menghapus.</p>
+                <div id="kelola-tugas"></div>
+            </div>
         </div>
 
         <button class="tombol-keluar" onclick="keluarAdmin()">Keluar</button>
@@ -840,10 +962,11 @@ function gantiTema() {
 
 /* PERAN PENGGUNA
    Admin     : boleh semua.
-   Wali kelas: boleh melihat semua, hanya boleh mengubah pengumuman, jadwal piket, dan jadwal mapel. */
+   Wali kelas: boleh MENGUBAH pengumuman, tugas, jadwal pelajaran, dan jadwal piket.
+               Di halaman absen dan kas, wali kelas hanya boleh MELIHAT. */
 
 const UID_ADMIN = "SQvYZXHKIUVGA51YXllzXVoRmSQ2";
-const UID_WALAS = "ISI_UID_WALI_KELAS_DI_SINI";   // <- GANTI dengan UID akun wali kelas dari Firebase
+const UID_WALAS = "ISI_UID_WALI_KELAS_DI_SINI";   // <- GANTI dengan UID akun wali kelas dari Firebase (Authentication > Users)
 
 function uidSaatIni() {
     return (auth !== null && auth.currentUser !== null) ? auth.currentUser.uid : "";
@@ -947,7 +1070,8 @@ function muatJadwal() {
             if (document.getElementById("jadwal").classList.contains("aktif") && aj) { tampilkanJadwal(aj.dataset.hari); }
             if (document.getElementById("piket").classList.contains("aktif") && ap) { tampilkanPiket(ap.dataset.hari); }
 
-            if (adminAtauWalas() && document.activeElement !== document.getElementById("ed-isi")) {
+            /* Jangan timpa editor kalau sedang ada perubahan yang belum disimpan */
+            if (adminAtauWalas() && !edKotor) {
                 isiEditorJadwal();
             }
 
@@ -991,6 +1115,20 @@ function pesanAdmin(teks) {
     document.getElementById("admin-pesan").textContent = teks;
 }
 
+function pilihTabAdmin(nama) {
+
+    document.querySelectorAll("#admin-panel .tab-btn").forEach(function(t) {
+        t.classList.toggle("aktif", t.dataset.tab === nama);
+    });
+
+    document.querySelectorAll("#admin-panel .seksi-admin").forEach(function(s) {
+        s.classList.toggle("aktif", s.id === "seksi-" + nama);
+    });
+
+    pesanAdmin("");
+
+}
+
 function perbaruiTampilanAdmin() {
 
     let masuk = adminAtauWalas();
@@ -1000,11 +1138,8 @@ function perbaruiTampilanAdmin() {
     document.getElementById("tombol-admin").textContent = masuk ? "🔓" : "🔐";
 
     if (masuk) {
-        document.getElementById("admin-info").textContent = auth.currentUser.email + " (" + namaPeran() + ")";
-
-        let tampilTugas = adalahAdmin() ? "block" : "none";
-        document.getElementById("admin-tugas-tambah").style.display = tampilTugas;
-        document.getElementById("admin-tugas-hapus").style.display = tampilTugas;
+        document.getElementById("admin-peran").textContent = namaPeran();
+        document.getElementById("admin-info").textContent = auth.currentUser.email;
 
         tampilkanKelolaAdmin();
         isiEditorJadwal();
@@ -1092,7 +1227,7 @@ function simpanPengumuman() {
 
 function simpanTugas() {
 
-    if (!adalahAdmin()) { pesanAdmin("Hanya admin yang bisa menambah tugas."); return; }
+    if (!adminAtauWalas()) { pesanAdmin("Masuk sebagai admin atau wali kelas dulu."); return; }
 
     let mapel = ambilNilai("in-mapel");
     let nama = ambilNilai("in-nama");
@@ -1123,48 +1258,158 @@ function simpanTugas() {
 
 }
 
-/* Ubah jadwal pelajaran dan piket */
+
+/* EDITOR JADWAL (pelajaran dan piket) */
+
+const URUTAN_HARI = ["senin", "selasa", "rabu", "kamis", "jumat", "sabtu"];
+
+let edJenis = "mapel";
+let edHari = "senin";
+let edRows = [];
+let edKotor = false;
 
 function isiEditorJadwal() {
 
-    let hari = document.getElementById("ed-hari").value;
-    let jenis = document.getElementById("ed-jenis").value;
-    let t = "";
+    if (edKotor) { return; }
 
-    if (jenis === "mapel") {
-        t = (jadwal[hari] || []).map(function(m) { return m.mapel + " | " + m.guru; }).join("\n");
-        document.getElementById("ed-petunjuk").textContent = "Satu mapel per baris, format: Nama Mapel | Nama Guru";
+    if (edJenis === "mapel") {
+        edRows = (jadwal[edHari] || []).map(function(m) {
+            return { mapel: m.mapel, guru: (m.guru === "-" ? "" : m.guru) };
+        });
     } else {
-        t = (jadwalPiket[hari] || []).join("\n");
-        document.getElementById("ed-petunjuk").textContent = "Satu nama per baris. Kosongkan semua jika tidak ada piket.";
+        edRows = (jadwalPiket[edHari] || []).map(function(n) { return { nama: n }; });
     }
 
-    document.getElementById("ed-isi").value = t;
+    gambarEditor();
 
+}
+
+function tandaiKotor() {
+    edKotor = true;
+    let el = document.getElementById("ed-kotor");
+    if (el) { el.textContent = "● Ada perubahan yang belum disimpan"; }
+}
+
+function gambarEditor() {
+
+    document.querySelectorAll("#ed-seg button").forEach(function(b) {
+        b.classList.toggle("aktif", b.dataset.jenis === edJenis);
+    });
+    document.getElementById("ed-seg").classList.toggle("mode-piket", edJenis === "piket");
+
+    let chip = "";
+    URUTAN_HARI.forEach(function(h) {
+        chip += `<button class="chip-bulan ${h === edHari ? "aktif" : ""}" onclick="edGantiHari('${h}')">${huruf1Besar(h)}</button>`;
+    });
+    document.getElementById("ed-hari-baris").innerHTML = chip;
+
+    document.getElementById("ed-tombol-tambah").textContent = edJenis === "mapel" ? "＋ Tambah mapel" : "＋ Tambah petugas";
+
+    let h = "";
+
+    if (edRows.length === 0) {
+        h = `<div class="ed-kosong">${edJenis === "mapel" ? "Belum ada mapel di hari ini." : "Belum ada petugas piket di hari ini."}</div>`;
+    }
+
+    edRows.forEach(function(r, i) {
+        if (edJenis === "mapel") {
+            h += `
+                <div class="ed-baris">
+                    <div class="ed-no">${i + 1}</div>
+                    <div class="ed-isi">
+                        <input class="input-admin" type="text" placeholder="Mata pelajaran" value="${esc(r.mapel)}" oninput="edUbah(${i}, 'mapel', this.value)">
+                        <input class="input-admin" type="text" placeholder="Nama guru" value="${esc(r.guru)}" oninput="edUbah(${i}, 'guru', this.value)">
+                    </div>
+                    <button class="ed-x" onclick="edHapus(${i})" aria-label="Hapus baris">✕</button>
+                </div>
+            `;
+        } else {
+            h += `
+                <div class="ed-baris">
+                    <div class="ed-no teal">${i + 1}</div>
+                    <div class="ed-isi">
+                        <input class="input-admin" type="text" placeholder="Nama petugas piket" value="${esc(r.nama)}" oninput="edUbah(${i}, 'nama', this.value)">
+                    </div>
+                    <button class="ed-x" onclick="edHapus(${i})" aria-label="Hapus baris">✕</button>
+                </div>
+            `;
+        }
+    });
+
+    document.getElementById("ed-daftar").innerHTML = h;
+    document.getElementById("ed-kotor").textContent = edKotor ? "● Ada perubahan yang belum disimpan" : "";
+
+}
+
+function edBolehPindah() {
+    if (!edKotor) { return true; }
+    return confirm("Perubahan belum disimpan. Pindah dan buang perubahan?");
+}
+
+function edGantiJenis(j) {
+    if (j === edJenis) { return; }
+    if (!edBolehPindah()) { return; }
+    edKotor = false;
+    edJenis = j;
+    isiEditorJadwal();
+}
+
+function edGantiHari(h) {
+    if (h === edHari) { return; }
+    if (!edBolehPindah()) { return; }
+    edKotor = false;
+    edHari = h;
+    isiEditorJadwal();
+}
+
+function edUbah(i, kolom, nilai) {
+    if (!edRows[i]) { return; }
+    edRows[i][kolom] = nilai;
+    tandaiKotor();
+}
+
+function edTambah() {
+
+    if (edJenis === "mapel") {
+        edRows.push({ mapel: "", guru: "" });
+    } else {
+        edRows.push({ nama: "" });
+    }
+
+    tandaiKotor();
+    gambarEditor();
+
+    let semua = document.querySelectorAll("#ed-daftar .ed-baris");
+    if (semua.length > 0) {
+        let input = semua[semua.length - 1].querySelector("input");
+        if (input) { input.focus(); }
+    }
+
+}
+
+function edHapus(i) {
+    edRows.splice(i, 1);
+    tandaiKotor();
+    gambarEditor();
 }
 
 function simpanJadwalEdit() {
 
     if (!adminAtauWalas()) { pesanAdmin("Masuk sebagai admin atau wali kelas dulu."); return; }
 
-    let hari = document.getElementById("ed-hari").value;
-    let jenis = document.getElementById("ed-jenis").value;
-
-    let baris = document.getElementById("ed-isi").value.split("\n")
-        .map(function(x) { return x.trim(); })
-        .filter(function(x) { return x !== ""; });
-
     let j = JSON.parse(JSON.stringify(jadwal));
     let p = JSON.parse(JSON.stringify(jadwalPiket));
 
-    if (jenis === "mapel") {
-        j[hari] = baris.map(function(x) {
-            let k = x.indexOf("|");
-            if (k < 0) { return { mapel: x, guru: "-" }; }
-            return { mapel: x.slice(0, k).trim(), guru: x.slice(k + 1).trim() || "-" };
-        });
+    if (edJenis === "mapel") {
+        j[edHari] = edRows
+            .filter(function(r) { return String(r.mapel).trim() !== ""; })
+            .map(function(r) {
+                return { mapel: String(r.mapel).trim(), guru: String(r.guru).trim() || "-" };
+            });
     } else {
-        p[hari] = baris;
+        p[edHari] = edRows
+            .map(function(r) { return String(r.nama).trim(); })
+            .filter(function(x) { return x !== ""; });
     }
 
     pesanAdmin("Menyimpan jadwal...");
@@ -1175,7 +1420,11 @@ function simpanJadwalEdit() {
         diperbarui: Date.now(),
         diubahOleh: auth.currentUser.email
     })
-    .then(function() { pesanAdmin("Jadwal tersimpan ✅"); })
+    .then(function() {
+        edKotor = false;
+        pesanAdmin("Jadwal " + huruf1Besar(edHari) + " tersimpan ✅");
+        isiEditorJadwal();
+    })
     .catch(function(error) {
         console.log("Gagal menyimpan jadwal:", error);
         pesanAdmin("Gagal menyimpan. Cek aturan Firestore (pengaturan) dan internet.");
@@ -1188,8 +1437,7 @@ let hapusMenunggu = "";
 
 function hapusData(koleksi, id, tombol) {
 
-    if (koleksi === "tugas" && !adalahAdmin()) { return; }
-    if (koleksi === "pengumuman" && !adminAtauWalas()) { return; }
+    if (!adminAtauWalas()) { return; }
 
     let kunci = koleksi + ":" + id;
 
@@ -1224,31 +1472,29 @@ function tampilkanKelolaAdmin() {
 
     daftarPengumuman.forEach(function(d) {
         hasilP += `
-            <div class="kelola-item">
+            <div class="kelola-item" style="background: var(--kartu2); border-color: transparent;">
                 <span>${esc(d.judul)}</span>
                 <button class="tombol-hapus" onclick="hapusData('pengumuman', '${esc(d.id)}', this)">🗑 Hapus</button>
             </div>
         `;
     });
 
-    if (hasilP === "") { hasilP = `<div class="kosong">Belum ada pengumuman.</div>`; }
+    if (hasilP === "") { hasilP = `<div class="ed-kosong">Belum ada pengumuman.</div>`; }
 
     document.getElementById("kelola-pengumuman").innerHTML = hasilP;
-
-    if (!adalahAdmin()) { return; }
 
     let hasilT = "";
 
     daftarTugas.forEach(function(d) {
         hasilT += `
-            <div class="kelola-item">
+            <div class="kelola-item" style="background: var(--kartu2); border-color: transparent;">
                 <span>${esc(d.nama || "(tanpa judul)")} • ${esc(d.mapel)}</span>
                 <button class="tombol-hapus" onclick="hapusData('tugas', '${esc(d.id)}', this)">🗑 Hapus</button>
             </div>
         `;
     });
 
-    if (hasilT === "") { hasilT = `<div class="kosong">Belum ada tugas.</div>`; }
+    if (hasilT === "") { hasilT = `<div class="ed-kosong">Belum ada tugas.</div>`; }
 
     document.getElementById("kelola-tugas").innerHTML = hasilT;
 
@@ -1563,7 +1809,8 @@ const DAFTAR_SISWA = [
     "Adnan", "Amar Ma'ruf", "Andika", "Asraf",
     "Azhar Mubaraq", "Faerul Fahmi", "Jusri Wahyudi", "M. Saiful Anwar",
     "Muh. Afiq Alfauzan", "Muh. Fais Mulyaqin", "Muh. Iksan",
-    "Muh. Khairil Bakri", "Muh. Padlan", "Riski", "Zulkifli", "Zahid"
+    "Muh. Khairil Bakri", "Muh. Padlan", "Riski", "Syahrul Imansyah",
+    "Zulkifli", "Zahid"
 ];
 
 const JAM_BIASA = 8;
