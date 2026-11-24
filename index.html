@@ -72,11 +72,12 @@ body {
 .kelas { color: var(--abu); font-size: 12px; margin-top: 4px; }
 
 .tema {
-    margin-left: auto; width: 42px; height: 42px; border-radius: 50%;
+    margin-left: 6px; width: 34px; height: 34px; border-radius: 50%;
     border: 1px solid var(--garis); background: var(--kartu); color: var(--teks);
-    font-size: 19px; cursor: pointer; box-shadow: var(--bayangan); flex-shrink: 0;
+    font-size: 15px; cursor: pointer; box-shadow: var(--bayangan); flex-shrink: 0; padding: 0;
     transition: transform 0.2s, background-color 0.3s;
 }
+.tema.pertama { margin-left: auto; }
 .tema:active { transform: rotate(40deg) scale(0.9); }
 
 /* HALAMAN */
@@ -220,8 +221,15 @@ textarea.input-admin { min-height: 90px; resize: vertical; }
 .pesan-admin { color: var(--emas-teks); font-size: 13px; margin-top: 12px; min-height: 18px; }
 .cek-penting { display: flex; align-items: center; gap: 8px; margin-top: 10px; font-size: 14px; color: var(--teks2); }
 
-@media (max-width: 420px) { .tema { width: 38px; height: 38px; font-size: 17px; } }
 @media (max-width: 370px) { .nama { font-size: 15px; } .logo { margin-right: 8px; } }
+
+/* MODE BACA SAJA (wali kelas di halaman absen dan kas) */
+.baca-saja .tombol-utama,
+.baca-saja .tombol-hapus,
+.baca-saja .kas-baris-input,
+.baca-saja .kas-form { display: none !important; }
+#kas-panel.baca-saja .input-admin { display: none !important; }
+.baca-saja .pilih, .baca-saja .chip-jam { pointer-events: none; }
 
 /* TABEL KEHADIRAN */
 .judul-tabel {
@@ -395,10 +403,10 @@ table.absen td.baris-jam { background: var(--kartu2); text-align: left; padding:
         <div class="nama">TKR <span class="emas">2</span> CONNECT</div>
         <div class="kelas">X TKR 2</div>
     </div>
+    <button class="tema pertama" id="tombol-absen" onclick="bukaHalaman('absen')" aria-label="Isi kehadiran">📝</button>
+    <button class="tema" id="tombol-kas" onclick="bukaHalaman('kas')" aria-label="Kelola kas">💰</button>
+    <button class="tema" id="tombol-tema" onclick="gantiTema()" aria-label="Ganti tema">☀️</button>
     <button class="tema" id="tombol-admin" onclick="bukaHalaman('admin')" aria-label="Admin">🔐</button>
-    <button class="tema" id="tombol-absen" style="margin-left: 8px;" onclick="bukaHalaman('absen')" aria-label="Isi kehadiran">📝</button>
-    <button class="tema" id="tombol-kas" style="margin-left: 8px;" onclick="bukaHalaman('kas')" aria-label="Kelola kas">💰</button>
-    <button class="tema" id="tombol-tema" style="margin-left: 8px;" onclick="gantiTema()" aria-label="Ganti tema">☀️</button>
 </div>
 
 <!-- BERANDA -->
@@ -507,13 +515,13 @@ table.absen td.baris-jam { background: var(--kartu2); text-align: left; padding:
     <button class="tombol-kembali" onclick="beranda()">← Kembali</button>
 </div>
 
-<!-- ABSEN (sekretaris dan admin) -->
+<!-- ABSEN (sekretaris dan admin; wali kelas hanya melihat) -->
 <div id="absen" class="halaman">
     <h1>📝 Isi Kehadiran</h1>
-    <p class="deskripsi">Hanya sekretaris dan admin yang bisa mengisi.</p>
+    <p class="deskripsi">Hanya sekretaris dan admin yang bisa mengisi. Wali kelas bisa melihat.</p>
 
     <div id="absen-login">
-        <input class="input-admin" type="email" id="absen-email" placeholder="Email sekretaris atau admin" autocomplete="username">
+        <input class="input-admin" type="email" id="absen-email" placeholder="Email sekretaris, admin, atau wali kelas" autocomplete="username">
         <input class="input-admin" type="password" id="absen-sandi" placeholder="Password" autocomplete="current-password">
         <button class="tombol-utama" onclick="masukAbsen()">Masuk</button>
     </div>
@@ -555,13 +563,13 @@ table.absen td.baris-jam { background: var(--kartu2); text-align: left; padding:
     <button class="tombol-kembali" onclick="beranda()">← Kembali</button>
 </div>
 
-<!-- KAS (bendahara dan admin) -->
+<!-- KAS (bendahara dan admin; wali kelas hanya melihat) -->
 <div id="kas" class="halaman">
     <h1>💰 Kelola Kas</h1>
-    <p class="deskripsi">Hanya bendahara dan admin yang bisa mengakses.</p>
+    <p class="deskripsi">Hanya bendahara dan admin yang bisa mengubah. Wali kelas bisa melihat.</p>
 
     <div id="kas-login">
-        <input class="input-admin" type="email" id="kas-email" placeholder="Email bendahara atau admin" autocomplete="username">
+        <input class="input-admin" type="email" id="kas-email" placeholder="Email bendahara, admin, atau wali kelas" autocomplete="username">
         <input class="input-admin" type="password" id="kas-sandi" placeholder="Password" autocomplete="current-password">
         <button class="tombol-utama" onclick="masukKas()">Masuk</button>
     </div>
@@ -580,19 +588,21 @@ table.absen td.baris-jam { background: var(--kartu2); text-align: left; padding:
         </div>
         <div id="kas-iuran-info" style="margin-top: 12px;"></div>
 
-        <div class="sub-judul">Catat pembayaran siswa</div>
-        <select class="input-admin" id="kas-bayar-nama"></select>
-        <div class="kas-baris-input">
-            <input class="input-admin" type="number" inputmode="numeric" id="kas-bayar-jml" placeholder="Nominal dibayar (Rp)">
-            <select class="input-admin" id="kas-bayar-minggu" style="flex: 0 0 38%;" onchange="isiNominalOtomatis()">
-                <option value="1">1 minggu</option>
-                <option value="2">2 minggu</option>
-                <option value="3">3 minggu</option>
-                <option value="4">4 minggu</option>
-            </select>
+        <div class="kas-form">
+            <div class="sub-judul">Catat pembayaran siswa</div>
+            <select class="input-admin" id="kas-bayar-nama"></select>
+            <div class="kas-baris-input">
+                <input class="input-admin" type="number" inputmode="numeric" id="kas-bayar-jml" placeholder="Nominal dibayar (Rp)">
+                <select class="input-admin" id="kas-bayar-minggu" style="flex: 0 0 38%;" onchange="isiNominalOtomatis()">
+                    <option value="1">1 minggu</option>
+                    <option value="2">2 minggu</option>
+                    <option value="3">3 minggu</option>
+                    <option value="4">4 minggu</option>
+                </select>
+            </div>
+            <input class="input-admin" type="date" id="kas-bayar-tgl">
+            <button class="tombol-utama" onclick="catatBayar()">Catat Pembayaran</button>
         </div>
-        <input class="input-admin" type="date" id="kas-bayar-tgl">
-        <button class="tombol-utama" onclick="catatBayar()">Catat Pembayaran</button>
 
         <div class="sub-judul">Status kas minggu ini</div>
         <div id="kas-status-siswa"></div>
@@ -601,17 +611,21 @@ table.absen td.baris-jam { background: var(--kartu2); text-align: left; padding:
         <div id="kas-list-bayar"></div>
 
         <h3 class="judul-bagian">Pemasukan di Luar Kas Siswa</h3>
-        <input class="input-admin" type="text" id="kas-masuk-ket" placeholder="Dari mana? (misal: Wali kelas)">
-        <input class="input-admin" type="number" inputmode="numeric" id="kas-masuk-jml" placeholder="Jumlah (Rp)">
-        <input class="input-admin" type="date" id="kas-masuk-tgl">
-        <button class="tombol-utama" onclick="tambahKas('masuk')">Tambah Pemasukan</button>
+        <div class="kas-form">
+            <input class="input-admin" type="text" id="kas-masuk-ket" placeholder="Dari mana? (misal: Wali kelas)">
+            <input class="input-admin" type="number" inputmode="numeric" id="kas-masuk-jml" placeholder="Jumlah (Rp)">
+            <input class="input-admin" type="date" id="kas-masuk-tgl">
+            <button class="tombol-utama" onclick="tambahKas('masuk')">Tambah Pemasukan</button>
+        </div>
         <div id="kas-list-masuk"></div>
 
         <h3 class="judul-bagian">Pengeluaran</h3>
-        <input class="input-admin" type="text" id="kas-keluar-ket" placeholder="Untuk apa? (misal: Beli spidol)">
-        <input class="input-admin" type="number" inputmode="numeric" id="kas-keluar-jml" placeholder="Jumlah (Rp)">
-        <input class="input-admin" type="date" id="kas-keluar-tgl">
-        <button class="tombol-utama" onclick="tambahKas('keluar')">Tambah Pengeluaran</button>
+        <div class="kas-form">
+            <input class="input-admin" type="text" id="kas-keluar-ket" placeholder="Untuk apa? (misal: Beli spidol)">
+            <input class="input-admin" type="number" inputmode="numeric" id="kas-keluar-jml" placeholder="Jumlah (Rp)">
+            <input class="input-admin" type="date" id="kas-keluar-tgl">
+            <button class="tombol-utama" onclick="tambahKas('keluar')">Tambah Pengeluaran</button>
+        </div>
         <div id="kas-list-keluar"></div>
 
         <h3 class="judul-bagian">Riwayat Per Bulan</h3>
@@ -624,13 +638,13 @@ table.absen td.baris-jam { background: var(--kartu2); text-align: left; padding:
     <button class="tombol-kembali" onclick="beranda()">← Kembali</button>
 </div>
 
-<!-- ADMIN -->
+<!-- ADMIN (admin penuh, wali kelas terbatas) -->
 <div id="admin" class="halaman">
     <h1>🔐 Admin</h1>
 
     <div id="admin-login">
-        <p class="deskripsi">Masuk untuk menambah atau menghapus pengumuman dan tugas.</p>
-        <input class="input-admin" type="email" id="admin-email-input" placeholder="Email admin" autocomplete="username">
+        <p class="deskripsi">Masuk untuk mengelola pengumuman, jadwal, dan tugas.</p>
+        <input class="input-admin" type="email" id="admin-email-input" placeholder="Email admin atau wali kelas" autocomplete="username">
         <input class="input-admin" type="password" id="admin-sandi" placeholder="Password" autocomplete="current-password">
         <button class="tombol-utama" onclick="masukAdmin()">Masuk</button>
     </div>
@@ -641,24 +655,45 @@ table.absen td.baris-jam { background: var(--kartu2); text-align: left; padding:
         <h3 class="judul-bagian">Tambah Pengumuman</h3>
         <input class="input-admin" type="text" id="in-judul" placeholder="Judul pengumuman">
         <textarea class="input-admin" id="in-isi" placeholder="Isi pengumuman"></textarea>
-        <input class="input-admin" type="text" id="in-pembuat" placeholder="Pembuat (kosongkan = Admin)">
+        <input class="input-admin" type="text" id="in-pembuat" placeholder="Pembuat (kosongkan = nama peran kamu)">
         <label class="cek-penting"><input type="checkbox" id="in-penting"> Tandai sebagai penting</label>
         <button class="tombol-utama" onclick="simpanPengumuman()">Simpan Pengumuman</button>
 
-        <h3 class="judul-bagian">Tambah Tugas</h3>
-        <input class="input-admin" type="text" id="in-mapel" placeholder="Mata pelajaran">
-        <input class="input-admin" type="text" id="in-nama" placeholder="Nama tugas">
-        <textarea class="input-admin" id="in-keterangan" placeholder="Keterangan tugas"></textarea>
-        <input class="input-admin" type="text" id="in-batas" placeholder="Batas pengumpulan (misal 28 November 2026)">
-        <button class="tombol-utama" onclick="simpanTugas()">Simpan Tugas</button>
+        <div id="admin-tugas-tambah">
+            <h3 class="judul-bagian">Tambah Tugas</h3>
+            <input class="input-admin" type="text" id="in-mapel" placeholder="Mata pelajaran">
+            <input class="input-admin" type="text" id="in-nama" placeholder="Nama tugas">
+            <textarea class="input-admin" id="in-keterangan" placeholder="Keterangan tugas"></textarea>
+            <input class="input-admin" type="text" id="in-batas" placeholder="Batas pengumpulan (misal 28 November 2026)">
+            <button class="tombol-utama" onclick="simpanTugas()">Simpan Tugas</button>
+        </div>
+
+        <h3 class="judul-bagian">Ubah Jadwal</h3>
+        <select class="input-admin" id="ed-jenis" onchange="isiEditorJadwal()">
+            <option value="mapel">Jadwal Pelajaran</option>
+            <option value="piket">Jadwal Piket</option>
+        </select>
+        <select class="input-admin" id="ed-hari" onchange="isiEditorJadwal()">
+            <option value="senin">Senin</option>
+            <option value="selasa">Selasa</option>
+            <option value="rabu">Rabu</option>
+            <option value="kamis">Kamis</option>
+            <option value="jumat">Jumat</option>
+            <option value="sabtu">Sabtu</option>
+        </select>
+        <p class="deskripsi" id="ed-petunjuk" style="margin: 8px 0 0 0;"></p>
+        <textarea class="input-admin" id="ed-isi" style="min-height: 160px;"></textarea>
+        <button class="tombol-utama" onclick="simpanJadwalEdit()">Simpan Jadwal</button>
 
         <h3 class="judul-bagian">Hapus Pengumuman</h3>
         <div id="kelola-pengumuman"></div>
 
-        <h3 class="judul-bagian">Hapus Tugas</h3>
-        <div id="kelola-tugas"></div>
+        <div id="admin-tugas-hapus">
+            <h3 class="judul-bagian">Hapus Tugas</h3>
+            <div id="kelola-tugas"></div>
+        </div>
 
-        <button class="tombol-keluar" onclick="keluarAdmin()">Keluar dari Admin</button>
+        <button class="tombol-keluar" onclick="keluarAdmin()">Keluar</button>
     </div>
 
     <p class="pesan-admin" id="admin-pesan"></p>
@@ -676,8 +711,8 @@ table.absen td.baris-jam { background: var(--kartu2); text-align: left; padding:
 
 <script>
 
-/* DATA JADWAL PELAJARAN */
-const jadwal = {
+/* DATA JADWAL PELAJARAN (bisa diubah admin / wali kelas lewat aplikasi) */
+let jadwal = {
     senin: [
         { mapel: "Dasar-Dasar Kompetensi Keahlian (DDKK)", guru: "RAMLI TIRO" },
         { mapel: "Matematika", guru: "NURAENI" }
@@ -707,8 +742,8 @@ const jadwal = {
     ]
 };
 
-/* DATA JADWAL PIKET */
-const jadwalPiket = {
+/* DATA JADWAL PIKET (bisa diubah admin / wali kelas lewat aplikasi) */
+let jadwalPiket = {
     senin:  ["FAHMI", "JUSRI", "nama"],
     selasa: ["Andika", "jusri", "AFIQ"],
     rabu:   ["ASRAF", "KHAIRIL", "ADNAN"],
@@ -803,7 +838,37 @@ function gantiTema() {
 }
 
 
-/* FIRESTORE: PENGUMUMAN DAN TUGAS */
+/* PERAN PENGGUNA
+   Admin     : boleh semua.
+   Wali kelas: boleh melihat semua, hanya boleh mengubah pengumuman, jadwal piket, dan jadwal mapel. */
+
+const UID_ADMIN = "SQvYZXHKIUVGA51YXllzXVoRmSQ2";
+const UID_WALAS = "ISI_UID_WALI_KELAS_DI_SINI";   // <- GANTI dengan UID akun wali kelas dari Firebase
+
+function uidSaatIni() {
+    return (auth !== null && auth.currentUser !== null) ? auth.currentUser.uid : "";
+}
+
+function adalahAdmin() {
+    return uidSaatIni() === UID_ADMIN;
+}
+
+function adalahWalas() {
+    return uidSaatIni() !== "" && uidSaatIni() === UID_WALAS;
+}
+
+function adminAtauWalas() {
+    return adalahAdmin() || adalahWalas();
+}
+
+function namaPeran() {
+    if (adalahAdmin()) { return "Admin"; }
+    if (adalahWalas()) { return "Wali Kelas"; }
+    return "";
+}
+
+
+/* FIRESTORE: PENGUMUMAN, TUGAS, JADWAL */
 
 function muatPengumuman() {
     try {
@@ -855,6 +920,45 @@ function muatTugas() {
     }
 }
 
+function muatJadwal() {
+    try {
+        db.collection("pengaturan").doc("jadwal").onSnapshot(function(dok) {
+
+            if (!dok.exists) { return; }
+
+            let d = dok.data();
+
+            try {
+                let j = JSON.parse(d.jadwalJson || "{}");
+                Object.keys(jadwal).forEach(function(h) { if (Array.isArray(j[h])) { jadwal[h] = j[h]; } });
+                let p = JSON.parse(d.piketJson || "{}");
+                Object.keys(jadwalPiket).forEach(function(h) { if (Array.isArray(p[h])) { jadwalPiket[h] = p[h]; } });
+            } catch (e) {
+                console.log("Data jadwal rusak:", e);
+                return;
+            }
+
+            tampilkanHariIni();
+            tampilkanChipInfo();
+
+            let aj = document.querySelector("#jadwal .hari-button.aktif");
+            let ap = document.querySelector("#piket .hari-button.aktif");
+
+            if (document.getElementById("jadwal").classList.contains("aktif") && aj) { tampilkanJadwal(aj.dataset.hari); }
+            if (document.getElementById("piket").classList.contains("aktif") && ap) { tampilkanPiket(ap.dataset.hari); }
+
+            if (adminAtauWalas() && document.activeElement !== document.getElementById("ed-isi")) {
+                isiEditorJadwal();
+            }
+
+        }, function(e) {
+            console.log("Gagal membaca jadwal:", e);
+        });
+    } catch (e) {
+        console.log("Firebase belum siap:", e);
+    }
+}
+
 function mulaiFirebase() {
 
     try {
@@ -862,6 +966,7 @@ function mulaiFirebase() {
         db = firebase.firestore();
         muatPengumuman();
         muatTugas();
+        muatJadwal();
     } catch (e) {
         console.log("Firebase belum siap:", e);
     }
@@ -880,27 +985,31 @@ function mulaiFirebase() {
 }
 
 
-/* ADMIN */
-
-const UID_ADMIN = "SQvYZXHKIUVGA51YXllzXVoRmSQ2";
-
-function adalahAdmin() {
-    return auth !== null && auth.currentUser !== null && auth.currentUser.uid === UID_ADMIN;
-}
+/* ADMIN DAN WALI KELAS */
 
 function pesanAdmin(teks) {
     document.getElementById("admin-pesan").textContent = teks;
 }
 
 function perbaruiTampilanAdmin() {
-    let masuk = adalahAdmin();
+
+    let masuk = adminAtauWalas();
+
     document.getElementById("admin-login").style.display = masuk ? "none" : "block";
     document.getElementById("admin-panel").style.display = masuk ? "block" : "none";
     document.getElementById("tombol-admin").textContent = masuk ? "🔓" : "🔐";
+
     if (masuk) {
-        document.getElementById("admin-info").textContent = auth.currentUser.email;
+        document.getElementById("admin-info").textContent = auth.currentUser.email + " (" + namaPeran() + ")";
+
+        let tampilTugas = adalahAdmin() ? "block" : "none";
+        document.getElementById("admin-tugas-tambah").style.display = tampilTugas;
+        document.getElementById("admin-tugas-hapus").style.display = tampilTugas;
+
         tampilkanKelolaAdmin();
+        isiEditorJadwal();
     }
+
 }
 
 function masukAdmin() {
@@ -922,9 +1031,10 @@ function masukAdmin() {
 
     auth.signInWithEmailAndPassword(email, sandi)
     .then(function(hasil) {
-        if (hasil.user.uid !== UID_ADMIN) {
+        let uid = hasil.user.uid;
+        if (uid !== UID_ADMIN && uid !== UID_WALAS) {
             auth.signOut();
-            pesanAdmin("Akun ini bukan admin.");
+            pesanAdmin("Akun ini bukan admin atau wali kelas.");
             return;
         }
         document.getElementById("admin-sandi").value = "";
@@ -944,7 +1054,7 @@ function keluarAdmin() {
 
 function simpanPengumuman() {
 
-    if (!adalahAdmin()) { pesanAdmin("Masuk sebagai admin dulu."); return; }
+    if (!adminAtauWalas()) { pesanAdmin("Masuk sebagai admin atau wali kelas dulu."); return; }
 
     let judul = ambilNilai("in-judul");
     let isi = ambilNilai("in-isi");
@@ -955,7 +1065,7 @@ function simpanPengumuman() {
         return;
     }
 
-    if (pembuat === "") { pembuat = "Admin"; }
+    if (pembuat === "") { pembuat = namaPeran(); }
 
     let tanggal = new Date().toLocaleDateString("id-ID", { day: "numeric", month: "long", year: "numeric" });
 
@@ -982,7 +1092,7 @@ function simpanPengumuman() {
 
 function simpanTugas() {
 
-    if (!adalahAdmin()) { pesanAdmin("Masuk sebagai admin dulu."); return; }
+    if (!adalahAdmin()) { pesanAdmin("Hanya admin yang bisa menambah tugas."); return; }
 
     let mapel = ambilNilai("in-mapel");
     let nama = ambilNilai("in-nama");
@@ -1013,12 +1123,73 @@ function simpanTugas() {
 
 }
 
+/* Ubah jadwal pelajaran dan piket */
+
+function isiEditorJadwal() {
+
+    let hari = document.getElementById("ed-hari").value;
+    let jenis = document.getElementById("ed-jenis").value;
+    let t = "";
+
+    if (jenis === "mapel") {
+        t = (jadwal[hari] || []).map(function(m) { return m.mapel + " | " + m.guru; }).join("\n");
+        document.getElementById("ed-petunjuk").textContent = "Satu mapel per baris, format: Nama Mapel | Nama Guru";
+    } else {
+        t = (jadwalPiket[hari] || []).join("\n");
+        document.getElementById("ed-petunjuk").textContent = "Satu nama per baris. Kosongkan semua jika tidak ada piket.";
+    }
+
+    document.getElementById("ed-isi").value = t;
+
+}
+
+function simpanJadwalEdit() {
+
+    if (!adminAtauWalas()) { pesanAdmin("Masuk sebagai admin atau wali kelas dulu."); return; }
+
+    let hari = document.getElementById("ed-hari").value;
+    let jenis = document.getElementById("ed-jenis").value;
+
+    let baris = document.getElementById("ed-isi").value.split("\n")
+        .map(function(x) { return x.trim(); })
+        .filter(function(x) { return x !== ""; });
+
+    let j = JSON.parse(JSON.stringify(jadwal));
+    let p = JSON.parse(JSON.stringify(jadwalPiket));
+
+    if (jenis === "mapel") {
+        j[hari] = baris.map(function(x) {
+            let k = x.indexOf("|");
+            if (k < 0) { return { mapel: x, guru: "-" }; }
+            return { mapel: x.slice(0, k).trim(), guru: x.slice(k + 1).trim() || "-" };
+        });
+    } else {
+        p[hari] = baris;
+    }
+
+    pesanAdmin("Menyimpan jadwal...");
+
+    db.collection("pengaturan").doc("jadwal").set({
+        jadwalJson: JSON.stringify(j),
+        piketJson: JSON.stringify(p),
+        diperbarui: Date.now(),
+        diubahOleh: auth.currentUser.email
+    })
+    .then(function() { pesanAdmin("Jadwal tersimpan ✅"); })
+    .catch(function(error) {
+        console.log("Gagal menyimpan jadwal:", error);
+        pesanAdmin("Gagal menyimpan. Cek aturan Firestore (pengaturan) dan internet.");
+    });
+
+}
+
 /* Hapus butuh dua ketukan */
 let hapusMenunggu = "";
 
 function hapusData(koleksi, id, tombol) {
 
-    if (!adalahAdmin()) { return; }
+    if (koleksi === "tugas" && !adalahAdmin()) { return; }
+    if (koleksi === "pengumuman" && !adminAtauWalas()) { return; }
 
     let kunci = koleksi + ":" + id;
 
@@ -1047,7 +1218,7 @@ function hapusData(koleksi, id, tombol) {
 
 function tampilkanKelolaAdmin() {
 
-    if (!adalahAdmin()) { return; }
+    if (!adminAtauWalas()) { return; }
 
     let hasilP = "";
 
@@ -1062,6 +1233,10 @@ function tampilkanKelolaAdmin() {
 
     if (hasilP === "") { hasilP = `<div class="kosong">Belum ada pengumuman.</div>`; }
 
+    document.getElementById("kelola-pengumuman").innerHTML = hasilP;
+
+    if (!adalahAdmin()) { return; }
+
     let hasilT = "";
 
     daftarTugas.forEach(function(d) {
@@ -1075,7 +1250,6 @@ function tampilkanKelolaAdmin() {
 
     if (hasilT === "") { hasilT = `<div class="kosong">Belum ada tugas.</div>`; }
 
-    document.getElementById("kelola-pengumuman").innerHTML = hasilP;
     document.getElementById("kelola-tugas").innerHTML = hasilT;
 
 }
@@ -1134,15 +1308,19 @@ function tampilkanHariIni() {
     if (new Date().getDay() === 0) { catatan = " (Minggu libur, menampilkan Senin)"; }
 
     let daftarMapel = "";
-    jadwal[hari].forEach(function(data) {
+    (jadwal[hari] || []).forEach(function(data) {
         daftarMapel += "<li>" + esc(data.mapel) + "</li>";
     });
+
+    if (daftarMapel === "") { daftarMapel = "<li>Belum ada jadwal</li>"; }
+
+    let piket = (jadwalPiket[hari] || []).map(esc).join(", ") || "-";
 
     document.getElementById("hari-ini").innerHTML = `
         <h3>📅 Jadwal Hari Ini</h3>
         <p class="tanggal">${tanggal}${catatan}</p>
         <ul>${daftarMapel}</ul>
-        <p class="piket-info">🧹 Piket: ${jadwalPiket[hari].map(esc).join(", ")}</p>
+        <p class="piket-info">🧹 Piket: ${piket}</p>
     `;
 
 }
@@ -1161,7 +1339,13 @@ function tampilkanJadwal(hari) {
 
     let hasil = "<h3>Hari " + huruf1Besar(hari) + "</h3>";
 
-    jadwal[hari].forEach(function(data, index) {
+    let daftar = jadwal[hari] || [];
+
+    if (daftar.length === 0) {
+        hasil += `<div class="kosong">Belum ada jadwal di hari ini.</div>`;
+    }
+
+    daftar.forEach(function(data, index) {
         hasil += `
             <div class="kartu-mapel">
                 <h3>${index + 1}. ${esc(data.mapel)}</h3>
@@ -1180,7 +1364,7 @@ function tampilkanJadwal(hari) {
 
 function tampilkanPiket(hari) {
 
-    let daftar = jadwalPiket[hari];
+    let daftar = jadwalPiket[hari] || [];
     let hasil = "<h3>Piket Hari " + huruf1Besar(hari) + "</h3>";
 
     if (daftar.length === 0) {
@@ -1410,11 +1594,15 @@ function kosongkanIsian() {
 
 kosongkanIsian();
 
-/* --- Sekretaris dan admin: mengisi kehadiran --- */
+/* --- Sekretaris dan admin: mengisi. Wali kelas: hanya melihat --- */
 
 function adalahPetugasAbsen() {
-    return auth !== null && auth.currentUser !== null
-        && (auth.currentUser.uid === UID_ADMIN || auth.currentUser.uid === UID_SEKRETARIS);
+    let u = uidSaatIni();
+    return u !== "" && (u === UID_ADMIN || u === UID_SEKRETARIS);
+}
+
+function bisaLihatAbsen() {
+    return adalahPetugasAbsen() || adalahWalas();
 }
 
 function pesanAbsen(teks) {
@@ -1435,9 +1623,9 @@ function masukAbsen() {
     auth.signInWithEmailAndPassword(email, sandi)
     .then(function(hasil) {
         let uid = hasil.user.uid;
-        if (uid !== UID_ADMIN && uid !== UID_SEKRETARIS) {
+        if (uid !== UID_ADMIN && uid !== UID_SEKRETARIS && uid !== UID_WALAS) {
             auth.signOut();
-            pesanAbsen("Akun ini tidak punya izin mengisi kehadiran.");
+            pesanAbsen("Akun ini tidak punya izin membuka halaman ini.");
             return;
         }
         document.getElementById("absen-sandi").value = "";
@@ -1457,7 +1645,7 @@ function keluarAbsen() {
 
 function perbaruiTampilanAbsen() {
 
-    let masuk = adalahPetugasAbsen();
+    let masuk = bisaLihatAbsen();
 
     document.getElementById("absen-login").style.display = masuk ? "none" : "block";
     document.getElementById("absen-panel").style.display = masuk ? "block" : "none";
@@ -1465,7 +1653,11 @@ function perbaruiTampilanAbsen() {
 
     if (masuk) {
 
-        document.getElementById("absen-info").textContent = auth.currentUser.email;
+        document.getElementById("absen-panel").classList.toggle("baca-saja", !adalahPetugasAbsen());
+
+        let info = auth.currentUser.email;
+        if (!adalahPetugasAbsen()) { info += " (Wali Kelas, hanya melihat)"; }
+        document.getElementById("absen-info").textContent = info;
 
         let kolom = document.getElementById("absen-tanggal");
         if (kolom.value === "") { kolom.value = tanggalHariIniISO(); }
@@ -1485,7 +1677,7 @@ function tampilkanAbsen() {
 
 function muatAbsen() {
 
-    if (!adalahPetugasAbsen() || db === null) { return; }
+    if (!bisaLihatAbsen() || db === null) { return; }
 
     let tanggal = document.getElementById("absen-tanggal").value;
 
@@ -1582,17 +1774,21 @@ function gambarAbsen() {
 }
 
 function pilihApel(i, j) {
+    if (!adalahPetugasAbsen()) { return; }
     stApel[i] = (stApel[i] === OPSI_APEL[j]) ? "" : OPSI_APEL[j];
     gambarAbsen();
 }
 
 function pilihKelas(i, j) {
+    if (!adalahPetugasAbsen()) { return; }
     stKelas[i] = (stKelas[i] === OPSI_KELAS[j]) ? "" : OPSI_KELAS[j];
     if (stKelas[i] !== "Bolos") { stJam[i] = []; }
     gambarAbsen();
 }
 
 function pilihJam(i, h) {
+
+    if (!adalahPetugasAbsen()) { return; }
 
     let posisi = stJam[i].indexOf(h);
 
@@ -1965,7 +2161,7 @@ function gambarDaftarHd() {
 }
 
 
-/* KAS KELAS (BENDAHARA) */
+/* KAS KELAS (BENDAHARA). Wali kelas hanya melihat. */
 
 const UID_BENDAHARA = "NJ8WRucVRrapIfli70HX4V0KH4x2";
 
@@ -1977,8 +2173,12 @@ let kasBulan = "";
 let kasBerhenti = null;
 
 function adalahPetugasKas() {
-    return auth !== null && auth.currentUser !== null
-        && (auth.currentUser.uid === UID_ADMIN || auth.currentUser.uid === UID_BENDAHARA);
+    let u = uidSaatIni();
+    return u !== "" && (u === UID_ADMIN || u === UID_BENDAHARA);
+}
+
+function bisaLihatKas() {
+    return adalahPetugasKas() || adalahWalas();
 }
 
 function pesanKas(t) { document.getElementById("kas-pesan").textContent = t; }
@@ -1998,7 +2198,8 @@ function masukKas() {
 
     auth.signInWithEmailAndPassword(email, sandi)
     .then(function(h) {
-        if (h.user.uid !== UID_ADMIN && h.user.uid !== UID_BENDAHARA) {
+        let uid = h.user.uid;
+        if (uid !== UID_ADMIN && uid !== UID_BENDAHARA && uid !== UID_WALAS) {
             auth.signOut();
             pesanKas("Akun ini tidak punya izin mengakses kas.");
             return;
@@ -2025,7 +2226,7 @@ function tampilkanKas() {
 
 function perbaruiTampilanKas() {
 
-    let masuk = adalahPetugasKas();
+    let masuk = bisaLihatKas();
 
     document.getElementById("kas-login").style.display = masuk ? "none" : "block";
     document.getElementById("kas-panel").style.display = masuk ? "block" : "none";
@@ -2037,7 +2238,11 @@ function perbaruiTampilanKas() {
         return;
     }
 
-    document.getElementById("kas-info").textContent = auth.currentUser.email;
+    document.getElementById("kas-panel").classList.toggle("baca-saja", !adalahPetugasKas());
+
+    let info = auth.currentUser.email;
+    if (!adalahPetugasKas()) { info += " (Wali Kelas, hanya melihat)"; }
+    document.getElementById("kas-info").textContent = info;
 
     if (kasBulan === "") { kasBulan = bulanSekarang(); }
 
@@ -2222,6 +2427,8 @@ function isiNominalOtomatis() {
 
 function catatBayar() {
 
+    if (!adalahPetugasKas()) { return; }
+
     let nama = document.getElementById("kas-bayar-nama").value;
     let jml = Math.round(Number(document.getElementById("kas-bayar-jml").value));
     let minggu = Number(document.getElementById("kas-bayar-minggu").value);
@@ -2302,7 +2509,7 @@ function tabelRiwayatHtml(sumber) {
 
 function gambarKas() {
 
-    if (!adalahPetugasKas() || kasBulan === "") { return; }
+    if (!bisaLihatKas() || kasBulan === "") { return; }
 
     let h = hitungKas(kasBulan);
     let d = h.d;
@@ -2326,7 +2533,7 @@ function gambarKas() {
 
     document.getElementById("kas-iuran-info").innerHTML = `
         <p class="deskripsi" style="margin: 0 0 8px 0;">
-            Minggu ke-${r.sk} • ${r.sudahN} dari ${DAFTAR_SISWA.length} siswa sudah bayar (${persen}%)
+            Iuran ${rp(d.iuran)}/minggu • Minggu ke-${r.sk} • ${r.sudahN} dari ${DAFTAR_SISWA.length} siswa sudah bayar (${persen}%)
         </p>
         <div class="rekap-bar"><div style="width: ${persen}%; background: var(--teal);"></div></div>
     `;
@@ -2368,6 +2575,8 @@ function gambarKas() {
 
 function simpanKas(bulan, data, ok) {
 
+    if (!adalahPetugasKas()) { pesanKas("Hanya bendahara dan admin yang bisa mengubah kas."); return; }
+
     data.bulan = bulan;
 
     db.collection("kas").doc(bulan).set(data, { merge: true })
@@ -2385,6 +2594,8 @@ function simpanKas(bulan, data, ok) {
 
 function simpanIuran() {
 
+    if (!adalahPetugasKas()) { return; }
+
     let nilai = document.getElementById("kas-iuran").value;
     let n = Number(nilai);
 
@@ -2398,6 +2609,8 @@ function simpanIuran() {
 }
 
 function tambahKas(jenis) {
+
+    if (!adalahPetugasKas()) { return; }
 
     let ket = document.getElementById("kas-" + jenis + "-ket").value.trim();
     let jml = Math.round(Number(document.getElementById("kas-" + jenis + "-jml").value));
@@ -2593,7 +2806,7 @@ function gambarKasLihat() {
 }
 
 
-/* BERANDA: CHIP INFO, JAM, KUTIPAN (bagian yang sebelumnya terpotong) */
+/* BERANDA: CHIP INFO, JAM, KUTIPAN */
 
 function tampilkanChipInfo() {
 
@@ -2601,7 +2814,7 @@ function tampilkanChipInfo() {
 
     if (!el) { return; }
 
-    let nMapel = jadwal[hariIni()].length;
+    let nMapel = (jadwal[hariIni()] || []).length;
     let tersimpan = ambilStatusTersimpan();
 
     let belum = daftarTugas.filter(function(t) {
