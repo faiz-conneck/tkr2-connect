@@ -454,6 +454,89 @@ table.absen td.baris-jam { background: var(--kartu2); text-align: left; padding:
 .baris-hd.buka .baris-hd-detail { display: block; }
 .sub-judul { font-size: 12px; font-weight: bold; color: var(--abu); margin: 12px 0 4px 0; }
 
+/* INPUT RUPIAH */
+.rp-kotak { position: relative; flex: 1; min-width: 0; margin-top: 8px; }
+.rp-kotak span { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: var(--emas-teks); font-size: 13px; font-weight: bold; pointer-events: none; }
+.rp-kotak .input-admin { margin-top: 0; padding-left: 44px; font-weight: bold; letter-spacing: 0.3px; }
+
+/* TOMBOL PILIH NAMA */
+.picker-tombol {
+    display: flex; align-items: center; gap: 12px; width: 100%; margin-top: 8px; padding: 10px 14px;
+    border-radius: 14px; border: 1px dashed var(--garis2); background: var(--kartu2); color: var(--teks);
+    font-size: 14px; cursor: pointer; text-align: left; min-height: 56px;
+    transition: border-color 0.2s, transform 0.1s, background-color 0.2s;
+}
+.picker-tombol:active { transform: scale(0.98); }
+.picker-tombol.terisi { border-style: solid; border-color: var(--biru); }
+.pt-teks { flex: 1; min-width: 0; font-weight: bold; }
+.pt-teks small { display: block; font-weight: normal; color: var(--redup); font-size: 11px; margin-top: 3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.pt-panah { color: var(--abu); font-size: 20px; line-height: 1; }
+.pt-ikon {
+    width: 38px; height: 38px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    background: var(--kartu); border: 1px dashed var(--garis2); font-size: 17px; flex-shrink: 0;
+}
+
+/* LEMBAR PILIH NAMA */
+.picker {
+    position: fixed; top: 0; left: 0; right: 0; bottom: 0; z-index: 100; display: none;
+    align-items: flex-end; justify-content: center; background: rgba(5, 10, 20, 0.6);
+}
+.picker.buka { display: flex; animation: pudar 0.2s ease; }
+.picker-lembar {
+    width: 100%; max-width: 600px; max-height: 86vh; display: flex; flex-direction: column;
+    background: var(--kartu); border: 1px solid var(--garis); border-bottom: none;
+    border-radius: 22px 22px 0 0; padding: 10px 16px 16px 16px;
+    box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.35); animation: naikLembar 0.28s ease;
+}
+.picker-pegangan { width: 42px; height: 4px; border-radius: 2px; background: var(--garis2); margin: 0 auto 12px auto; flex-shrink: 0; }
+.picker-kepala { display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-shrink: 0; }
+.picker-kepala b { font-size: 16px; }
+.picker-tutup { width: 32px; height: 32px; border-radius: 50%; border: 1px solid var(--garis2); background: var(--kartu2); color: var(--teks); cursor: pointer; font-size: 14px; padding: 0; }
+.picker-cari {
+    display: block; width: 100%; margin-top: 12px; padding: 11px 14px; border-radius: 12px; flex-shrink: 0;
+    border: 1px solid var(--garis2); background: var(--kartu2); color: var(--teks); font-size: 14px; font-family: Arial, sans-serif;
+}
+.picker-aksi { display: flex; gap: 8px; margin-top: 10px; flex-shrink: 0; }
+.picker-aksi button { flex: 1; padding: 9px; border-radius: 10px; border: 1px solid var(--garis2); background: var(--kartu2); color: var(--teks); font-size: 12px; cursor: pointer; }
+.picker-daftar { overflow-y: auto; margin-top: 12px; flex: 1; -webkit-overflow-scrolling: touch; }
+.picker-baris {
+    display: flex; align-items: center; gap: 12px; width: 100%; padding: 10px 12px; margin-bottom: 8px;
+    border-radius: 14px; border: 1px solid var(--garis); background: var(--kartu); color: var(--teks);
+    text-align: left; cursor: pointer; transition: border-color 0.15s, background-color 0.15s, transform 0.1s;
+}
+.picker-baris:active { transform: scale(0.98); }
+.picker-baris.on { border-color: var(--biru); background: rgba(59, 123, 240, 0.14); }
+.picker-nm { flex: 1; min-width: 0; font-size: 14px; font-weight: bold; line-height: 1.25; }
+.picker-nm small { display: block; font-weight: normal; font-size: 11px; margin-top: 3px; }
+.picker-cek {
+    width: 24px; height: 24px; border-radius: 50%; border: 2px solid var(--garis2); flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center; font-size: 13px; color: transparent;
+    transition: background-color 0.15s, border-color 0.15s;
+}
+.picker-baris.on .picker-cek { background: var(--biru); border-color: var(--biru); color: #ffffff; }
+.picker-ok { width: 100%; margin-top: 8px; flex-shrink: 0; }
+@keyframes naikLembar { from { transform: translateY(100%); } to { transform: translateY(0); } }
+@keyframes pudar { from { opacity: 0; } to { opacity: 1; } }
+
+/* IURAN ACARA */
+.acara {
+    background: var(--kartu); border: 1px solid var(--garis); border-left: 4px solid var(--emas);
+    border-radius: 14px; margin-top: 12px; box-shadow: var(--bayangan); overflow: hidden;
+}
+.acara-kepala { display: block; width: 100%; padding: 14px 16px; background: transparent; border: none; color: var(--teks); text-align: left; cursor: pointer; }
+.acara-baris1 { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.acara-judul { font-size: 16px; font-weight: bold; }
+.acara-sub { color: var(--abu); font-size: 12px; margin: 6px 0 10px 0; }
+.acara-isi { padding: 2px 16px 16px 16px; border-top: 1px solid var(--garis); }
+.acara.buka .panah { transform: rotate(90deg); }
+.siswa-baris { display: flex; align-items: center; gap: 10px; padding: 8px 0; border-bottom: 1px solid var(--garis); font-size: 14px; }
+.siswa-baris:last-child { border-bottom: none; }
+.siswa-baris .nm { flex: 1; min-width: 0; }
+
+/* ABSEN TERKUNCI (sekretaris, data sudah tersimpan) */
+.terkunci .pilih, .terkunci .chip-jam { pointer-events: none; }
+.terkunci #absen-simpan { display: none; }
+
 .footer { text-align: center; color: var(--redup); margin-top: 35px; font-size: 12px; }
 
 @media (prefers-reduced-motion: reduce) {
@@ -594,7 +677,7 @@ table.absen td.baris-jam { background: var(--kartu2); text-align: left; padding:
 <!-- ABSEN (sekretaris dan admin; wali kelas hanya melihat) -->
 <div id="absen" class="halaman">
     <h1>📝 Isi Kehadiran</h1>
-    <p class="deskripsi">Hanya sekretaris dan admin yang bisa mengisi. Wali kelas bisa melihat.</p>
+    <p class="deskripsi">Sekretaris hanya bisa menambah kehadiran. Hanya admin yang bisa mengubah atau menghapus. Wali kelas bisa melihat.</p>
 
     <div id="absen-login">
         <input class="input-admin" type="email" id="absen-email" placeholder="Email sekretaris, admin, atau wali kelas" autocomplete="username">
@@ -622,7 +705,9 @@ table.absen td.baris-jam { background: var(--kartu2); text-align: left; padding:
         </table>
         <p class="deskripsi" style="margin-top: 8px;">H = hadir tanpa keterangan, I = izin, S = sakit, B = bolos, A = alfa (tidak hadir tanpa keterangan), T = terlambat. Pilih B untuk mengisi jam bolos. Ketuk lagi untuk membatalkan pilihan.</p>
 
-        <button class="tombol-utama" style="width: 100%;" onclick="simpanAbsen()">Simpan Kehadiran</button>
+        <p class="deskripsi" id="absen-catatan" style="color: var(--emas-teks);"></p>
+        <button class="tombol-utama" id="absen-simpan" style="width: 100%;" onclick="simpanAbsen()">Simpan Kehadiran</button>
+        <button class="tombol-hapus" id="absen-hapus" style="display: none; width: 100%; margin-top: 10px; padding: 12px;" onclick="hapusAbsen(this)">🗑 Hapus kehadiran tanggal ini</button>
         <button class="tombol-keluar" onclick="keluarAbsen()">Keluar</button>
     </div>
 
@@ -642,7 +727,7 @@ table.absen td.baris-jam { background: var(--kartu2); text-align: left; padding:
 <!-- KAS (bendahara dan admin; wali kelas hanya melihat) -->
 <div id="kas" class="halaman">
     <h1>💰 Kelola Kas</h1>
-    <p class="deskripsi">Hanya bendahara dan admin yang bisa mengubah. Wali kelas bisa melihat.</p>
+    <p class="deskripsi">Bendahara hanya bisa menambah data. Hanya admin yang bisa menghapus. Wali kelas bisa melihat.</p>
 
     <div id="kas-login">
         <input class="input-admin" type="email" id="kas-email" placeholder="Email bendahara, admin, atau wali kelas" autocomplete="username">
@@ -659,16 +744,16 @@ table.absen td.baris-jam { background: var(--kartu2); text-align: left; padding:
 
         <h3 class="judul-bagian">Kas Siswa (Iuran Mingguan)</h3>
         <div class="kas-baris-input">
-            <input class="input-admin" type="number" inputmode="numeric" id="kas-iuran" placeholder="Iuran per minggu (Rp)">
+            <div class="rp-kotak"><span>Rp</span><input class="input-admin" type="text" inputmode="numeric" autocomplete="off" id="kas-iuran" placeholder="Iuran per minggu" oninput="formatInputRibu(this)"></div>
             <button class="tombol-utama" style="white-space: nowrap;" onclick="simpanIuran()">Simpan</button>
         </div>
         <div id="kas-iuran-info" style="margin-top: 12px;"></div>
 
         <div class="kas-form">
             <div class="sub-judul">Catat pembayaran siswa</div>
-            <select class="input-admin" id="kas-bayar-nama"></select>
+            <button type="button" class="picker-tombol" id="kas-bayar-nama-btn" onclick="pilihNamaBayar()"></button>
             <div class="kas-baris-input">
-                <input class="input-admin" type="number" inputmode="numeric" id="kas-bayar-jml" placeholder="Nominal dibayar (Rp)">
+                <div class="rp-kotak"><span>Rp</span><input class="input-admin" type="text" inputmode="numeric" autocomplete="off" id="kas-bayar-jml" placeholder="Nominal dibayar" oninput="formatInputRibu(this)"></div>
                 <select class="input-admin" id="kas-bayar-minggu" style="flex: 0 0 38%;" onchange="isiNominalOtomatis()">
                     <option value="1">1 minggu</option>
                     <option value="2">2 minggu</option>
@@ -689,7 +774,7 @@ table.absen td.baris-jam { background: var(--kartu2); text-align: left; padding:
         <h3 class="judul-bagian">Pemasukan di Luar Kas Siswa</h3>
         <div class="kas-form">
             <input class="input-admin" type="text" id="kas-masuk-ket" placeholder="Dari mana? (misal: Wali kelas)">
-            <input class="input-admin" type="number" inputmode="numeric" id="kas-masuk-jml" placeholder="Jumlah (Rp)">
+            <div class="rp-kotak"><span>Rp</span><input class="input-admin" type="text" inputmode="numeric" autocomplete="off" id="kas-masuk-jml" placeholder="Jumlah" oninput="formatInputRibu(this)"></div>
             <input class="input-admin" type="date" id="kas-masuk-tgl">
             <button class="tombol-utama" onclick="tambahKas('masuk')">Tambah Pemasukan</button>
         </div>
@@ -698,11 +783,21 @@ table.absen td.baris-jam { background: var(--kartu2); text-align: left; padding:
         <h3 class="judul-bagian">Pengeluaran</h3>
         <div class="kas-form">
             <input class="input-admin" type="text" id="kas-keluar-ket" placeholder="Untuk apa? (misal: Beli spidol)">
-            <input class="input-admin" type="number" inputmode="numeric" id="kas-keluar-jml" placeholder="Jumlah (Rp)">
+            <div class="rp-kotak"><span>Rp</span><input class="input-admin" type="text" inputmode="numeric" autocomplete="off" id="kas-keluar-jml" placeholder="Jumlah" oninput="formatInputRibu(this)"></div>
             <input class="input-admin" type="date" id="kas-keluar-tgl">
             <button class="tombol-utama" onclick="tambahKas('keluar')">Tambah Pengeluaran</button>
         </div>
         <div id="kas-list-keluar"></div>
+
+        <h3 class="judul-bagian">🎯 Iuran Acara</h3>
+        <p class="deskripsi" style="margin: 10px 0 0 0;">Kumpulkan uang untuk acara (misal beli jersey Porseni). Dicatat terpisah dari saldo kas kelas.</p>
+        <div class="kas-form">
+            <div class="sub-judul">Buat iuran acara baru</div>
+            <input class="input-admin" type="text" id="acara-nama" placeholder="Nama acara (misal: Jersey Porseni)">
+            <div class="rp-kotak"><span>Rp</span><input class="input-admin" type="text" inputmode="numeric" autocomplete="off" id="acara-nominal" placeholder="Iuran per siswa" oninput="formatInputRibu(this)"></div>
+            <button class="tombol-utama" onclick="buatAcara()">Buat Iuran Acara</button>
+        </div>
+        <div id="acara-daftar"></div>
 
         <h3 class="judul-bagian">Riwayat Per Bulan</h3>
         <div id="kas-riwayat"></div>
@@ -827,6 +922,24 @@ table.absen td.baris-jam { background: var(--kartu2); text-align: left; padding:
 </div>
 
 <!-- FIREBASE -->
+<!-- LEMBAR PILIH NAMA -->
+<div class="picker" id="picker" onclick="if (event.target === this) { tutupPicker(); }">
+    <div class="picker-lembar">
+        <div class="picker-pegangan"></div>
+        <div class="picker-kepala">
+            <b id="picker-judul">Pilih nama</b>
+            <button type="button" class="picker-tutup" onclick="tutupPicker()" aria-label="Tutup">✕</button>
+        </div>
+        <input class="picker-cari" type="text" id="picker-cari" placeholder="🔍 Cari nama..." autocomplete="off" oninput="gambarPicker()">
+        <div class="picker-aksi" id="picker-aksi">
+            <button type="button" onclick="pickerSemua(true)">Pilih semua</button>
+            <button type="button" onclick="pickerSemua(false)">Kosongkan</button>
+        </div>
+        <div class="picker-daftar" id="picker-daftar"></div>
+        <button type="button" class="tombol-utama picker-ok" id="picker-ok" onclick="selesaiPicker()">Pilih</button>
+    </div>
+</div>
+
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
@@ -966,7 +1079,7 @@ function gantiTema() {
                Di halaman absen dan kas, wali kelas hanya boleh MELIHAT. */
 
 const UID_ADMIN = "SQvYZXHKIUVGA51YXllzXVoRmSQ2";
-const UID_WALAS = "ISI_UID_WALI_KELAS_DI_SINI";   // <- GANTI dengan UID akun wali kelas dari Firebase (Authentication > Users)
+const UID_WALAS = "hazq2bC7BMZNj21BhAMc8sTQx0G2";
 
 function uidSaatIni() {
     return (auth !== null && auth.currentUser !== null) ? auth.currentUser.uid : "";
@@ -1827,6 +1940,7 @@ let jamAbsenSekarang = JAM_BIASA;
 let stApel = [];
 let stKelas = [];
 let stJam = [];
+let absenAda = true;
 
 function kosongkanIsian() {
     stApel = [];
@@ -1846,6 +1960,22 @@ kosongkanIsian();
 function adalahPetugasAbsen() {
     let u = uidSaatIni();
     return u !== "" && (u === UID_ADMIN || u === UID_SEKRETARIS);
+}
+
+function bolehIsiAbsen() {
+    return adalahAdmin() || (adalahPetugasAbsen() && !absenAda);
+}
+
+function perbaruiKunciAbsen() {
+
+    let kunci = adalahPetugasAbsen() && !bolehIsiAbsen();
+
+    document.getElementById("absen-panel").classList.toggle("terkunci", kunci);
+    document.getElementById("absen-catatan").textContent = kunci
+        ? "🔒 Kehadiran tanggal ini sudah tersimpan. Sekretaris hanya bisa menambah. Untuk mengubah atau menghapus, hubungi admin."
+        : "";
+    document.getElementById("absen-hapus").style.display = (adalahAdmin() && absenAda) ? "block" : "none";
+
 }
 
 function bisaLihatAbsen() {
@@ -1939,10 +2069,15 @@ function muatAbsen() {
 
     pesanAbsen("Memuat...");
 
+    absenAda = true;
+    perbaruiKunciAbsen();
+
     db.collection("kehadiran").doc(tanggal).get()
     .then(function(dok) {
 
         kosongkanIsian();
+        absenAda = dok.exists;
+        perbaruiKunciAbsen();
 
         if (dok.exists) {
             let daftar = dok.data().data || [];
@@ -2021,13 +2156,13 @@ function gambarAbsen() {
 }
 
 function pilihApel(i, j) {
-    if (!adalahPetugasAbsen()) { return; }
+    if (!bolehIsiAbsen()) { return; }
     stApel[i] = (stApel[i] === OPSI_APEL[j]) ? "" : OPSI_APEL[j];
     gambarAbsen();
 }
 
 function pilihKelas(i, j) {
-    if (!adalahPetugasAbsen()) { return; }
+    if (!bolehIsiAbsen()) { return; }
     stKelas[i] = (stKelas[i] === OPSI_KELAS[j]) ? "" : OPSI_KELAS[j];
     if (stKelas[i] !== "Bolos") { stJam[i] = []; }
     gambarAbsen();
@@ -2035,7 +2170,7 @@ function pilihKelas(i, j) {
 
 function pilihJam(i, h) {
 
-    if (!adalahPetugasAbsen()) { return; }
+    if (!bolehIsiAbsen()) { return; }
 
     let posisi = stJam[i].indexOf(h);
 
@@ -2081,24 +2216,83 @@ function simpanAbsen() {
 
     pesanAbsen("Menyimpan...");
 
-    db.collection("kehadiran").doc(tanggal).set({
+    let ref = db.collection("kehadiran").doc(tanggal);
+
+    let payload = {
         tanggal: tanggal,
         jamPelajaran: jamAbsenSekarang,
         data: data,
         diisiOleh: auth.currentUser.email,
         diperbarui: Date.now()
-    })
-    .then(function() { pesanAbsen("Kehadiran tersimpan ✅"); })
-    .catch(function(error) {
+    };
+
+    let tulis = function() {
+        return ref.set(payload).then(function() {
+            absenAda = true;
+            perbaruiKunciAbsen();
+            pesanAbsen("Kehadiran tersimpan ✅");
+        });
+    };
+
+    let proses = adalahAdmin()
+        ? tulis()
+        : ref.get().then(function(dok) {
+            if (dok.exists) {
+                absenAda = true;
+                perbaruiKunciAbsen();
+                pesanAbsen("Kehadiran tanggal ini sudah tersimpan. Hanya admin yang bisa mengubahnya.");
+                return;
+            }
+            return tulis();
+        });
+
+    proses.catch(function(error) {
         console.log("Gagal menyimpan kehadiran:", error);
         let kode = error && error.code ? error.code : "tidak diketahui";
         if (kode === "permission-denied") {
-            pesanAbsen("Ditolak Firestore (permission-denied). Aturan belum di-Publish atau UID akun ini belum ada di aturan.");
+            pesanAbsen("Ditolak Firestore (permission-denied). Aturan belum di-Publish, UID akun ini belum ada di aturan, atau data tanggal ini sudah ada.");
         } else if (kode === "unavailable") {
             pesanAbsen("Tidak ada koneksi internet. Coba lagi.");
         } else {
             pesanAbsen("Gagal menyimpan. Kode error: " + kode);
         }
+    });
+
+}
+
+function hapusAbsen(tombol) {
+
+    if (!adalahAdmin()) { return; }
+
+    let tanggal = document.getElementById("absen-tanggal").value;
+    if (tanggal === "") { return; }
+
+    let teksAsli = "🗑 Hapus kehadiran tanggal ini";
+    let kunci = "absen:" + tanggal;
+
+    if (hapusMenunggu !== kunci) {
+        hapusMenunggu = kunci;
+        tombol.textContent = "Ketuk lagi untuk menghapus";
+        setTimeout(function() {
+            if (hapusMenunggu === kunci) { hapusMenunggu = ""; tombol.textContent = teksAsli; }
+        }, 4000);
+        return;
+    }
+
+    hapusMenunggu = "";
+    tombol.textContent = teksAsli;
+
+    db.collection("kehadiran").doc(tanggal).delete()
+    .then(function() {
+        kosongkanIsian();
+        absenAda = false;
+        gambarAbsen();
+        perbaruiKunciAbsen();
+        pesanAbsen("Kehadiran tanggal ini dihapus ✅");
+    })
+    .catch(function(error) {
+        console.log("Gagal menghapus kehadiran:", error);
+        pesanAbsen("Gagal menghapus. Cek aturan Firestore dan internet.");
     });
 
 }
@@ -2430,7 +2624,36 @@ function bisaLihatKas() {
 
 function pesanKas(t) { document.getElementById("kas-pesan").textContent = t; }
 
-function rp(n) { return (n < 0 ? "-" : "") + "Rp" + Math.abs(n).toLocaleString("id-ID"); }
+/* FORMAT RUPIAH: 1000 -> 1.000 */
+
+function fmtRibu(n) {
+    return String(Math.round(Math.abs(Number(n) || 0))).replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+}
+
+function rp(n) { return (n < 0 ? "-" : "") + "Rp " + fmtRibu(n); }
+
+function angkaId(n) { return (n < 0 ? "-" : "") + fmtRibu(n); }
+
+function bacaAngka(teks) { return Number(String(teks).replace(/\D/g, "")) || 0; }
+
+function formatInputRibu(el) {
+
+    let pos = el.selectionStart;
+    let sebelum = el.value.slice(0, pos).replace(/\D/g, "").length;
+    let digit = el.value.replace(/\D/g, "").replace(/^0+(?=\d)/, "").slice(0, 10);
+    let baru = digit === "" ? "" : fmtRibu(digit);
+
+    el.value = baru;
+
+    let n = 0, p = 0;
+    while (p < baru.length && n < sebelum) {
+        if (/\d/.test(baru.charAt(p))) { n++; }
+        p++;
+    }
+
+    try { el.setSelectionRange(p, p); } catch (e) {}
+
+}
 
 function masukKas() {
 
@@ -2481,7 +2704,9 @@ function perbaruiTampilanKas() {
 
     if (!masuk) {
         if (kasBerhenti) { kasBerhenti(); kasBerhenti = null; }
+        if (acaraBerhenti) { acaraBerhenti(); acaraBerhenti = null; }
         kasData = {};
+        acaraData = {};
         return;
     }
 
@@ -2495,7 +2720,18 @@ function perbaruiTampilanKas() {
 
     bangunChipKas();
     aturTanggalKas();
-    isiPilihanNama();
+    segarTombolBayar();
+
+    if (!acaraBerhenti && db !== null && document.getElementById("kas").classList.contains("aktif")) {
+        acaraBerhenti = db.collection("iuranAcara").onSnapshot(function(s) {
+            acaraData = {};
+            s.forEach(function(d) { acaraData[d.id] = d.data(); });
+            gambarAcara();
+        }, function(e) {
+            console.log("Gagal membaca iuran acara:", e);
+            pesanKas("Gagal memuat iuran acara. Cek aturan Firestore (koleksi iuranAcara).");
+        });
+    }
 
     if (!kasBerhenti && db !== null && document.getElementById("kas").classList.contains("aktif")) {
         kasBerhenti = db.collection("kas").onSnapshot(function(s) {
@@ -2645,19 +2881,50 @@ function itemBayarHtml(x, bolehHapus) {
 
 }
 
-function isiPilihanNama() {
+let bayarNama = "";
 
-    let sel = document.getElementById("kas-bayar-nama");
+function segarTombolBayar() {
 
-    if (sel.options.length > 0) { return; }
+    let tb = document.getElementById("kas-bayar-nama-btn");
 
-    let h = `<option value="">Pilih nama siswa</option>`;
+    if (bayarNama === "") {
+        tb.classList.remove("terisi");
+        tb.innerHTML = `<span class="pt-ikon">👤</span><span class="pt-teks">Pilih siapa yang bayar<small>Ketuk untuk memilih nama</small></span><span class="pt-panah">›</span>`;
+        return;
+    }
 
-    DAFTAR_SISWA.forEach(function(nama) {
-        h += `<option value="${esc(nama)}">${esc(nama)}</option>`;
+    tb.classList.add("terisi");
+    tb.innerHTML = `${avatarHtml(bayarNama)}<span class="pt-teks">${esc(bayarNama)}<small>Ketuk untuk ganti</small></span><span class="pt-panah">›</span>`;
+
+}
+
+function pilihNamaBayar() {
+
+    let r = ringkasStatus();
+
+    bukaPicker({
+        judul: "Siapa yang bayar kas?",
+        multi: false,
+        terpilih: bayarNama ? [bayarNama] : [],
+        info: function(nama) {
+            let x = r.daftar.filter(function(d) { return d.nama === nama; })[0];
+            if (!x) { return null; }
+            return x.aman
+                ? { teks: "✓ Lunas s/d " + akhirMinggu(x.dibayar), warna: "var(--teal-teks)" }
+                : { teks: "Nunggak " + (r.sk - x.dibayar) + " minggu", warna: "var(--koral-teks)" };
+        },
+        selesai: function(arr) {
+            bayarNama = arr[0] || "";
+            segarTombolBayar();
+
+            let x = r.daftar.filter(function(d) { return d.nama === bayarNama; })[0];
+            if (x) {
+                let m = x.aman ? 1 : Math.min(4, Math.max(1, r.sk - x.dibayar));
+                document.getElementById("kas-bayar-minggu").value = String(m);
+                isiNominalOtomatis();
+            }
+        }
     });
-
-    sel.innerHTML = h;
 
 }
 
@@ -2667,7 +2934,7 @@ function isiNominalOtomatis() {
     let minggu = Number(document.getElementById("kas-bayar-minggu").value);
 
     if (iuran > 0 && minggu > 0) {
-        document.getElementById("kas-bayar-jml").value = iuran * minggu;
+        document.getElementById("kas-bayar-jml").value = fmtRibu(iuran * minggu);
     }
 
 }
@@ -2676,8 +2943,8 @@ function catatBayar() {
 
     if (!adalahPetugasKas()) { return; }
 
-    let nama = document.getElementById("kas-bayar-nama").value;
-    let jml = Math.round(Number(document.getElementById("kas-bayar-jml").value));
+    let nama = bayarNama;
+    let jml = bacaAngka(document.getElementById("kas-bayar-jml").value);
     let minggu = Number(document.getElementById("kas-bayar-minggu").value);
     let tgl = document.getElementById("kas-bayar-tgl").value;
 
@@ -2693,7 +2960,8 @@ function catatBayar() {
     simpanKas(kasBulan, { bayar: arr }, "Pembayaran " + nama + " tersimpan ✅");
 
     document.getElementById("kas-bayar-jml").value = "";
-    document.getElementById("kas-bayar-nama").value = "";
+    bayarNama = "";
+    segarTombolBayar();
 
 }
 
@@ -2718,7 +2986,7 @@ function daftarKasHtml(arr, jenis) {
             <div class="kelola-item">
                 <span style="flex: 1; min-width: 0;">${esc(x.ket)}<br><small class="kas-tgl">${tgl}</small></span>
                 <b class="${jenis === "masuk" ? "kas-plus" : "kas-minus"}">${jenis === "masuk" ? "+" : "-"}${rp(x.jumlah)}</b>
-                <button class="tombol-hapus" onclick="hapusKas('${jenis}', '${esc(x.id)}', this)">🗑</button>
+                ${adalahAdmin() ? `<button class="tombol-hapus" onclick="hapusKas('${jenis}', '${esc(x.id)}', this)">🗑</button>` : ""}
             </div>
         `;
     });
@@ -2741,9 +3009,9 @@ function tabelRiwayatHtml(sumber) {
         rt += `
             <tr>
                 <td class="nm">${namaBulan(bl, false)}</td>
-                <td>${x.masuk.toLocaleString("id-ID")}</td>
-                <td>${x.keluar.toLocaleString("id-ID")}</td>
-                <td><b>${x.saldo.toLocaleString("id-ID")}</b></td>
+                <td>${angkaId(x.masuk)}</td>
+                <td>${angkaId(x.keluar)}</td>
+                <td><b>${angkaId(x.saldo)}</b></td>
             </tr>
         `;
     });
@@ -2776,7 +3044,7 @@ function gambarKas() {
     `;
 
     let kolomIuran = document.getElementById("kas-iuran");
-    if (document.activeElement !== kolomIuran) { kolomIuran.value = d.iuran > 0 ? d.iuran : ""; }
+    if (document.activeElement !== kolomIuran) { kolomIuran.value = d.iuran > 0 ? fmtRibu(d.iuran) : ""; }
 
     document.getElementById("kas-iuran-info").innerHTML = `
         <p class="deskripsi" style="margin: 0 0 8px 0;">
@@ -2803,7 +3071,7 @@ function gambarKas() {
 
     let b = "";
 
-    d.bayar.slice().reverse().forEach(function(x) { b += itemBayarHtml(x, true); });
+    d.bayar.slice().reverse().forEach(function(x) { b += itemBayarHtml(x, adalahAdmin()); });
 
     if (b === "") { b = `<div class="kosong" style="margin-top: 8px; padding: 16px;">Belum ada pembayaran bulan ini.</div>`; }
 
@@ -2844,7 +3112,7 @@ function simpanIuran() {
     if (!adalahPetugasKas()) { return; }
 
     let nilai = document.getElementById("kas-iuran").value;
-    let n = Number(nilai);
+    let n = bacaAngka(nilai);
 
     if (nilai === "" || !(n >= 0)) {
         pesanKas("Isi nominal iuran dengan angka.");
@@ -2860,7 +3128,7 @@ function tambahKas(jenis) {
     if (!adalahPetugasKas()) { return; }
 
     let ket = document.getElementById("kas-" + jenis + "-ket").value.trim();
-    let jml = Math.round(Number(document.getElementById("kas-" + jenis + "-jml").value));
+    let jml = bacaAngka(document.getElementById("kas-" + jenis + "-jml").value);
     let tgl = document.getElementById("kas-" + jenis + "-tgl").value;
 
     if (ket === "" || !(jml > 0)) {
@@ -2884,7 +3152,7 @@ function tambahKas(jenis) {
 
 function hapusKas(jenis, id, tombol) {
 
-    if (!adalahPetugasKas()) { return; }
+    if (!adalahAdmin()) { pesanKas("Hanya admin yang bisa menghapus data kas."); return; }
 
     let kunci = "kas:" + jenis + ":" + id;
 
@@ -2940,6 +3208,8 @@ function salinLaporan() {
 /* KAS KELAS: TAMPILAN SISWA (hanya melihat) */
 
 let klData = {};
+let acaraLihat = {};
+let acaraBukaLihat = "";
 let klBulan = "";
 
 function siapkanKasLihat() {
@@ -2981,10 +3251,15 @@ function muatKasLihat() {
 
     tempat.innerHTML = `<div class="kosong">Memuat...</div>`;
 
-    db.collection("kas").get()
-    .then(function(s) {
+    Promise.all([
+        db.collection("kas").get(),
+        db.collection("iuranAcara").get().catch(function(e) { console.log("Gagal memuat iuran acara:", e); return null; })
+    ])
+    .then(function(hs) {
         klData = {};
-        s.forEach(function(d) { klData[d.id] = d.data(); });
+        hs[0].forEach(function(d) { klData[d.id] = d.data(); });
+        acaraLihat = {};
+        if (hs[1]) { hs[1].forEach(function(d) { acaraLihat[d.id] = d.data(); }); }
         gambarKasLihat();
     })
     .catch(function(e) {
@@ -3046,9 +3321,447 @@ function gambarKasLihat() {
         <h3 class="judul-bagian">Pengeluaran (untuk apa saja)</h3>
         ${keluar}
 
+        <div id="kl-acara"></div>
+
         <h3 class="judul-bagian">Riwayat Per Bulan</h3>
         <div style="margin-top: 10px;">${tabelRiwayatHtml(klData)}</div>
     `;
+
+    gambarAcaraLihat();
+
+}
+
+
+/* LEMBAR PILIH NAMA (satu atau banyak siswa) */
+
+let pk = { multi: false, sel: [], info: null, selesai: null };
+
+function avatarHtml(nama) {
+    let i = Math.max(0, DAFTAR_SISWA.indexOf(nama));
+    return `<span class="avatar-kecil ${kelasAvatar(i)}">${esc(inisialNama(nama))}</span>`;
+}
+
+function bukaPicker(opsi) {
+
+    pk.multi = !!opsi.multi;
+    pk.sel = (opsi.terpilih || []).slice();
+    pk.info = opsi.info || null;
+    pk.selesai = opsi.selesai || null;
+
+    document.getElementById("picker-judul").textContent = opsi.judul || "Pilih nama";
+    document.getElementById("picker-cari").value = "";
+    document.getElementById("picker-aksi").style.display = pk.multi ? "flex" : "none";
+    document.getElementById("picker-ok").style.display = pk.multi ? "block" : "none";
+    document.getElementById("picker").classList.add("buka");
+
+    gambarPicker();
+
+}
+
+function tutupPicker() {
+    document.getElementById("picker").classList.remove("buka");
+}
+
+function gambarPicker() {
+
+    let cari = document.getElementById("picker-cari").value.trim().toLowerCase();
+    let daftar = document.getElementById("picker-daftar");
+    let gulung = daftar.scrollTop;
+    let h = "";
+
+    DAFTAR_SISWA.forEach(function(nama, i) {
+
+        if (cari !== "" && nama.toLowerCase().indexOf(cari) === -1) { return; }
+
+        let on = pk.sel.indexOf(nama) > -1;
+        let inf = pk.info ? pk.info(nama) : null;
+        let kecil = inf ? `<small style="color: ${inf.warna};">${esc(inf.teks)}</small>` : "";
+
+        h += `
+            <button type="button" class="picker-baris ${on ? "on" : ""}" onclick="ketukPicker(${i})">
+                <span class="avatar-kecil ${kelasAvatar(i)}">${esc(inisialNama(nama))}</span>
+                <span class="picker-nm">${esc(nama)}${kecil}</span>
+                <span class="picker-cek">✓</span>
+            </button>
+        `;
+
+    });
+
+    if (h === "") { h = `<div class="kosong" style="margin-top: 0; padding: 18px;">Nama tidak ditemukan.</div>`; }
+
+    daftar.innerHTML = h;
+    daftar.scrollTop = gulung;
+
+    document.getElementById("picker-ok").textContent = pk.sel.length > 0 ? "Pilih (" + pk.sel.length + " siswa)" : "Pilih";
+
+}
+
+function ketukPicker(i) {
+
+    let nama = DAFTAR_SISWA[i];
+
+    if (!pk.multi) {
+        pk.sel = [nama];
+        selesaiPicker();
+        return;
+    }
+
+    let p = pk.sel.indexOf(nama);
+    if (p > -1) { pk.sel.splice(p, 1); } else { pk.sel.push(nama); }
+
+    gambarPicker();
+
+}
+
+function pickerSemua(pilih) {
+    pk.sel = pilih ? DAFTAR_SISWA.slice() : [];
+    gambarPicker();
+}
+
+function selesaiPicker() {
+
+    let hasil = DAFTAR_SISWA.filter(function(n) { return pk.sel.indexOf(n) > -1; });
+    let aksi = pk.selesai;
+
+    tutupPicker();
+
+    if (aksi) { aksi(hasil); }
+
+}
+
+
+/* IURAN ACARA (jersey Porseni, dll.)
+   Bendahara hanya bisa menambah. Hanya admin yang bisa menghapus. */
+
+let acaraData = {};
+let acaraBerhenti = null;
+let acaraBuka = "";
+let acaraPilih = [];
+let acaraForm = { jml: "", tgl: "" };
+
+function urutAcara(sumber) {
+    return Object.keys(sumber).map(function(k) { return sumber[k]; })
+        .sort(function(a, b) { return (b.dibuat || 0) - (a.dibuat || 0); });
+}
+
+function acaraRingkas(a) {
+
+    let nominal = Number(a.nominal) || 0;
+    let bayar = a.bayar || [];
+    let daftar = [];
+    let lunas = 0;
+
+    DAFTAR_SISWA.forEach(function(nama) {
+        let dibayar = bayar.reduce(function(s, x) { return x.nama === nama ? s + (Number(x.jumlah) || 0) : s; }, 0);
+        let kurang = Math.max(0, nominal - dibayar);
+        if (kurang === 0) { lunas++; }
+        daftar.push({ nama: nama, dibayar: dibayar, kurang: kurang, lunas: kurang === 0 });
+    });
+
+    let target = nominal * DAFTAR_SISWA.length;
+    let terkumpul = jumlahDari(bayar);
+    let persen = target > 0 ? Math.min(100, Math.round(terkumpul / target * 100)) : 0;
+
+    return { daftar: daftar, lunas: lunas, target: target, terkumpul: terkumpul, persen: persen };
+
+}
+
+function acaraKartuHtml(a, mode) {
+
+    let r = acaraRingkas(a);
+    let kelola = mode === "kelola";
+    let terbuka = (kelola ? acaraBuka : acaraBukaLihat) === a.id;
+    let id = esc(a.id);
+
+    let h = `
+        <div class="acara ${terbuka ? "buka" : ""}">
+            <button class="acara-kepala" onclick="bukaAcara('${id}', '${mode}')">
+                <div class="acara-baris1"><span class="acara-judul">🎯 ${esc(a.nama)}</span><span class="panah">›</span></div>
+                <div class="acara-sub">${rp(a.nominal)} per siswa • ${r.lunas} dari ${DAFTAR_SISWA.length} lunas</div>
+                <div class="rekap-bar"><div style="width: ${r.persen}%; background: var(--emas);"></div></div>
+                <div class="acara-sub" style="margin: 8px 0 0 0;"><b class="kas-plus">${rp(r.terkumpul)}</b> terkumpul dari ${rp(r.target)} (${r.persen}%)</div>
+            </button>
+    `;
+
+    if (terbuka) {
+
+        h += `<div class="acara-isi">`;
+
+        if (kelola) {
+
+            let ringkasPilih = acaraPilih.length === 0
+                ? `<span class="pt-ikon">👥</span><span class="pt-teks">Pilih siapa yang bayar<small>Bisa pilih lebih dari satu orang</small></span><span class="pt-panah">›</span>`
+                : `${acaraPilih.length === 1 ? avatarHtml(acaraPilih[0]) : `<span class="pt-ikon" style="border-style: solid;">👥</span>`}<span class="pt-teks">${acaraPilih.length} siswa dipilih<small>${esc(acaraPilih.join(", "))}</small></span><span class="pt-panah">›</span>`;
+
+            h += `
+                <div class="kas-form">
+                    <div class="sub-judul">Catat pembayaran</div>
+                    <button type="button" class="picker-tombol ${acaraPilih.length > 0 ? "terisi" : ""}" onclick="pilihNamaAcara('${id}')">${ringkasPilih}</button>
+                    <div class="rp-kotak"><span>Rp</span><input class="input-admin" type="text" inputmode="numeric" autocomplete="off" placeholder="Nominal per orang" value="${esc(acaraForm.jml)}" oninput="formatInputRibu(this); acaraForm.jml = this.value"></div>
+                    <input class="input-admin" type="date" value="${esc(acaraForm.tgl)}" onchange="acaraForm.tgl = this.value">
+                    <button class="tombol-utama" onclick="catatBayarAcara('${id}')">Catat Pembayaran</button>
+                </div>
+            `;
+
+        }
+
+        h += `<div class="sub-judul">Status per siswa</div>`;
+
+        r.daftar.forEach(function(x) {
+            let label = x.lunas
+                ? `<span class="lencana lencana-hijau">✓ Lunas</span>`
+                : (x.dibayar > 0
+                    ? `<span class="lencana lencana-kuning">Kurang ${rp(x.kurang)}</span>`
+                    : `<span class="lencana lencana-merah">Belum bayar</span>`);
+            h += `<div class="siswa-baris">${avatarHtml(x.nama)}<span class="nm">${esc(x.nama)}</span>${label}</div>`;
+        });
+
+        h += `<div class="sub-judul">Riwayat pembayaran</div>`;
+
+        let bayar = (a.bayar || []).slice().reverse();
+
+        if (bayar.length === 0) {
+            h += `<div class="kosong" style="margin-top: 8px; padding: 16px;">Belum ada pembayaran.</div>`;
+        }
+
+        bayar.forEach(function(x) {
+            let tgl = x.tanggal ? tglPendek(x.tanggal, { day: "numeric", month: "short" }) : "";
+            let hapus = (kelola && adalahAdmin())
+                ? `<button class="tombol-hapus" onclick="hapusBayarAcara('${id}', '${esc(x.id)}', this)">🗑</button>`
+                : "";
+            h += `
+                <div class="kelola-item">
+                    <span style="flex: 1; min-width: 0;">${esc(x.nama)}<br><small class="kas-tgl">${tgl}</small></span>
+                    <b class="kas-plus">+${rp(x.jumlah)}</b>
+                    ${hapus}
+                </div>
+            `;
+        });
+
+        if (kelola) {
+            h += `<button class="tombol-keluar" style="width: 100%; margin-top: 14px;" onclick="salinAcara('${id}')">📋 Salin daftar untuk WhatsApp</button>`;
+            if (adalahAdmin()) {
+                h += `<button class="tombol-hapus" style="width: 100%; margin-top: 10px; padding: 12px;" onclick="hapusAcara('${id}', this)">🗑 Hapus iuran acara ini</button>`;
+            }
+        }
+
+        h += `</div>`;
+
+    }
+
+    h += `</div>`;
+
+    return h;
+
+}
+
+function gambarAcara() {
+
+    let el = document.getElementById("acara-daftar");
+    if (!el) { return; }
+
+    let daftar = urutAcara(acaraData);
+
+    el.innerHTML = daftar.length === 0
+        ? `<div class="kosong" style="margin-top: 12px; padding: 16px;">Belum ada iuran acara.</div>`
+        : daftar.map(function(a) { return acaraKartuHtml(a, "kelola"); }).join("");
+
+}
+
+function gambarAcaraLihat() {
+
+    let el = document.getElementById("kl-acara");
+    if (!el) { return; }
+
+    let daftar = urutAcara(acaraLihat);
+
+    if (daftar.length === 0) { el.innerHTML = ""; return; }
+
+    el.innerHTML = `
+        <h3 class="judul-bagian">Iuran Acara</h3>
+        <p class="deskripsi" style="margin: 10px 0 0 0;">Uang untuk acara, dicatat terpisah dari saldo kas kelas. Ketuk untuk melihat siapa yang sudah bayar.</p>
+        ${daftar.map(function(a) { return acaraKartuHtml(a, "lihat"); }).join("")}
+    `;
+
+}
+
+function bukaAcara(id, mode) {
+
+    if (mode === "kelola") {
+        acaraBuka = (acaraBuka === id) ? "" : id;
+        acaraPilih = [];
+        acaraForm = { jml: "", tgl: tanggalHariIniISO() };
+        if (acaraBuka !== "" && acaraData[id]) { acaraForm.jml = fmtRibu(acaraData[id].nominal); }
+        gambarAcara();
+    } else {
+        acaraBukaLihat = (acaraBukaLihat === id) ? "" : id;
+        gambarAcaraLihat();
+    }
+
+}
+
+function pilihNamaAcara(id) {
+
+    let a = acaraData[id];
+    if (!a) { return; }
+
+    let r = acaraRingkas(a);
+
+    bukaPicker({
+        judul: "Siapa yang bayar?",
+        multi: true,
+        terpilih: acaraPilih,
+        info: function(nama) {
+            let x = r.daftar.filter(function(d) { return d.nama === nama; })[0];
+            if (!x) { return null; }
+            if (x.lunas) { return { teks: "✓ Sudah lunas", warna: "var(--teal-teks)" }; }
+            if (x.dibayar > 0) { return { teks: "Kurang " + rp(x.kurang), warna: "var(--emas-teks)" }; }
+            return { teks: "Belum bayar", warna: "var(--koral-teks)" };
+        },
+        selesai: function(arr) {
+            acaraPilih = arr;
+            gambarAcara();
+        }
+    });
+
+}
+
+function galatAcara(e) {
+    console.log("Gagal menyimpan iuran acara:", e);
+    if (e && e.code === "permission-denied") {
+        pesanKas("Ditolak Firestore. Tambahkan aturan untuk koleksi iuranAcara.");
+    } else {
+        pesanKas("Gagal menyimpan. Cek internet.");
+    }
+}
+
+function buatAcara() {
+
+    if (!adalahPetugasKas()) { return; }
+
+    let nama = document.getElementById("acara-nama").value.trim();
+    let nominal = bacaAngka(document.getElementById("acara-nominal").value);
+
+    if (nama === "" || !(nominal > 0)) {
+        pesanKas("Isi nama acara dan iuran per siswa (lebih dari 0).");
+        return;
+    }
+
+    let id = String(Date.now());
+
+    db.collection("iuranAcara").doc(id).set({
+        id: id, nama: nama, nominal: nominal, tanggal: tanggalHariIniISO(),
+        dibuat: Date.now(), dibuatOleh: auth.currentUser.email, bayar: []
+    })
+    .then(function() {
+        pesanKas("Iuran acara dibuat ✅");
+        acaraBuka = id;
+        acaraPilih = [];
+        acaraForm = { jml: fmtRibu(nominal), tgl: tanggalHariIniISO() };
+        document.getElementById("acara-nama").value = "";
+        document.getElementById("acara-nominal").value = "";
+    })
+    .catch(galatAcara);
+
+}
+
+function catatBayarAcara(id) {
+
+    if (!adalahPetugasKas()) { return; }
+
+    let jml = bacaAngka(acaraForm.jml);
+    let tgl = acaraForm.tgl || tanggalHariIniISO();
+
+    if (acaraPilih.length === 0 || !(jml > 0)) {
+        pesanKas("Pilih siapa yang bayar dan isi nominalnya.");
+        return;
+    }
+
+    let t = Date.now();
+    let entri = acaraPilih.map(function(nama, i) {
+        return { id: String(t + i), nama: nama, jumlah: jml, tanggal: tgl };
+    });
+
+    let banyak = entri.length;
+
+    db.collection("iuranAcara").doc(id).update({
+        bayar: firebase.firestore.FieldValue.arrayUnion(...entri)
+    })
+    .then(function() { pesanKas(banyak + " pembayaran tersimpan ✅"); })
+    .catch(galatAcara);
+
+    acaraPilih = [];
+
+}
+
+function konfirmasiHapus(kunci, tombol, teksAsli, aksi) {
+
+    if (hapusMenunggu !== kunci) {
+        hapusMenunggu = kunci;
+        tombol.textContent = "Ketuk lagi";
+        setTimeout(function() {
+            if (hapusMenunggu === kunci) { hapusMenunggu = ""; tombol.textContent = teksAsli; }
+        }, 4000);
+        return;
+    }
+
+    hapusMenunggu = "";
+    aksi();
+
+}
+
+function hapusBayarAcara(id, idBayar, tombol) {
+
+    if (!adalahAdmin()) { pesanKas("Hanya admin yang bisa menghapus."); return; }
+
+    let a = acaraData[id];
+    if (!a) { return; }
+
+    konfirmasiHapus("acara:" + id + ":" + idBayar, tombol, "🗑", function() {
+        let sisa = (a.bayar || []).filter(function(x) { return x.id !== idBayar; });
+        db.collection("iuranAcara").doc(id).update({ bayar: sisa })
+        .then(function() { pesanKas("Pembayaran dihapus ✅"); })
+        .catch(galatAcara);
+    });
+
+}
+
+function hapusAcara(id, tombol) {
+
+    if (!adalahAdmin()) { pesanKas("Hanya admin yang bisa menghapus."); return; }
+
+    konfirmasiHapus("acara:" + id, tombol, "🗑 Hapus iuran acara ini", function() {
+        db.collection("iuranAcara").doc(id).delete()
+        .then(function() { acaraBuka = ""; pesanKas("Iuran acara dihapus ✅"); })
+        .catch(galatAcara);
+    });
+
+}
+
+function salinAcara(id) {
+
+    let a = acaraData[id];
+    if (!a) { return; }
+
+    let r = acaraRingkas(a);
+    let lunas = r.daftar.filter(function(x) { return x.lunas; });
+    let belum = r.daftar.filter(function(x) { return !x.lunas; });
+
+    let t = "*Iuran " + a.nama + " X TKR 2*\n";
+    t += "Per siswa: " + rp(a.nominal) + "\n";
+    t += "Terkumpul: " + rp(r.terkumpul) + " dari " + rp(r.target) + "\n\n";
+    t += "Sudah lunas (" + lunas.length + "):\n";
+    lunas.forEach(function(x) { t += "✓ " + x.nama + "\n"; });
+    t += "\nBelum lunas (" + belum.length + "):\n";
+    belum.forEach(function(x) { t += "- " + x.nama + (x.dibayar > 0 ? " (kurang " + rp(x.kurang) + ")" : "") + "\n"; });
+
+    try {
+        navigator.clipboard.writeText(t)
+        .then(function() { pesanKas("Daftar disalin, tinggal tempel di WhatsApp ✅"); })
+        .catch(function() { pesanKas("Gagal menyalin."); });
+    } catch (e) {
+        pesanKas("Gagal menyalin.");
+    }
 
 }
 
