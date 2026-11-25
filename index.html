@@ -677,7 +677,7 @@ table.absen td.baris-jam { background: var(--kartu2); text-align: left; padding:
 <!-- ABSEN (sekretaris dan admin; wali kelas hanya melihat) -->
 <div id="absen" class="halaman">
     <h1>📝 Isi Kehadiran</h1>
-    <p class="deskripsi">Sekretaris hanya bisa menambah kehadiran. Hanya admin yang bisa mengubah atau menghapus. Wali kelas bisa melihat.</p>
+    <p class="deskripsi">Sekretaris bisa mengisi dan mengubah absen hari ini sampai pukul 14.30. Setelah itu perlu izin admin. Hanya admin yang bisa menghapus. Wali kelas bisa melihat.</p>
 
     <div id="absen-login">
         <input class="input-admin" type="email" id="absen-email" placeholder="Email sekretaris, admin, atau wali kelas" autocomplete="username">
@@ -689,6 +689,7 @@ table.absen td.baris-jam { background: var(--kartu2); text-align: left; padding:
         <p class="deskripsi">Masuk sebagai: <span id="absen-info"></span></p>
         <input class="input-admin" type="date" id="absen-tanggal" onchange="muatAbsen()">
         <p class="deskripsi" id="absen-hari" style="margin-top: 8px;"></p>
+        <div id="absen-izin-admin" style="display: none;"></div>
 
         <h3 class="judul-tabel">Tabel 1: Apel pagi</h3>
         <table class="absen">
@@ -706,8 +707,19 @@ table.absen td.baris-jam { background: var(--kartu2); text-align: left; padding:
         <p class="deskripsi" style="margin-top: 8px;">H = hadir tanpa keterangan, I = izin, S = sakit, B = bolos, A = alfa (tidak hadir tanpa keterangan), T = terlambat. Pilih B untuk mengisi jam bolos. Ketuk lagi untuk membatalkan pilihan.</p>
 
         <p class="deskripsi" id="absen-catatan" style="color: var(--emas-teks);"></p>
+        <div id="absen-izin" style="display: none;">
+            <p class="deskripsi" id="absen-izin-info"></p>
+            <div id="absen-izin-form">
+                <input class="input-admin" type="text" id="absen-izin-alasan" maxlength="120" placeholder="Alasan (misal: lupa input siswa bolos)">
+                <button class="tombol-utama" style="width: 100%;" onclick="mintaIzinAbsen()">🔑 Minta izin ke admin</button>
+            </div>
+        </div>
         <button class="tombol-utama" id="absen-simpan" style="width: 100%;" onclick="simpanAbsen()">Simpan Kehadiran</button>
         <button class="tombol-hapus" id="absen-hapus" style="display: none; width: 100%; margin-top: 10px; padding: 12px;" onclick="hapusAbsen(this)">🗑 Hapus kehadiran tanggal ini</button>
+        <div style="display: flex; gap: 8px; margin-top: 14px;">
+            <button class="tombol-keluar" style="flex: 1; margin-top: 0;" onclick="salinRekapHarian()">📋 Rekap hari ini</button>
+            <button class="tombol-keluar" style="flex: 1; margin-top: 0;" onclick="salinRekapBulanan()">📋 Rekap bulan ini</button>
+        </div>
         <button class="tombol-keluar" onclick="keluarAbsen()">Keluar</button>
     </div>
 
@@ -1927,6 +1939,7 @@ const DAFTAR_SISWA = [
 ];
 
 const JAM_BIASA = 8;
+const BATAS_UBAH_ABSEN = "14:30";   // jam pulang sekolah, sekretaris tidak bisa mengubah absen setelah ini
 const JAM_JUMAT = 5;   // SESUAIKAN dengan jumlah jam pelajaran hari Jumat
 
 const OPSI_APEL  = ["Mengikuti apel", "Tidak mengikuti apel", "Tidak hadir", "Terlambat"];
@@ -1962,21 +1975,206 @@ function adalahPetugasAbsen() {
     return u !== "" && (u === UID_ADMIN || u === UID_SEKRETARIS);
 }
 
+let izinAbsen = null;
+let izinBerhentiSek = null;
+let izinBerhentiAdmin = null;
+let izinMenunggu = {};
+
+function adalahSekretaris() {
+    return uidSaatIni() === UID_SEKRETARIS;
+}
+
+function menitBatasAbsen() {
+    let p = BATAS_UBAH_ABSEN.split(":");
+    return Number(p[0]) * 60 + Number(p[1]);
+}
+
+function jamTeks(ms) {
+    let d = new Date(ms);
+    return String(d.getHours()).padStart(2, "0") + "." + String(d.getMinutes()).padStart(2, "0");
+}
+
+function izinAktif() {
+    return izinAbsen !== null && izinAbsen.status === "disetujui" && Number(izinAbsen.sampai) > Date.now();
+}
+
 function bolehIsiAbsen() {
-    return adalahAdmin() || (adalahPetugasAbsen() && !absenAda);
+
+    if (adalahAdmin()) { return true; }
+    if (!adalahSekretaris()) { return false; }
+
+    let tanggal = document.getElementById("absen-tanggal").value;
+    let d = new Date();
+    let menit = d.getHours() * 60 + d.getMinutes();
+
+    return (tanggal === tanggalHariIniISO() && menit < menitBatasAbsen()) || izinAktif();
+
 }
 
 function perbaruiKunciAbsen() {
 
-    let kunci = adalahPetugasAbsen() && !bolehIsiAbsen();
+    let sek = adalahSekretaris();
+    let kunci = sek && !bolehIsiAbsen();
+    let batas = BATAS_UBAH_ABSEN.replace(":", ".");
 
     document.getElementById("absen-panel").classList.toggle("terkunci", kunci);
-    document.getElementById("absen-catatan").textContent = kunci
-        ? "🔒 Kehadiran tanggal ini sudah tersimpan. Sekretaris hanya bisa menambah. Untuk mengubah atau menghapus, hubungi admin."
-        : "";
+
+    let catatan = "";
+
+    if (sek) {
+        if (izinAktif()) {
+            catatan = "🔑 Izin dari admin aktif sampai pukul " + jamTeks(izinAbsen.sampai) + ".";
+        } else if (!kunci) {
+            catatan = "⏰ Absen hari ini bisa diubah sampai pukul " + batas + ". Setelah itu terkunci.";
+        } else {
+            catatan = "🔒 Absen terkunci (batas mengubah pukul " + batas + " pada hari yang sama). Minta izin ke admin untuk mengubah.";
+        }
+    }
+
+    document.getElementById("absen-catatan").textContent = catatan;
+
+    let kotak = document.getElementById("absen-izin");
+    kotak.style.display = (sek && kunci) ? "block" : "none";
+
+    if (sek && kunci) {
+        let st = izinAbsen ? izinAbsen.status : "";
+        let menunggu = st === "menunggu";
+        let teks = "Kirim permintaan ke admin. Izin berlaku 1 sampai 3 jam.";
+        if (menunggu) { teks = "⏳ Permintaan sudah dikirim. Menunggu persetujuan admin..."; }
+        else if (st === "ditolak") { teks = "Permintaan sebelumnya ditolak admin. Kamu bisa meminta lagi."; }
+        else if (st === "disetujui") { teks = "Izin sebelumnya sudah berakhir. Kamu bisa meminta lagi."; }
+        document.getElementById("absen-izin-info").textContent = teks;
+        document.getElementById("absen-izin-form").style.display = menunggu ? "none" : "block";
+    }
+
     document.getElementById("absen-hapus").style.display = (adalahAdmin() && absenAda) ? "block" : "none";
 
 }
+
+function berlanggananIzin(tanggal) {
+
+    if (izinBerhentiSek) { izinBerhentiSek(); izinBerhentiSek = null; }
+    izinAbsen = null;
+
+    if (!adalahSekretaris() || db === null) { return; }
+
+    izinBerhentiSek = db.collection("izinAbsen").doc(tanggal).onSnapshot(function(d) {
+        izinAbsen = d.exists ? d.data() : null;
+        perbaruiKunciAbsen();
+    }, function(e) {
+        console.log("Gagal membaca izin:", e);
+    });
+
+}
+
+function mintaIzinAbsen() {
+
+    if (!adalahSekretaris()) { return; }
+
+    let tanggal = document.getElementById("absen-tanggal").value;
+    if (tanggal === "") { pesanAbsen("Pilih tanggal dulu."); return; }
+
+    let alasan = document.getElementById("absen-izin-alasan").value.trim().slice(0, 120);
+
+    db.collection("izinAbsen").doc(tanggal).set({
+        tanggal: tanggal, status: "menunggu", alasan: alasan, diminta: Date.now()
+    })
+    .then(function() {
+        document.getElementById("absen-izin-alasan").value = "";
+        pesanAbsen("Permintaan terkirim ke admin ✅");
+    })
+    .catch(function(e) {
+        console.log("Gagal meminta izin:", e);
+        pesanAbsen("Gagal mengirim permintaan. Cek aturan Firestore (izinAbsen) dan internet.");
+    });
+
+}
+
+function langgananIzinAdmin() {
+
+    if (!adalahAdmin()) {
+        if (izinBerhentiAdmin) { izinBerhentiAdmin(); izinBerhentiAdmin = null; }
+        gambarIzinAdmin([]);
+        return;
+    }
+
+    if (izinBerhentiAdmin || db === null) { return; }
+
+    izinBerhentiAdmin = db.collection("izinAbsen").where("status", "==", "menunggu").onSnapshot(function(s) {
+        let daftar = [];
+        izinMenunggu = {};
+        s.forEach(function(d) { izinMenunggu[d.id] = d.data(); daftar.push(d.data()); });
+        daftar.sort(function(a, b) { return (a.diminta || 0) - (b.diminta || 0); });
+        gambarIzinAdmin(daftar);
+    }, function(e) {
+        console.log("Gagal membaca permintaan izin:", e);
+    });
+
+}
+
+function gambarIzinAdmin(daftar) {
+
+    let el = document.getElementById("absen-izin-admin");
+
+    if (!adalahAdmin() || daftar.length === 0) {
+        el.style.display = "none";
+        el.innerHTML = "";
+        return;
+    }
+
+    let h = `<div class="sub-judul">🔔 Permintaan izin ubah absen (${daftar.length})</div>`;
+
+    daftar.forEach(function(x) {
+        let t = esc(x.tanggal);
+        h += `
+            <div class="kelola-item" style="flex-direction: column; align-items: stretch; gap: 10px;">
+                <div>
+                    <b>${esc(tglPendek(x.tanggal, { weekday: "long", day: "numeric", month: "long" }))}</b><br>
+                    <small class="kas-tgl">${esc(x.alasan || "Tanpa alasan")}</small>
+                </div>
+                <div style="display: flex; gap: 6px;">
+                    <button class="tombol-utama" style="flex: 1; margin-top: 0; padding: 10px 4px;" onclick="putusIzinAbsen('${t}', 1)">1 jam</button>
+                    <button class="tombol-utama" style="flex: 1; margin-top: 0; padding: 10px 4px;" onclick="putusIzinAbsen('${t}', 2)">2 jam</button>
+                    <button class="tombol-utama" style="flex: 1; margin-top: 0; padding: 10px 4px;" onclick="putusIzinAbsen('${t}', 3)">3 jam</button>
+                    <button class="tombol-hapus" style="padding: 10px 12px;" onclick="putusIzinAbsen('${t}', 0)">Tolak</button>
+                </div>
+            </div>
+        `;
+    });
+
+    el.innerHTML = h;
+    el.style.display = "block";
+
+}
+
+function putusIzinAbsen(tanggal, jam) {
+
+    if (!adalahAdmin()) { return; }
+
+    let lama = izinMenunggu[tanggal] || {};
+    let data = { tanggal: tanggal, alasan: lama.alasan || "", diminta: lama.diminta || Date.now() };
+
+    if (jam === 0) {
+        data.status = "ditolak";
+    } else {
+        data.status = "disetujui";
+        data.jam = jam;
+        data.sampai = Date.now() + jam * 3600000;
+        data.disetujuiOleh = auth.currentUser.email;
+    }
+
+    db.collection("izinAbsen").doc(tanggal).set(data)
+    .then(function() { pesanAbsen(jam === 0 ? "Permintaan ditolak." : "Izin " + jam + " jam diberikan ✅"); })
+    .catch(function(e) {
+        console.log("Gagal memutuskan izin:", e);
+        pesanAbsen("Gagal menyimpan. Cek aturan Firestore dan internet.");
+    });
+
+}
+
+setInterval(function() {
+    if (adalahSekretaris()) { perbaruiKunciAbsen(); }
+}, 30000);
 
 function bisaLihatAbsen() {
     return adalahPetugasAbsen() || adalahWalas();
@@ -2024,6 +2222,8 @@ function perbaruiTampilanAbsen() {
 
     let masuk = bisaLihatAbsen();
 
+    langgananIzinAdmin();
+
     document.getElementById("absen-login").style.display = masuk ? "none" : "block";
     document.getElementById("absen-panel").style.display = masuk ? "block" : "none";
     document.getElementById("tombol-absen").textContent = masuk ? "✅" : "📝";
@@ -2069,7 +2269,8 @@ function muatAbsen() {
 
     pesanAbsen("Memuat...");
 
-    absenAda = true;
+    absenAda = false;
+    berlanggananIzin(tanggal);
     perbaruiKunciAbsen();
 
     db.collection("kehadiran").doc(tanggal).get()
@@ -2196,6 +2397,11 @@ function simpanAbsen() {
 
     if (tanggal === "") { pesanAbsen("Pilih tanggal dulu."); return; }
 
+    if (!bolehIsiAbsen()) {
+        pesanAbsen("Waktu mengubah absen sudah lewat. Minta izin ke admin.");
+        return;
+    }
+
     let data = [];
 
     for (let i = 0; i < DAFTAR_SISWA.length; i++) {
@@ -2234,23 +2440,13 @@ function simpanAbsen() {
         });
     };
 
-    let proses = adalahAdmin()
-        ? tulis()
-        : ref.get().then(function(dok) {
-            if (dok.exists) {
-                absenAda = true;
-                perbaruiKunciAbsen();
-                pesanAbsen("Kehadiran tanggal ini sudah tersimpan. Hanya admin yang bisa mengubahnya.");
-                return;
-            }
-            return tulis();
-        });
+    let proses = tulis();
 
     proses.catch(function(error) {
         console.log("Gagal menyimpan kehadiran:", error);
         let kode = error && error.code ? error.code : "tidak diketahui";
         if (kode === "permission-denied") {
-            pesanAbsen("Ditolak Firestore (permission-denied). Aturan belum di-Publish, UID akun ini belum ada di aturan, atau data tanggal ini sudah ada.");
+            pesanAbsen("Ditolak Firestore. Waktu mengubah absen sudah lewat, izin admin belum ada/berakhir, atau aturan belum di-Publish.");
         } else if (kode === "unavailable") {
             pesanAbsen("Tidak ada koneksi internet. Coba lagi.");
         } else {
@@ -2293,6 +2489,149 @@ function hapusAbsen(tombol) {
     .catch(function(error) {
         console.log("Gagal menghapus kehadiran:", error);
         pesanAbsen("Gagal menghapus. Cek aturan Firestore dan internet.");
+    });
+
+}
+
+
+/* --- Salin rekap untuk WhatsApp --- */
+
+function salinTeks(t, kabar) {
+
+    function cadangan() {
+        let ta = document.createElement("textarea");
+        ta.value = t;
+        ta.style.position = "fixed";
+        ta.style.opacity = "0";
+        document.body.appendChild(ta);
+        ta.select();
+        let ok = false;
+        try { ok = document.execCommand("copy"); } catch (e) {}
+        document.body.removeChild(ta);
+        kabar(ok ? "Rekap disalin, tinggal tempel di WhatsApp ✅" : "Gagal menyalin.");
+    }
+
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(t)
+        .then(function() { kabar("Rekap disalin, tinggal tempel di WhatsApp ✅"); })
+        .catch(cadangan);
+    } else {
+        cadangan();
+    }
+
+}
+
+function salinRekapHarian() {
+
+    let tanggal = document.getElementById("absen-tanggal").value;
+    if (tanggal === "") { pesanAbsen("Pilih tanggal dulu."); return; }
+
+    let kelas = {};
+    let apel = {};
+    OPSI_KELAS.forEach(function(o) { kelas[o] = []; });
+    OPSI_APEL.forEach(function(o) { apel[o] = []; });
+    let kosongK = [];
+    let kosongA = [];
+
+    DAFTAR_SISWA.forEach(function(nama, i) {
+
+        if (stKelas[i] !== "") {
+            let n = nama;
+            if (stKelas[i] === "Bolos" && stJam[i].length > 0) {
+                n += " (jam " + stJam[i].slice().sort(function(a, b) { return a - b; }).join(", ") + ")";
+            }
+            kelas[stKelas[i]].push(n);
+        } else {
+            kosongK.push(nama);
+        }
+
+        if (stApel[i] !== "") { apel[stApel[i]].push(nama); } else { kosongA.push(nama); }
+
+    });
+
+    if (kosongK.length === DAFTAR_SISWA.length && kosongA.length === DAFTAR_SISWA.length) {
+        pesanAbsen("Belum ada data untuk disalin.");
+        return;
+    }
+
+    function baris(ikon, label, arr, denganNama) {
+        if (arr.length === 0) { return ""; }
+        return ikon + " " + label + " (" + arr.length + ")" + (denganNama ? ": " + arr.join(", ") : "") + "\n";
+    }
+
+    let t = "*REKAP KEHADIRAN X TKR 2*\n";
+    t += new Date(tanggal + "T00:00:00").toLocaleDateString("id-ID", { weekday: "long", day: "numeric", month: "long", year: "numeric" }) + "\n\n";
+
+    t += "*Absen kelas*\n";
+    t += baris("✅", "Hadir", kelas["Hadir tanpa keterangan"], false);
+    t += baris("📝", "Izin", kelas["Izin"], true);
+    t += baris("🤒", "Sakit", kelas["Sakit"], true);
+    t += baris("🚫", "Bolos", kelas["Bolos"], true);
+    t += baris("❌", "Alfa", kelas["Alfa"], true);
+    t += baris("⏰", "Terlambat", kelas["Terlambat"], true);
+    t += baris("⚠️", "Belum diisi", kosongK, true);
+
+    t += "\n*Apel pagi*\n";
+    t += baris("✅", "Mengikuti apel", apel["Mengikuti apel"], false);
+    t += baris("➖", "Tidak mengikuti apel", apel["Tidak mengikuti apel"], true);
+    t += baris("❌", "Tidak hadir", apel["Tidak hadir"], true);
+    t += baris("⏰", "Terlambat", apel["Terlambat"], true);
+    t += baris("⚠️", "Belum diisi", kosongA, true);
+
+    salinTeks(t.trim(), pesanAbsen);
+
+}
+
+function salinRekapBulanan() {
+
+    let tanggal = document.getElementById("absen-tanggal").value;
+    if (tanggal === "" || db === null) { pesanAbsen("Pilih tanggal dulu."); return; }
+
+    let bulan = tanggal.slice(0, 7);
+
+    pesanAbsen("Menyiapkan rekap bulan ini...");
+
+    db.collection("kehadiran")
+      .where("tanggal", ">=", bulan + "-01")
+      .where("tanggal", "<=", bulan + "-31")
+      .get()
+    .then(function(hasil) {
+
+        let hari = 0;
+        let hitung = {};
+        DAFTAR_SISWA.forEach(function(n) { hitung[n] = { H: 0, I: 0, S: 0, B: 0, A: 0, T: 0 }; });
+
+        let kode = { "Hadir tanpa keterangan": "H", "Izin": "I", "Sakit": "S", "Bolos": "B", "Alfa": "A", "Terlambat": "T" };
+
+        hasil.forEach(function(dok) {
+            hari++;
+            (dok.data().data || []).forEach(function(e) {
+                if (hitung[e.nama] && kode[e.kelas]) { hitung[e.nama][kode[e.kelas]]++; }
+            });
+        });
+
+        if (hari === 0) { pesanAbsen("Belum ada data bulan ini."); return; }
+
+        let t = "*REKAP KEHADIRAN " + namaBulan(bulan, true).toUpperCase() + "*\n";
+        t += "X TKR 2 • " + hari + " hari tercatat\n\n";
+
+        DAFTAR_SISWA.forEach(function(nama, i) {
+            let c = hitung[nama];
+            let bagian = ["Hadir " + c.H];
+            if (c.I > 0) { bagian.push("Izin " + c.I); }
+            if (c.S > 0) { bagian.push("Sakit " + c.S); }
+            if (c.B > 0) { bagian.push("Bolos " + c.B); }
+            if (c.A > 0) { bagian.push("Alfa " + c.A); }
+            if (c.T > 0) { bagian.push("Terlambat " + c.T); }
+            t += (i + 1) + ". " + nama + ": " + bagian.join(", ") + "\n";
+        });
+
+        salinTeks(t.trim(), pesanAbsen);
+
+    })
+    .catch(function(e) {
+        console.log("Gagal menyiapkan rekap bulanan:", e);
+        pesanAbsen("Gagal menyiapkan rekap. Cek internet.");
     });
 
 }
@@ -2799,7 +3138,7 @@ function dataBulanKas(b, sumber) {
         });
     }
 
-    return { iuran: iuran, bayar: d.bayar || [], masuk: d.masuk || [], keluar: d.keluar || [] };
+    return { iuran: iuran, bayar: d.bayar || [], masuk: d.masuk || [], keluar: (d.keluar || []).filter(function(x) { return !x.tambahId; }) };
 
 }
 
@@ -2965,6 +3304,21 @@ function catatBayar() {
 
 }
 
+function rawKas(b, jenis) {
+    return (kasData[b] || {})[jenis] || [];
+}
+
+function totalTambahAcara(sumber) {
+    let src = sumber || acaraData;
+    let t = 0;
+    Object.keys(src).forEach(function(k) { t += jumlahDari(src[k].tambah || []); });
+    return t;
+}
+
+function saldoKasBersih(kasSumber, acaraSumber) {
+    return saldoTotalKas(kasSumber) - totalTambahAcara(acaraSumber);
+}
+
 function saldoTotalKas(sumber) {
     let src = sumber || kasData;
     let total = 0;
@@ -3034,7 +3388,7 @@ function gambarKas() {
     document.getElementById("kas-ringkasan").innerHTML = `
         <div class="kartu kartu-hari" style="margin-top: 6px;">
             <p class="tanggal">Saldo kas total</p>
-            <div class="kas-besar">${rp(saldoTotalKas())}</div>
+            <div class="kas-besar" id="kas-besar">${rp(saldoKasBersih())}</div>
             <p class="piket-info">${namaBulan(kasBulan, true)}: saldo ${rp(h.saldo)}</p>
             <p class="piket-info" id="kas-acara-baris" style="margin-top: 6px;"></p>
         </div>
@@ -3139,7 +3493,7 @@ function tambahKas(jenis) {
         return;
     }
 
-    let arr = dataBulanKas(kasBulan)[jenis].concat([{
+    let arr = rawKas(kasBulan, jenis).concat([{
         id: String(Date.now()), ket: ket, jumlah: jml, tanggal: tgl
     }]);
 
@@ -3170,14 +3524,8 @@ function hapusKas(jenis, id, tombol) {
 
     hapusMenunggu = "";
 
-    let tertaut = dataBulanKas(kasBulan)[jenis].filter(function(x) { return x.id === id && x.tambahId; })[0];
-    if (tertaut) {
-        pesanKas("Ini tambahan dana acara. Hapus lewat kartu iuran acara terkait.");
-        return;
-    }
-
     let data = {};
-    data[jenis] = dataBulanKas(kasBulan)[jenis].filter(function(x) { return x.id !== id; });
+    data[jenis] = rawKas(kasBulan, jenis).filter(function(x) { return x.id !== id; });
 
     simpanKas(kasBulan, data, "Data dihapus ✅");
 
@@ -3201,7 +3549,7 @@ function salinLaporan() {
     d.masuk.forEach(function(x) { t += "+ " + x.ket + ": " + rp(x.jumlah) + "\n"; });
     t += "\nPengeluaran: " + rp(h.keluar) + "\n";
     d.keluar.forEach(function(x) { t += "- " + x.ket + ": " + rp(x.jumlah) + "\n"; });
-    t += "\nSaldo bulan ini: " + rp(h.saldo) + "\nSaldo kas total: " + rp(saldoTotalKas());
+    t += "\nSaldo bulan ini: " + rp(h.saldo) + "\nSaldo kas total: " + rp(saldoKasBersih());
 
     try {
         navigator.clipboard.writeText(t)
@@ -3312,7 +3660,7 @@ function gambarKasLihat() {
     document.getElementById("kl-isi").innerHTML = `
         <div class="kartu kartu-hari" style="margin-top: 6px;">
             <p class="tanggal">Uang kas kelas saat ini</p>
-            <div class="kas-besar">${rp(saldoTotalKas(klData))}</div>
+            <div class="kas-besar">${rp(saldoKasBersih(klData, acaraLihat))}</div>
             <p class="piket-info">${namaBulan(klBulan, true)}: saldo ${rp(h.saldo)}</p>
             ${teksAcaraSaldo(acaraLihat) !== "" ? `<p class="piket-info" style="margin-top: 6px;">${teksAcaraSaldo(acaraLihat)}</p>` : ""}
         </div>
@@ -3516,7 +3864,7 @@ function acaraKartuHtml(a, mode) {
                     <button class="tombol-utama" onclick="catatBayarAcara('${id}')">Catat Pembayaran</button>
                 </div>
                 <div class="kas-form">
-                    <div class="sub-judul">Dana kurang? Tambah dari kas kelas • Saldo kas ${rp(saldoTotalKas())}</div>
+                    <div class="sub-judul">Dana kurang? Tambah dari kas kelas • Saldo kas ${rp(saldoKasBersih())}</div>
                     <div class="rp-kotak"><span>Rp</span><input class="input-admin" type="text" inputmode="numeric" autocomplete="off" placeholder="Jumlah diambil dari kas kelas" value="${esc(acaraForm.tJml)}" oninput="formatInputRibu(this); acaraForm.tJml = this.value"></div>
                     <button class="tombol-utama" onclick="tambahDariKas('${id}')">Ambil dari Kas Kelas</button>
                 </div>
@@ -3777,28 +4125,16 @@ function tambahDariKas(id) {
         return;
     }
 
-    let saldo = saldoTotalKas();
+    let saldo = saldoKasBersih();
 
     if (jml > saldo) {
         pesanKas("Saldo kas kelas tidak cukup (" + rp(saldo) + ").");
         return;
     }
 
-    let tgl = tanggalHariIniISO();
-    let bulan = tgl.slice(0, 7);
-    let tId = String(Date.now());
-
-    let keluarBaru = dataBulanKas(bulan).keluar.concat([{
-        id: "t" + tId, ket: "Tambahan dana acara: " + a.nama, jumlah: jml, tanggal: tgl, tambahId: tId
-    }]);
-
-    let b = db.batch();
-    b.set(db.collection("kas").doc(bulan), { bulan: bulan, keluar: keluarBaru }, { merge: true });
-    b.update(db.collection("iuranAcara").doc(id), {
-        tambah: firebase.firestore.FieldValue.arrayUnion({ id: tId, jumlah: jml, tanggal: tgl, bulan: bulan })
-    });
-
-    b.commit()
+    db.collection("iuranAcara").doc(id).update({
+        tambah: firebase.firestore.FieldValue.arrayUnion({ id: String(Date.now()), jumlah: jml, tanggal: tanggalHariIniISO() })
+    })
     .then(function() {
         pesanKas(rp(jml) + " diambil dari kas kelas ✅");
         acaraForm.tJml = "";
@@ -3824,18 +4160,9 @@ function hapusTambahAcara(id, tId, tombol) {
     }
 
     konfirmasiHapus("acaraT:" + id + ":" + tId, tombol, "🗑", function() {
-        let bulan = item.bulan || String(item.tanggal || "").slice(0, 7);
-        let b = db.batch();
-        b.update(db.collection("iuranAcara").doc(id), {
+        db.collection("iuranAcara").doc(id).update({
             tambah: (a.tambah || []).filter(function(x) { return x.id !== tId; })
-        });
-        if (bulan !== "") {
-            b.set(db.collection("kas").doc(bulan), {
-                bulan: bulan,
-                keluar: dataBulanKas(bulan).keluar.filter(function(x) { return x.tambahId !== tId; })
-            }, { merge: true });
-        }
-        b.commit()
+        })
         .then(function() { pesanKas("Tambahan dihapus, uang kembali ke kas kelas ✅"); })
         .catch(galatAcara);
     });
@@ -3901,12 +4228,16 @@ function acaraSisaTotal(sumber) {
 
 function teksAcaraSaldo(sumber) {
     let s = acaraSisaTotal(sumber);
-    return s.n === 0 ? "" : "🎯 Dana iuran acara (terpisah): " + rp(s.total);
+    if (s.n === 0) { return ""; }
+    let t = totalTambahAcara(sumber);
+    return "🎯 Dana iuran acara (terpisah): " + rp(s.total) + (t > 0 ? " • termasuk " + rp(t) + " dari kas" : "");
 }
 
 function isiBarisAcara() {
     let el = document.getElementById("kas-acara-baris");
     if (el) { el.textContent = teksAcaraSaldo(acaraData); }
+    let besar = document.getElementById("kas-besar");
+    if (besar) { besar.textContent = rp(saldoKasBersih()); }
 }
 
 function konfirmasiHapus(kunci, tombol, teksAsli, aksi) {
@@ -3947,7 +4278,7 @@ function hapusAcara(id, tombol) {
 
     konfirmasiHapus("acara:" + id, tombol, "🗑 Hapus iuran acara ini", function() {
         db.collection("iuranAcara").doc(id).delete()
-        .then(function() { acaraBuka = ""; pesanKas("Iuran acara dihapus ✅"); })
+        .then(function() { acaraBuka = ""; pesanKas("Iuran acara dihapus. Uang tambahan dari kas otomatis kembali ✅"); })
         .catch(galatAcara);
     });
 
